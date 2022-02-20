@@ -621,18 +621,60 @@ foreach ($key in $table.Keys) {
 ### 比較演算子
 <a id="markdown-%E6%AF%94%E8%BC%83%E6%BC%94%E7%AE%97%E5%AD%90" name="%E6%AF%94%E8%BC%83%E6%BC%94%E7%AE%97%E5%AD%90"></a>
 
-| 演算子    | 比較内容                             |
-| :-------- | :----------------------------------- |
-| -eq       | 等しい                               |
-| -ne       | 等しくない                           |
-| -gt       | より大きい                           |
-| -ge       | 以上                                 |
-| -le       | 以下                                 |
-| -lt       | より小さい                           |
-| -like     | ワイルドカード(*, ?)による文字列比較 |
-| -match    | 正規表現による文字列比較             |
-| -notlike  | 否定形                               |
-| -notmatch | 否定形                               |
+| 演算子             | 比較内容                                                       |
+| :----------------- | :------------------------------------------------------------- |
+| -eq                | 等しい                                                         |
+| -ne                | 等しくない                                                     |
+| -gt                | より大きい                                                     |
+| -ge                | 以上                                                           |
+| -le                | 以下                                                           |
+| -lt                | より小さい                                                     |
+| -like              | ワイルドカード(*, ?)による文字列比較                           |
+| -notlike           | 否定形                                                         |
+| -match             | 正規表現による文字列比較                                       |
+| -notmatch          | 否定形                                                         |
+| -contains          | 含む ( `"abc", "def" -contains "def"` )                        |
+| -notcontains       | 含まない                                                       |
+| -in                | 含む ( `"def" -in "abc", "def" ` )                             |
+| -notin             | 含まない                                                       |
+| -replace -ireplace | 正規表現を使用して置換(大小文字を区別しない; Case insensitive) |
+| -creplace          | 正規表現を使用して置換(大小文字を区別する; Case-sensitive)     |
+| -is                | 型が等しい                                                     |
+| -isnot             | 型が等しくない                                                 |
+
+```powershell
+"PowerShell" -like    "*shell"           # Output: True
+"PowerShell" -like    "Power?hell"       # Output: True
+"PowerShell" -like    "Power[p-w]hell"   # Output: True
+"PowerShell", "Server" -like "*shell"    # Output: PowerShell
+"PowerShell", "Server" -notlike "*shell" # Output: Server
+
+"PowerShell" -match 'shell'              # Output: True
+"PowerShell" -like  'shell'              # Output: False
+"PowerShell" -match    '^Power\w+'       # Output: True
+'bag'        -notmatch 'b[iou]g'         # Output: True
+
+"Bag", "Beg", "Big", "Bog", "Bug"  -match 'b[iou]g'
+#Output: Big, Bog, Bug
+"Bag", "Beg", "Big", "Bog", "Bug"  -notmatch 'b[iou]g'
+#Output: Bag, Beg
+
+'5.72' -replace '(.+)', '$ $1' # Output: $ 5.72
+'5.72' -replace '(.+)', '$$$1' # Output: $5.72
+'5.72' -replace '(.+)', '$$1'  # Output: $1
+
+"B1","B2","B3","B4","B5" -replace "B", 'a'
+# a1
+# a2
+# a3
+# a4
+# a5
+
+$a = 1
+$b = "1"
+$a -is [int]        # Output: True
+$a -is $b.GetType() # Output: False
+```
 
 ### 論理演算子
 <a id="markdown-%E8%AB%96%E7%90%86%E6%BC%94%E7%AE%97%E5%AD%90" name="%E8%AB%96%E7%90%86%E6%BC%94%E7%AE%97%E5%AD%90"></a>
@@ -973,13 +1015,22 @@ Start-Sleep -m 3000; Write-Host "###"
 
 ```powershell
 # 書式
-$format = "yyyyMMdd-HHmm"
+$format = "yyyyMMdd-HHmmss"
+
+# 要素( Get-Date|Get-Member )
+(Get-Date).Year  # 年
+(Get-Date).Month # 月
+(Get-Date).day   # 日
 
 # 明日
 Write-Host (Get-Date).AddDays(1).ToString($format)
 
+# 月末
+$Today=(Get-Date)
+(Get-Date -Year $Today.year -month $Today.month -Date 1).AddMonths(1).AddDays(-1)
+
 # 文字列からキャスト
-$datetime = [DateTime]::ParseExact("20150101-0130",$format, $null)
+$datetime = [DateTime]::ParseExact("20150101-013000",$format, $null)
 Write-Host $datetime.ToString($format)
 ```
 
