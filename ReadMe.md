@@ -6,6 +6,7 @@
 <!-- TOC -->
 
 - [PowerShell cheatsheet 基礎編](#powershell-cheatsheet-%E5%9F%BA%E7%A4%8E%E7%B7%A8)
+    - [PowerShellバージョンの確認](#powershell%E3%83%90%E3%83%BC%E3%82%B8%E3%83%A7%E3%83%B3%E3%81%AE%E7%A2%BA%E8%AA%8D)
     - [PowerShell実行ポリシーの変更](#powershell%E5%AE%9F%E8%A1%8C%E3%83%9D%E3%83%AA%E3%82%B7%E3%83%BC%E3%81%AE%E5%A4%89%E6%9B%B4)
     - [コメント](#%E3%82%B3%E3%83%A1%E3%83%B3%E3%83%88)
     - [コマンドレット](#%E3%82%B3%E3%83%9E%E3%83%B3%E3%83%89%E3%83%AC%E3%83%83%E3%83%88)
@@ -48,8 +49,10 @@
             - [try節](#try%E7%AF%80)
             - [trap節](#trap%E7%AF%80)
     - [プロセス](#%E3%83%97%E3%83%AD%E3%82%BB%E3%82%B9)
-        - [キー押下を待機Pause](#%E3%82%AD%E3%83%BC%E6%8A%BC%E4%B8%8B%E3%82%92%E5%BE%85%E6%A9%9Fpause)
-        - [一定時間待機Sleep, Wait](#%E4%B8%80%E5%AE%9A%E6%99%82%E9%96%93%E5%BE%85%E6%A9%9Fsleep-wait)
+        - [管理者権限で実行](#%E7%AE%A1%E7%90%86%E8%80%85%E6%A8%A9%E9%99%90%E3%81%A7%E5%AE%9F%E8%A1%8C)
+        - [待機](#%E5%BE%85%E6%A9%9F)
+            - [キー押下を待機Pause](#%E3%82%AD%E3%83%BC%E6%8A%BC%E4%B8%8B%E3%82%92%E5%BE%85%E6%A9%9Fpause)
+            - [一定時間待機Sleep, Wait](#%E4%B8%80%E5%AE%9A%E6%99%82%E9%96%93%E5%BE%85%E6%A9%9Fsleep-wait)
     - [日付処理](#%E6%97%A5%E4%BB%98%E5%87%A6%E7%90%86)
     - [ファイル操作](#%E3%83%95%E3%82%A1%E3%82%A4%E3%83%AB%E6%93%8D%E4%BD%9C)
         - [カレントディレクトリ](#%E3%82%AB%E3%83%AC%E3%83%B3%E3%83%88%E3%83%87%E3%82%A3%E3%83%AC%E3%82%AF%E3%83%88%E3%83%AA)
@@ -79,6 +82,41 @@
 <!-- /TOC -->
 
 ---
+
+## PowerShellバージョンの確認
+<a id="markdown-powershell%E3%83%90%E3%83%BC%E3%82%B8%E3%83%A7%E3%83%B3%E3%81%AE%E7%A2%BA%E8%AA%8D" name="powershell%E3%83%90%E3%83%BC%E3%82%B8%E3%83%A7%E3%83%B3%E3%81%AE%E7%A2%BA%E8%AA%8D"></a>
+
+```powershell
+$PSVersionTable
+```
+
+```
+Name                           Value
+----                           -----
+PSVersion                      7.2.1
+PSEdition                      Core
+GitCommitId                    7.2.1
+OS                             Microsoft Windows 10.0.22000
+Platform                       Win32NT
+PSCompatibleVersions           {1.0, 2.0, 3.0, 4.0…}
+PSRemotingProtocolVersion      2.3
+SerializationVersion           1.1.0.1
+WSManStackVersion              3.0
+```
+
+```powershell
+$PSVersionTable["PSVersion"].Major
+
+# バージョンが7未満ならインストーラーをダウンロードして実行
+if ($PSVersionTable["PSVersion"].Major -lt 7) {
+    Invoke-Expression "& { $(Invoke-RestMethod https://aka.ms/install-powershell.ps1) } -UseMSI"
+    exit
+}
+```
+
+```
+7
+```
 
 ## PowerShell実行ポリシーの変更
 <a id="markdown-powershell%E5%AE%9F%E8%A1%8C%E3%83%9D%E3%83%AA%E3%82%B7%E3%83%BC%E3%81%AE%E5%A4%89%E6%9B%B4" name="powershell%E5%AE%9F%E8%A1%8C%E3%83%9D%E3%83%AA%E3%82%B7%E3%83%BC%E3%81%AE%E5%A4%89%E6%9B%B4"></a>
@@ -885,7 +923,26 @@ trap [Exception] {
 ## プロセス
 <a id="markdown-%E3%83%97%E3%83%AD%E3%82%BB%E3%82%B9" name="%E3%83%97%E3%83%AD%E3%82%BB%E3%82%B9"></a>
 
-### キー押下を待機(Pause)
+### 管理者権限で実行
+<a id="markdown-%E7%AE%A1%E7%90%86%E8%80%85%E6%A8%A9%E9%99%90%E3%81%A7%E5%AE%9F%E8%A1%8C" name="%E7%AE%A1%E7%90%86%E8%80%85%E6%A8%A9%E9%99%90%E3%81%A7%E5%AE%9F%E8%A1%8C"></a>
+
+```powershell
+$currentPrincipal = New-Object Security.Principal.WindowsPrincipal([Security.Principal.WindowsIdentity]::GetCurrent())
+$isAdmin = $currentPrincipal.IsInRole([Security.Principal.WindowsBuiltInRole]::Administrator)
+
+if (!$isAdmin) {
+    Start-Process pwsh "-File `"$PSCommandPath`"" -Verb RunAs
+    exit
+}
+else {
+    # 管理者権限で実行する処理
+}
+```
+
+### 待機
+<a id="markdown-%E5%BE%85%E6%A9%9F" name="%E5%BE%85%E6%A9%9F"></a>
+
+#### キー押下を待機(Pause)
 <a id="markdown-%E3%82%AD%E3%83%BC%E6%8A%BC%E4%B8%8B%E3%82%92%E5%BE%85%E6%A9%9Fpause" name="%E3%82%AD%E3%83%BC%E6%8A%BC%E4%B8%8B%E3%82%92%E5%BE%85%E6%A9%9Fpause"></a>
 
 ```powershell
@@ -900,7 +957,7 @@ function Pause {
 }
 ```
 
-### 一定時間待機(Sleep, Wait)
+#### 一定時間待機(Sleep, Wait)
 <a id="markdown-%E4%B8%80%E5%AE%9A%E6%99%82%E9%96%93%E5%BE%85%E6%A9%9Fsleep%2C-wait" name="%E4%B8%80%E5%AE%9A%E6%99%82%E9%96%93%E5%BE%85%E6%A9%9Fsleep%2C-wait"></a>
 
 ```powershell
