@@ -1,23 +1,20 @@
-# PowerShell cheatsheet (基礎編)
-<a id="markdown-powershell-cheatsheet-%E5%9F%BA%E7%A4%8E%E7%B7%A8" name="powershell-cheatsheet-%E5%9F%BA%E7%A4%8E%E7%B7%A8"></a>
-
----
-
 <!-- TOC -->
 
-- [PowerShell cheatsheet 基礎編](#powershell-cheatsheet-%E5%9F%BA%E7%A4%8E%E7%B7%A8)
-    - [PowerShellバージョンの確認](#powershell%E3%83%90%E3%83%BC%E3%82%B8%E3%83%A7%E3%83%B3%E3%81%AE%E7%A2%BA%E8%AA%8D)
+- [おまじない](#%E3%81%8A%E3%81%BE%E3%81%98%E3%81%AA%E3%81%84)
     - [PowerShell実行ポリシーの変更](#powershell%E5%AE%9F%E8%A1%8C%E3%83%9D%E3%83%AA%E3%82%B7%E3%83%BC%E3%81%AE%E5%A4%89%E6%9B%B4)
+        - [署名する](#%E7%BD%B2%E5%90%8D%E3%81%99%E3%82%8B)
+    - [PowerShell バージョン](#powershell-%E3%83%90%E3%83%BC%E3%82%B8%E3%83%A7%E3%83%B3)
+    - [ヘルプ](#%E3%83%98%E3%83%AB%E3%83%97)
+- [文法](#%E6%96%87%E6%B3%95)
     - [コメント](#%E3%82%B3%E3%83%A1%E3%83%B3%E3%83%88)
     - [コマンドレット](#%E3%82%B3%E3%83%9E%E3%83%B3%E3%83%89%E3%83%AC%E3%83%83%E3%83%88)
-        - [コマンドレット](#%E3%82%B3%E3%83%9E%E3%83%B3%E3%83%89%E3%83%AC%E3%83%83%E3%83%88)
-            - [動詞の完全な一覧](#%E5%8B%95%E8%A9%9E%E3%81%AE%E5%AE%8C%E5%85%A8%E3%81%AA%E4%B8%80%E8%A6%A7)
-        - [パイプライン](#%E3%83%91%E3%82%A4%E3%83%97%E3%83%A9%E3%82%A4%E3%83%B3)
-    - [画面出力](#%E7%94%BB%E9%9D%A2%E5%87%BA%E5%8A%9B)
-        - [デバッグ出力](#%E3%83%87%E3%83%90%E3%83%83%E3%82%B0%E5%87%BA%E5%8A%9B)
-            - [Write-Error](#write-error)
-            - [その他のログレベル](#%E3%81%9D%E3%81%AE%E4%BB%96%E3%81%AE%E3%83%AD%E3%82%B0%E3%83%AC%E3%83%99%E3%83%AB)
-        - [プログレスバー](#%E3%83%97%E3%83%AD%E3%82%B0%E3%83%AC%E3%82%B9%E3%83%90%E3%83%BC)
+        - [動詞の完全な一覧](#%E5%8B%95%E8%A9%9E%E3%81%AE%E5%AE%8C%E5%85%A8%E3%81%AA%E4%B8%80%E8%A6%A7)
+    - [パイプライン](#%E3%83%91%E3%82%A4%E3%83%97%E3%83%A9%E3%82%A4%E3%83%B3)
+    - [演算子](#%E6%BC%94%E7%AE%97%E5%AD%90)
+        - [算術演算子](#%E7%AE%97%E8%A1%93%E6%BC%94%E7%AE%97%E5%AD%90)
+        - [比較演算子](#%E6%AF%94%E8%BC%83%E6%BC%94%E7%AE%97%E5%AD%90)
+        - [論理演算子](#%E8%AB%96%E7%90%86%E6%BC%94%E7%AE%97%E5%AD%90)
+        - [ビット演算子](#%E3%83%93%E3%83%83%E3%83%88%E6%BC%94%E7%AE%97%E5%AD%90)
     - [変数](#%E5%A4%89%E6%95%B0)
         - [型を指定](#%E5%9E%8B%E3%82%92%E6%8C%87%E5%AE%9A)
         - [スコープ](#%E3%82%B9%E3%82%B3%E3%83%BC%E3%83%97)
@@ -25,11 +22,16 @@
         - [配列](#%E9%85%8D%E5%88%97)
             - [多次元配列](#%E5%A4%9A%E6%AC%A1%E5%85%83%E9%85%8D%E5%88%97)
             - [連想配列ハッシュテーブル](#%E9%80%A3%E6%83%B3%E9%85%8D%E5%88%97%E3%83%8F%E3%83%83%E3%82%B7%E3%83%A5%E3%83%86%E3%83%BC%E3%83%96%E3%83%AB)
-    - [演算子](#%E6%BC%94%E7%AE%97%E5%AD%90)
-        - [算術演算子](#%E7%AE%97%E8%A1%93%E6%BC%94%E7%AE%97%E5%AD%90)
-        - [比較演算子](#%E6%AF%94%E8%BC%83%E6%BC%94%E7%AE%97%E5%AD%90)
-        - [論理演算子](#%E8%AB%96%E7%90%86%E6%BC%94%E7%AE%97%E5%AD%90)
-        - [ビット演算子](#%E3%83%93%E3%83%83%E3%83%88%E6%BC%94%E7%AE%97%E5%AD%90)
+    - [画面出力](#%E7%94%BB%E9%9D%A2%E5%87%BA%E5%8A%9B)
+        - [デバッグ出力](#%E3%83%87%E3%83%90%E3%83%83%E3%82%B0%E5%87%BA%E5%8A%9B)
+            - [Write-Error](#write-error)
+            - [その他のログレベル](#%E3%81%9D%E3%81%AE%E4%BB%96%E3%81%AE%E3%83%AD%E3%82%B0%E3%83%AC%E3%83%99%E3%83%AB)
+        - [プログレスバー](#%E3%83%97%E3%83%AD%E3%82%B0%E3%83%AC%E3%82%B9%E3%83%90%E3%83%BC)
+    - [プロセス](#%E3%83%97%E3%83%AD%E3%82%BB%E3%82%B9)
+        - [管理者権限で実行](#%E7%AE%A1%E7%90%86%E8%80%85%E6%A8%A9%E9%99%90%E3%81%A7%E5%AE%9F%E8%A1%8C)
+        - [待機](#%E5%BE%85%E6%A9%9F)
+            - [キー押下を待機Pause](#%E3%82%AD%E3%83%BC%E6%8A%BC%E4%B8%8B%E3%82%92%E5%BE%85%E6%A9%9Fpause)
+            - [一定時間待機Sleep, Wait](#%E4%B8%80%E5%AE%9A%E6%99%82%E9%96%93%E5%BE%85%E6%A9%9Fsleep-wait)
     - [制御構文](#%E5%88%B6%E5%BE%A1%E6%A7%8B%E6%96%87)
         - [条件分岐](#%E6%9D%A1%E4%BB%B6%E5%88%86%E5%B2%90)
             - [if文](#if%E6%96%87)
@@ -38,43 +40,39 @@
         - [ループ](#%E3%83%AB%E3%83%BC%E3%83%97)
             - [ループ文](#%E3%83%AB%E3%83%BC%E3%83%97%E6%96%87)
             - [ループ制御文](#%E3%83%AB%E3%83%BC%E3%83%97%E5%88%B6%E5%BE%A1%E6%96%87)
-        - [関数](#%E9%96%A2%E6%95%B0)
-            - [関数の基本形](#%E9%96%A2%E6%95%B0%E3%81%AE%E5%9F%BA%E6%9C%AC%E5%BD%A2)
-            - [引数](#%E5%BC%95%E6%95%B0)
-                - [引数の取り方](#%E5%BC%95%E6%95%B0%E3%81%AE%E5%8F%96%E3%82%8A%E6%96%B9)
-                - [引数の型を指定](#%E5%BC%95%E6%95%B0%E3%81%AE%E5%9E%8B%E3%82%92%E6%8C%87%E5%AE%9A)
-                - [引数の参照渡し](#%E5%BC%95%E6%95%B0%E3%81%AE%E5%8F%82%E7%85%A7%E6%B8%A1%E3%81%97)
-                - [引数の既定値](#%E5%BC%95%E6%95%B0%E3%81%AE%E6%97%A2%E5%AE%9A%E5%80%A4)
         - [例外処理](#%E4%BE%8B%E5%A4%96%E5%87%A6%E7%90%86)
             - [try節](#try%E7%AF%80)
             - [trap節](#trap%E7%AF%80)
-    - [プロセス](#%E3%83%97%E3%83%AD%E3%82%BB%E3%82%B9)
-        - [管理者権限で実行](#%E7%AE%A1%E7%90%86%E8%80%85%E6%A8%A9%E9%99%90%E3%81%A7%E5%AE%9F%E8%A1%8C)
-        - [待機](#%E5%BE%85%E6%A9%9F)
-            - [キー押下を待機Pause](#%E3%82%AD%E3%83%BC%E6%8A%BC%E4%B8%8B%E3%82%92%E5%BE%85%E6%A9%9Fpause)
-            - [一定時間待機Sleep, Wait](#%E4%B8%80%E5%AE%9A%E6%99%82%E9%96%93%E5%BE%85%E6%A9%9Fsleep-wait)
-    - [日付処理](#%E6%97%A5%E4%BB%98%E5%87%A6%E7%90%86)
-    - [ファイル操作](#%E3%83%95%E3%82%A1%E3%82%A4%E3%83%AB%E6%93%8D%E4%BD%9C)
-        - [カレントディレクトリ](#%E3%82%AB%E3%83%AC%E3%83%B3%E3%83%88%E3%83%87%E3%82%A3%E3%83%AC%E3%82%AF%E3%83%88%E3%83%AA)
-        - [ファイルフォルダの新規作成](#%E3%83%95%E3%82%A1%E3%82%A4%E3%83%AB%E3%83%95%E3%82%A9%E3%83%AB%E3%83%80%E3%81%AE%E6%96%B0%E8%A6%8F%E4%BD%9C%E6%88%90)
+    - [関数](#%E9%96%A2%E6%95%B0)
+        - [関数の基本形](#%E9%96%A2%E6%95%B0%E3%81%AE%E5%9F%BA%E6%9C%AC%E5%BD%A2)
+        - [引数](#%E5%BC%95%E6%95%B0)
+            - [引数の取り方](#%E5%BC%95%E6%95%B0%E3%81%AE%E5%8F%96%E3%82%8A%E6%96%B9)
+            - [引数の型を指定](#%E5%BC%95%E6%95%B0%E3%81%AE%E5%9E%8B%E3%82%92%E6%8C%87%E5%AE%9A)
+            - [引数の参照渡し](#%E5%BC%95%E6%95%B0%E3%81%AE%E5%8F%82%E7%85%A7%E6%B8%A1%E3%81%97)
+            - [引数の既定値](#%E5%BC%95%E6%95%B0%E3%81%AE%E6%97%A2%E5%AE%9A%E5%80%A4)
+- [システム情報](#%E3%82%B7%E3%82%B9%E3%83%86%E3%83%A0%E6%83%85%E5%A0%B1)
+- [日付処理](#%E6%97%A5%E4%BB%98%E5%87%A6%E7%90%86)
+- [ファイル操作](#%E3%83%95%E3%82%A1%E3%82%A4%E3%83%AB%E6%93%8D%E4%BD%9C)
+    - [カレントディレクトリ](#%E3%82%AB%E3%83%AC%E3%83%B3%E3%83%88%E3%83%87%E3%82%A3%E3%83%AC%E3%82%AF%E3%83%88%E3%83%AA)
+    - [ファイルフォルダの新規作成](#%E3%83%95%E3%82%A1%E3%82%A4%E3%83%AB%E3%83%95%E3%82%A9%E3%83%AB%E3%83%80%E3%81%AE%E6%96%B0%E8%A6%8F%E4%BD%9C%E6%88%90)
         - [touch](#touch)
-        - [ファイルフォルダの削除](#%E3%83%95%E3%82%A1%E3%82%A4%E3%83%AB%E3%83%95%E3%82%A9%E3%83%AB%E3%83%80%E3%81%AE%E5%89%8A%E9%99%A4)
-        - [ファイルフォルダのコピーと移動](#%E3%83%95%E3%82%A1%E3%82%A4%E3%83%AB%E3%83%95%E3%82%A9%E3%83%AB%E3%83%80%E3%81%AE%E3%82%B3%E3%83%94%E3%83%BC%E3%81%A8%E7%A7%BB%E5%8B%95)
-        - [テキストファイル](#%E3%83%86%E3%82%AD%E3%82%B9%E3%83%88%E3%83%95%E3%82%A1%E3%82%A4%E3%83%AB)
-            - [行ごとに読込み](#%E8%A1%8C%E3%81%94%E3%81%A8%E3%81%AB%E8%AA%AD%E8%BE%BC%E3%81%BF)
-            - [書出し](#%E6%9B%B8%E5%87%BA%E3%81%97)
-        - [CSVファイル](#csv%E3%83%95%E3%82%A1%E3%82%A4%E3%83%AB)
-            - [読込み](#%E8%AA%AD%E8%BE%BC%E3%81%BF)
-            - [書出し](#%E6%9B%B8%E5%87%BA%E3%81%97)
-        - [設定ファイル.ini](#%E8%A8%AD%E5%AE%9A%E3%83%95%E3%82%A1%E3%82%A4%E3%83%ABini)
-            - [読込み](#%E8%AA%AD%E8%BE%BC%E3%81%BF)
-        - [構成ファイルWeb.config](#%E6%A7%8B%E6%88%90%E3%83%95%E3%82%A1%E3%82%A4%E3%83%ABwebconfig)
-            - [読み書き](#%E8%AA%AD%E3%81%BF%E6%9B%B8%E3%81%8D)
-        - [XMLファイル](#xml%E3%83%95%E3%82%A1%E3%82%A4%E3%83%AB)
-            - [読込み](#%E8%AA%AD%E8%BE%BC%E3%81%BF)
-            - [書出し](#%E6%9B%B8%E5%87%BA%E3%81%97)
-        - [CSVファイル](#csv%E3%83%95%E3%82%A1%E3%82%A4%E3%83%AB)
-            - [読込み](#%E8%AA%AD%E8%BE%BC%E3%81%BF)
+    - [ファイルフォルダの削除](#%E3%83%95%E3%82%A1%E3%82%A4%E3%83%AB%E3%83%95%E3%82%A9%E3%83%AB%E3%83%80%E3%81%AE%E5%89%8A%E9%99%A4)
+    - [ファイルフォルダのコピーと移動](#%E3%83%95%E3%82%A1%E3%82%A4%E3%83%AB%E3%83%95%E3%82%A9%E3%83%AB%E3%83%80%E3%81%AE%E3%82%B3%E3%83%94%E3%83%BC%E3%81%A8%E7%A7%BB%E5%8B%95)
+    - [テキストファイル](#%E3%83%86%E3%82%AD%E3%82%B9%E3%83%88%E3%83%95%E3%82%A1%E3%82%A4%E3%83%AB)
+        - [行ごとに読込み](#%E8%A1%8C%E3%81%94%E3%81%A8%E3%81%AB%E8%AA%AD%E8%BE%BC%E3%81%BF)
+        - [書出し](#%E6%9B%B8%E5%87%BA%E3%81%97)
+    - [CSVファイル](#csv%E3%83%95%E3%82%A1%E3%82%A4%E3%83%AB)
+        - [読込み](#%E8%AA%AD%E8%BE%BC%E3%81%BF)
+        - [書出し](#%E6%9B%B8%E5%87%BA%E3%81%97)
+    - [設定ファイル.ini](#%E8%A8%AD%E5%AE%9A%E3%83%95%E3%82%A1%E3%82%A4%E3%83%ABini)
+        - [読込み](#%E8%AA%AD%E8%BE%BC%E3%81%BF)
+    - [構成ファイルWeb.config](#%E6%A7%8B%E6%88%90%E3%83%95%E3%82%A1%E3%82%A4%E3%83%ABwebconfig)
+        - [読み書き](#%E8%AA%AD%E3%81%BF%E6%9B%B8%E3%81%8D)
+    - [XMLファイル](#xml%E3%83%95%E3%82%A1%E3%82%A4%E3%83%AB)
+        - [読込み](#%E8%AA%AD%E8%BE%BC%E3%81%BF)
+        - [書出し](#%E6%9B%B8%E5%87%BA%E3%81%97)
+    - [CSVファイル](#csv%E3%83%95%E3%82%A1%E3%82%A4%E3%83%AB)
+        - [読込み](#%E8%AA%AD%E8%BE%BC%E3%81%BF)
     - [ログ出力](#%E3%83%AD%E3%82%B0%E5%87%BA%E5%8A%9B)
         - [ログファイル](#%E3%83%AD%E3%82%B0%E3%83%95%E3%82%A1%E3%82%A4%E3%83%AB)
         - [イベントログ](#%E3%82%A4%E3%83%99%E3%83%B3%E3%83%88%E3%83%AD%E3%82%B0)
@@ -83,8 +81,49 @@
 
 ---
 
-## PowerShellバージョンの確認
-<a id="markdown-powershell%E3%83%90%E3%83%BC%E3%82%B8%E3%83%A7%E3%83%B3%E3%81%AE%E7%A2%BA%E8%AA%8D" name="powershell%E3%83%90%E3%83%BC%E3%82%B8%E3%83%A7%E3%83%B3%E3%81%AE%E7%A2%BA%E8%AA%8D"></a>
+# おまじない
+<a id="markdown-%E3%81%8A%E3%81%BE%E3%81%98%E3%81%AA%E3%81%84" name="%E3%81%8A%E3%81%BE%E3%81%98%E3%81%AA%E3%81%84"></a>
+
+
+## PowerShell実行ポリシーの変更
+<a id="markdown-powershell%E5%AE%9F%E8%A1%8C%E3%83%9D%E3%83%AA%E3%82%B7%E3%83%BC%E3%81%AE%E5%A4%89%E6%9B%B4" name="powershell%E5%AE%9F%E8%A1%8C%E3%83%9D%E3%83%AA%E3%82%B7%E3%83%BC%E3%81%AE%E5%A4%89%E6%9B%B4"></a>
+
+```powershell
+# 一時的に許可
+Set-ExecutionPolicy RemoteSigned -Scope Process -Force
+
+# ユーザーに対して許可
+Set-ExecutionPolicy RemoteSigned -Scope CurrentUser -Force
+```
+
+| 実行ポリシー | 内容                                                       |
+| ------------ | ---------------------------------------------------------- |
+| Restricted   | 個々のコマンドは許可、スクリプトは制限される               |
+| AllSigned    | 署名されたスクリプトのみ許可                               |
+| RemoteSigned | ローカルのスクリプトは許可、リモートは署名されていれば許可 |
+| Unrestricted | 全てのスクリプトが制限なし(警告あり)                       |
+| Bypass       | 全てのスクリプトが制限なし(警告なし)                       |
+
+### 署名する
+<a id="markdown-%E7%BD%B2%E5%90%8D%E3%81%99%E3%82%8B" name="%E7%BD%B2%E5%90%8D%E3%81%99%E3%82%8B"></a>
+
+```powershell
+$targetScriptPath = ".\gen.ps1"
+
+# 証明書作成
+$cert = New-SelfSignedCertificate -Subject "CN=PS証明書" -KeyAlgorithm RSA -KeyLength 2048 -Type CodeSigningCert -CertStoreLocation Cert:\CurrentUser\My\ -NotAfter ([datetime]"2099/01/01")
+Move-Item "Cert:\CurrentUser\My\$($cert.Thumbprint)" Cert:\CurrentUser\Root
+
+# 署名
+$cert = (Get-ChildItem Cert:\CurrentUser\My | ? {$_.Subject -eq "CN=PS証明書"})[0]
+Set-AuthenticodeSignature -Cert $cert -Filepath $targetScriptPath
+```
+
+
+## PowerShell バージョン
+<a id="markdown-powershell-%E3%83%90%E3%83%BC%E3%82%B8%E3%83%A7%E3%83%B3" name="powershell-%E3%83%90%E3%83%BC%E3%82%B8%E3%83%A7%E3%83%B3"></a>
+
+スクリプト内から確認
 
 ```powershell
 $PSVersionTable
@@ -118,12 +157,25 @@ if ($PSVersionTable["PSVersion"].Major -lt 7) {
 7
 ```
 
-## PowerShell実行ポリシーの変更
-<a id="markdown-powershell%E5%AE%9F%E8%A1%8C%E3%83%9D%E3%83%AA%E3%82%B7%E3%83%BC%E3%81%AE%E5%A4%89%E6%9B%B4" name="powershell%E5%AE%9F%E8%A1%8C%E3%83%9D%E3%83%AA%E3%82%B7%E3%83%BC%E3%81%AE%E5%A4%89%E6%9B%B4"></a>
+ターミナルから確認
 
 ```powershell
-Set-ExecutionPolicy RemoteSigned
+$ pwsh --version
 ```
+
+
+## ヘルプ
+<a id="markdown-%E3%83%98%E3%83%AB%E3%83%97" name="%E3%83%98%E3%83%AB%E3%83%97"></a>
+
+```powershell
+# Get-Help <Command>
+Get-Help Get-ChildItem
+```
+
+
+# 文法
+<a id="markdown-%E6%96%87%E6%B3%95" name="%E6%96%87%E6%B3%95"></a>
+
 
 ## コメント
 <a id="markdown-%E3%82%B3%E3%83%A1%E3%83%B3%E3%83%88" name="%E3%82%B3%E3%83%A1%E3%83%B3%E3%83%88"></a>
@@ -138,21 +190,17 @@ Set-ExecutionPolicy RemoteSigned
 #>
 ```
 
-## コマンドレット
-<a id="markdown-%E3%82%B3%E3%83%9E%E3%83%B3%E3%83%89%E3%83%AC%E3%83%83%E3%83%88" name="%E3%82%B3%E3%83%9E%E3%83%B3%E3%83%89%E3%83%AC%E3%83%83%E3%83%88"></a>
 
-### コマンドレット
+## コマンドレット
 <a id="markdown-%E3%82%B3%E3%83%9E%E3%83%B3%E3%83%89%E3%83%AC%E3%83%83%E3%83%88" name="%E3%82%B3%E3%83%9E%E3%83%B3%E3%83%89%E3%83%AC%E3%83%83%E3%83%88"></a>
 
 ```powershell
 Get-Command # コマンドレット一覧
 Get-Service # サービス一覧
-
-Write-Host "画面出力"
-write-host "画面出力" # 大文字小文字の区別はない
+get-service # 大小文字の区別はない
 ```
 
-#### 動詞の完全な一覧
+### 動詞の完全な一覧
 <a id="markdown-%E5%8B%95%E8%A9%9E%E3%81%AE%E5%AE%8C%E5%85%A8%E3%81%AA%E4%B8%80%E8%A6%A7" name="%E5%8B%95%E8%A9%9E%E3%81%AE%E5%AE%8C%E5%85%A8%E3%81%AA%E4%B8%80%E8%A6%A7"></a>
 
 ```powershell
@@ -265,106 +313,117 @@ Unblock     ul          Security       Removes restrictions to a resource
 Unprotect   up          Security       Removes safeguards from a resource that were added to prevent it from attack or loss
 ```
 
-### パイプライン
+
+## パイプライン
 <a id="markdown-%E3%83%91%E3%82%A4%E3%83%97%E3%83%A9%E3%82%A4%E3%83%B3" name="%E3%83%91%E3%82%A4%E3%83%97%E3%83%A9%E3%82%A4%E3%83%B3"></a>
 
 ```powershell
-.4|Sort-Object
+0..4|Sort-Object
 ```
 
 > 1
 > 2
 > 3
 > 4
+>
 
-## 画面出力
-<a id="markdown-%E7%94%BB%E9%9D%A2%E5%87%BA%E5%8A%9B" name="%E7%94%BB%E9%9D%A2%E5%87%BA%E5%8A%9B"></a>
 
-```powershell
-"画面出力 $a" # Write-Outputと同じ
-'画面出力 $a'
+## 演算子
+<a id="markdown-%E6%BC%94%E7%AE%97%E5%AD%90" name="%E6%BC%94%E7%AE%97%E5%AD%90"></a>
 
-Write-Host "画面出力" # コンソールに出力
-Write-Output "画面出力" # パイプラインに渡す(パイプラインがなければコンソールに出力される)
+### 算術演算子
+<a id="markdown-%E7%AE%97%E8%A1%93%E6%BC%94%E7%AE%97%E5%AD%90" name="%E7%AE%97%E8%A1%93%E6%BC%94%E7%AE%97%E5%AD%90"></a>
 
-Write-Host "画面出力" -NoNewline # 文末で改行しない
-Write-Host "画面出力" -ForegroundColor Blue
+| 演算子 | 比較内容       |
+| :----- | :------------- |
+| +      | 和             |
+| ++     | インクリメント |
+| -      | 差             |
+| --     | デクリメント   |
+| *      | 積             |
+| /      | 商             |
+| %      | 剰余           |
 
-$Host.UI.WriteLine() # コンソールに出力
-$Host.UI.WriteWarningLine()
+冪乗には関数Powを用いる
 
-[System.Console]::Write()
-[System.Console]::WriteLine()
+### 比較演算子
+<a id="markdown-%E6%AF%94%E8%BC%83%E6%BC%94%E7%AE%97%E5%AD%90" name="%E6%AF%94%E8%BC%83%E6%BC%94%E7%AE%97%E5%AD%90"></a>
 
-@"
-画面
-出力
-"
-@'
-画面
-出力
-'
-```
-
-### デバッグ出力
-<a id="markdown-%E3%83%87%E3%83%90%E3%83%83%E3%82%B0%E5%87%BA%E5%8A%9B" name="%E3%83%87%E3%83%90%E3%83%83%E3%82%B0%E5%87%BA%E5%8A%9B"></a>
-
-#### Write-Error
-<a id="markdown-write-error" name="write-error"></a>
-
-```powershell
-# $ErrorActionPreference変数の値によってメッセージ表示／非表示、処理の継続／停止を指定する
-try {
-    $savedErrorActionPreference = $ErrorActionPreference  # 現在の設定値を保存する
-    $ErrorActionPreference = "Stop"
-    Write-Error -Message "画面出力" # エラー出力を行い、catch節に飛ばす
-} catch {
-    # 例外処理
-} finally {
-    $ErrorActionPreference = $savedErrorActionPreference  #既定値に戻す
-}
-```
-
-#### その他のログレベル
-<a id="markdown-%E3%81%9D%E3%81%AE%E4%BB%96%E3%81%AE%E3%83%AD%E3%82%B0%E3%83%AC%E3%83%99%E3%83%AB" name="%E3%81%9D%E3%81%AE%E4%BB%96%E3%81%AE%E3%83%AD%E3%82%B0%E3%83%AC%E3%83%99%E3%83%AB"></a>
+| 演算子             | 比較内容                                                       |
+| :----------------- | :------------------------------------------------------------- |
+| -eq                | 等しい                                                         |
+| -ne                | 等しくない                                                     |
+| -gt                | より大きい                                                     |
+| -ge                | 以上                                                           |
+| -le                | 以下                                                           |
+| -lt                | より小さい                                                     |
+| -like              | ワイルドカード(*, ?)による文字列比較                           |
+| -notlike           | 否定形                                                         |
+| -match             | 正規表現による文字列比較                                       |
+| -notmatch          | 否定形                                                         |
+| -contains          | 含む ( `"abc", "def" -contains "def"` )                        |
+| -notcontains       | 含まない                                                       |
+| -in                | 含む ( `"def" -in "abc", "def" ` )                             |
+| -notin             | 含まない                                                       |
+| -replace -ireplace | 正規表現を使用して置換(大小文字を区別しない; Case insensitive) |
+| -creplace          | 正規表現を使用して置換(大小文字を区別する; Case-sensitive)     |
+| -is                | 型が等しい                                                     |
+| -isnot             | 型が等しくない                                                 |
 
 ```powershell
-$DebugPreference
-Write-Debug -Message "画面出力"
+"PowerShell" -like    "*shell"           # Output: True
+"PowerShell" -like    "Power?hell"       # Output: True
+"PowerShell" -like    "Power[p-w]hell"   # Output: True
+"PowerShell", "Server" -like "*shell"    # Output: PowerShell
+"PowerShell", "Server" -notlike "*shell" # Output: Server
 
-Write-Debug -Message "画面出力" -Debug # $DebugPreferenceの値が"SilentryContinue"であっても出力する
+"PowerShell" -match 'shell'              # Output: True
+"PowerShell" -like  'shell'              # Output: False
+"PowerShell" -match    '^Power\w+'       # Output: True
+'bag'        -notmatch 'b[iou]g'         # Output: True
 
-$VerbosePreference
-Write-Verbose -Message "画面出力"
+"Bag", "Beg", "Big", "Bog", "Bug"  -match 'b[iou]g'
+#Output: Big, Bog, Bug
+"Bag", "Beg", "Big", "Bog", "Bug"  -notmatch 'b[iou]g'
+#Output: Bag, Beg
 
-$WarningPreference
-Write-Warning -Message "画面出力"
+'5.72' -replace '(.+)', '$ $1' # Output: $ 5.72
+'5.72' -replace '(.+)', '$$$1' # Output: $5.72
+'5.72' -replace '(.+)', '$$1'  # Output: $1
+
+"B1","B2","B3","B4","B5" -replace "B", 'a'
+# a1
+# a2
+# a3
+# a4
+# a5
+
+$a = 1
+$b = "1"
+$a -is [int]        # Output: True
+$a -is $b.GetType() # Output: False
 ```
 
-```powershell
-# Write-Hostの、文字色のみログレベル別に変化させたもの
-$Host.UI.WriteDebugLine("画面出力")
-$Host.UI.WriteErrorLine("画面出力")
-$Host.UI.WriteVerboseLine("画面出力")
-$Host.UI.WriteWarningLine("画面出力")
-```
+### 論理演算子
+<a id="markdown-%E8%AB%96%E7%90%86%E6%BC%94%E7%AE%97%E5%AD%90" name="%E8%AB%96%E7%90%86%E6%BC%94%E7%AE%97%E5%AD%90"></a>
 
-### プログレスバー
-<a id="markdown-%E3%83%97%E3%83%AD%E3%82%B0%E3%83%AC%E3%82%B9%E3%83%90%E3%83%BC" name="%E3%83%97%E3%83%AD%E3%82%B0%E3%83%AC%E3%82%B9%E3%83%90%E3%83%BC"></a>
+| 演算子 | 比較内容     |
+| :----- | :----------- |
+| -and   | 積(かつ)     |
+| -or    | 和(または)   |
+| -not   | 否定         |
+| -xor   | 排他的論理和 |
 
-```powershell
-$activity = "読込処理"
-$currentOperation = "データを読込んでいます。"
-for($i = 0;$i -le 100; $i++){
-   $status = "{0} %" -F $i
-   Write-Progress $activity $status -PercentComplete $i -CurrentOperation $currentOperation
+### ビット演算子
+<a id="markdown-%E3%83%93%E3%83%83%E3%83%88%E6%BC%94%E7%AE%97%E5%AD%90" name="%E3%83%93%E3%83%83%E3%83%88%E6%BC%94%E7%AE%97%E5%AD%90"></a>
 
-  #
-  # 読込処理
-  #
+| 演算子 | 比較内容     |
+| :----- | :----------- |
+| -band  | 積(かつ)     |
+| -bor   | 和(または)   |
+| -bnot  | 否定         |
+| -bxor  | 排他的論理和 |
 
-}
-```
 
 ## 変数
 <a id="markdown-%E5%A4%89%E6%95%B0" name="%E5%A4%89%E6%95%B0"></a>
@@ -403,62 +462,75 @@ $a = 1 # 型を指定しなければObject型
 <a id="markdown-%E8%87%AA%E5%8B%95%E5%A4%89%E6%95%B0" name="%E8%87%AA%E5%8B%95%E5%A4%89%E6%95%B0"></a>
 
 ```powershell
-Get-Variable # で確認する
+Get-Variable
 ```
 
-| Name                       |
-| :------------------------- |
-| $                          |
-| ?                          |
-| ^                          |
-| _                          |
-| args                       |
-| ConfirmPreference          |
-| ConsoleFileName            |
-| DebugPreference            |
-| Error                      |
-| ErrorActionPreference      |
-| ErrorView                  |
-| ExecutionContext           |
-| false                      |
-| FormatEnumerationLimit     |
-| HOME                       |
-| Host                       |
-| InformationPreference      |
-| input                      |
-| MaximumAliasCount          |
-| MaximumDriveCount          |
-| MaximumErrorCount          |
-| MaximumFunctionCount       |
-| MaximumHistoryCount        |
-| MaximumVariableCount       |
-| MyInvocation               |
-| NestedPromptLevel          |
-| null                       |
-| OutputEncoding             |
-| PID                        |
-| PROFILE                    |
-| ProgressPreference         |
-| PSBoundParameters          |
-| PSCommandPath              |
-| PSCulture                  |
-| PSDefaultParameterValues   |
-| PSEdition                  |
-| PSEmailServer              |
-| PSHOME                     |
-| PSScriptRoot               |
-| PSSessionApplicationName   |
-| PSSessionConfigurationName |
-| PSSessionOption            |
-| PSUICulture                |
-| PSVersionTable             |
-| PWD                        |
-| ShellId                    |
-| StackTrace                 |
-| true                       |
-| VerbosePreference          |
-| WarningPreference          |
-| WhatIfPreference           |
+```powershell
+Get-Variable | Get-Member -MemberType Properties
+```
+
+| $Host                   |  |
+| $InformationPreference  |                                          |
+| $input                  |                 |
+
+| 変数名                      | 内容                                                 |
+| --------------------------- | ---------------------------------------------------- |
+| $env:ENVVAR                 | 環境変数                                             |
+|                             |                                                      |
+| _ ( PSItem と同じ)          | パイプラインオブジェクトの現在のオブジェクト         |
+| ?                           | 最後のコマンドの実行状態(リターンコード)             |
+| ^                           | セッションによって受信された最後の行の最初のトークン |
+| $                           | セッションによって受信された最後の行の最後のトークン |
+| args                        | コマンドライン引数                                   |
+| cert                        |                                                      |
+| ConfirmPreference           |                                                      |
+| DebugPreference             |                                                      |
+| EnabledExperimentalFeatures |                                                      |
+| Error                       | 最後のエラー                                         |
+| ErrorActionPreference       |                                                      |
+| ErrorView                   |                                                      |
+| ExecutionContext            |                                                      |
+| false                       | False                                                |
+| FormatEnumerationLimit      |                                                      |
+| HOME                        | ホームディレクトリのパス                             |
+| Host                        | ホストアプリケーションを表すオブジェクト             |
+| InformationPreference       |                                                      |
+| input                       | 関数に渡される入力                                   |
+| IsCoreCLR                   |                                                      |
+| IsLinux                     |                                                      |
+| IsMacOS                     |                                                      |
+| IsWindows                   |                                                      |
+| MaximumHistoryCount         |                                                      |
+| MyInvocation                | 現在のコマンドに関する情報                           |
+| NestedPromptLevel           |                                                      |
+| null                        | NULL                                                 |
+| OutputEncoding              |                                                      |
+| PID                         | ホストしているプロセスのプロセス識別子 (PID)         |
+| profile                     | PowerShell プロファイルのパス                        |
+| ProgressPreference          |                                                      |
+| PSBoundParameters           |                                                      |
+| PSCommandPath               |                                                      |
+| PSCulture                   |                                                      |
+| PSDefaultParameterValues    |                                                      |
+| PSEdition                   |                                                      |
+| psEditor                    |                                                      |
+| PSEmailServer               |                                                      |
+| PSHOME                      | PowerShell のインストールディレクトリのパス          |
+| PSScriptRoot                | スクリプトの実行元のディレクトリ                     |
+| PSSessionApplicationName    |                                                      |
+| PSSessionConfigurationName  |                                                      |
+| PSSessionOption             |                                                      |
+| PSStyle                     |                                                      |
+| PSUICulture                 |                                                      |
+| PSVersionTable              | PowerShell のバージョン                              |
+| PWD                         | カレントディレクトリ                                 |
+| ShellId                     |                                                      |
+| StackTrace                  |                                                      |
+| targetScriptPath            |                                                      |
+| true                        | True                                                 |
+| VerbosePreference           |                                                      |
+| WarningPreference           |                                                      |
+| WhatIfPreference            |                                                      |
 
 ### 配列
 <a id="markdown-%E9%85%8D%E5%88%97" name="%E9%85%8D%E5%88%97"></a>
@@ -600,101 +672,145 @@ foreach ($key in $table.Keys) {
 > key1: value1
 > key2: value2
 
-## 演算子
-<a id="markdown-%E6%BC%94%E7%AE%97%E5%AD%90" name="%E6%BC%94%E7%AE%97%E5%AD%90"></a>
 
-### 算術演算子
-<a id="markdown-%E7%AE%97%E8%A1%93%E6%BC%94%E7%AE%97%E5%AD%90" name="%E7%AE%97%E8%A1%93%E6%BC%94%E7%AE%97%E5%AD%90"></a>
-
-| 演算子 | 比較内容       |
-| :----- | :------------- |
-| +      | 和             |
-| ++     | インクリメント |
-| -      | 差             |
-| --     | デクリメント   |
-| *      | 積             |
-| /      | 商             |
-| %      | 剰余           |
-
-冪乗には関数Powを用いる
-
-### 比較演算子
-<a id="markdown-%E6%AF%94%E8%BC%83%E6%BC%94%E7%AE%97%E5%AD%90" name="%E6%AF%94%E8%BC%83%E6%BC%94%E7%AE%97%E5%AD%90"></a>
-
-| 演算子             | 比較内容                                                       |
-| :----------------- | :------------------------------------------------------------- |
-| -eq                | 等しい                                                         |
-| -ne                | 等しくない                                                     |
-| -gt                | より大きい                                                     |
-| -ge                | 以上                                                           |
-| -le                | 以下                                                           |
-| -lt                | より小さい                                                     |
-| -like              | ワイルドカード(*, ?)による文字列比較                           |
-| -notlike           | 否定形                                                         |
-| -match             | 正規表現による文字列比較                                       |
-| -notmatch          | 否定形                                                         |
-| -contains          | 含む ( `"abc", "def" -contains "def"` )                        |
-| -notcontains       | 含まない                                                       |
-| -in                | 含む ( `"def" -in "abc", "def" ` )                             |
-| -notin             | 含まない                                                       |
-| -replace -ireplace | 正規表現を使用して置換(大小文字を区別しない; Case insensitive) |
-| -creplace          | 正規表現を使用して置換(大小文字を区別する; Case-sensitive)     |
-| -is                | 型が等しい                                                     |
-| -isnot             | 型が等しくない                                                 |
+## 画面出力
+<a id="markdown-%E7%94%BB%E9%9D%A2%E5%87%BA%E5%8A%9B" name="%E7%94%BB%E9%9D%A2%E5%87%BA%E5%8A%9B"></a>
 
 ```powershell
-"PowerShell" -like    "*shell"           # Output: True
-"PowerShell" -like    "Power?hell"       # Output: True
-"PowerShell" -like    "Power[p-w]hell"   # Output: True
-"PowerShell", "Server" -like "*shell"    # Output: PowerShell
-"PowerShell", "Server" -notlike "*shell" # Output: Server
+"画面出力 $a" # Write-Outputと同じ
+'画面出力 $a'
 
-"PowerShell" -match 'shell'              # Output: True
-"PowerShell" -like  'shell'              # Output: False
-"PowerShell" -match    '^Power\w+'       # Output: True
-'bag'        -notmatch 'b[iou]g'         # Output: True
+Write-Host "画面出力" # コンソールに出力
+Write-Output "画面出力" # パイプラインに渡す(パイプラインがなければコンソールに出力される)
 
-"Bag", "Beg", "Big", "Bog", "Bug"  -match 'b[iou]g'
-#Output: Big, Bog, Bug
-"Bag", "Beg", "Big", "Bog", "Bug"  -notmatch 'b[iou]g'
-#Output: Bag, Beg
+Write-Host "画面出力" -NoNewline # 文末で改行しない
+Write-Host "画面出力" -ForegroundColor Blue
 
-'5.72' -replace '(.+)', '$ $1' # Output: $ 5.72
-'5.72' -replace '(.+)', '$$$1' # Output: $5.72
-'5.72' -replace '(.+)', '$$1'  # Output: $1
+$Host.UI.WriteLine() # コンソールに出力
+$Host.UI.WriteWarningLine()
 
-"B1","B2","B3","B4","B5" -replace "B", 'a'
-# a1
-# a2
-# a3
-# a4
-# a5
+[System.Console]::Write()
+[System.Console]::WriteLine()
 
-$a = 1
-$b = "1"
-$a -is [int]        # Output: True
-$a -is $b.GetType() # Output: False
+@"
+画面
+出力
+"
+@'
+画面
+出力
+'
 ```
 
-### 論理演算子
-<a id="markdown-%E8%AB%96%E7%90%86%E6%BC%94%E7%AE%97%E5%AD%90" name="%E8%AB%96%E7%90%86%E6%BC%94%E7%AE%97%E5%AD%90"></a>
+### デバッグ出力
+<a id="markdown-%E3%83%87%E3%83%90%E3%83%83%E3%82%B0%E5%87%BA%E5%8A%9B" name="%E3%83%87%E3%83%90%E3%83%83%E3%82%B0%E5%87%BA%E5%8A%9B"></a>
 
-| 演算子 | 比較内容     |
-| :----- | :----------- |
-| -and   | 積(かつ)     |
-| -or    | 和(または)   |
-| -not   | 否定         |
-| -xor   | 排他的論理和 |
+#### Write-Error
+<a id="markdown-write-error" name="write-error"></a>
 
-### ビット演算子
-<a id="markdown-%E3%83%93%E3%83%83%E3%83%88%E6%BC%94%E7%AE%97%E5%AD%90" name="%E3%83%93%E3%83%83%E3%83%88%E6%BC%94%E7%AE%97%E5%AD%90"></a>
+```powershell
+# $ErrorActionPreference変数の値によってメッセージ表示／非表示、処理の継続／停止を指定する
+try {
+    $savedErrorActionPreference = $ErrorActionPreference  # 現在の設定値を保存する
+    $ErrorActionPreference = "Stop"
+    Write-Error -Message "画面出力" # エラー出力を行い、catch節に飛ばす
+} catch {
+    # 例外処理
+} finally {
+    $ErrorActionPreference = $savedErrorActionPreference  #既定値に戻す
+}
+```
 
-| 演算子 | 比較内容     |
-| :----- | :----------- |
-| -band  | 積(かつ)     |
-| -bor   | 和(または)   |
-| -bnot  | 否定         |
-| -bxor  | 排他的論理和 |
+#### その他のログレベル
+<a id="markdown-%E3%81%9D%E3%81%AE%E4%BB%96%E3%81%AE%E3%83%AD%E3%82%B0%E3%83%AC%E3%83%99%E3%83%AB" name="%E3%81%9D%E3%81%AE%E4%BB%96%E3%81%AE%E3%83%AD%E3%82%B0%E3%83%AC%E3%83%99%E3%83%AB"></a>
+
+```powershell
+$DebugPreference
+Write-Debug -Message "画面出力"
+
+Write-Debug -Message "画面出力" -Debug # $DebugPreferenceの値が"SilentryContinue"であっても出力する
+
+$VerbosePreference
+Write-Verbose -Message "画面出力"
+
+$WarningPreference
+Write-Warning -Message "画面出力"
+```
+
+```powershell
+# Write-Hostの、文字色のみログレベル別に変化させたもの
+$Host.UI.WriteDebugLine("画面出力")
+$Host.UI.WriteErrorLine("画面出力")
+$Host.UI.WriteVerboseLine("画面出力")
+$Host.UI.WriteWarningLine("画面出力")
+```
+
+### プログレスバー
+<a id="markdown-%E3%83%97%E3%83%AD%E3%82%B0%E3%83%AC%E3%82%B9%E3%83%90%E3%83%BC" name="%E3%83%97%E3%83%AD%E3%82%B0%E3%83%AC%E3%82%B9%E3%83%90%E3%83%BC"></a>
+
+```powershell
+$activity = "読込処理"
+$currentOperation = "データを読込んでいます。"
+for($i = 0;$i -le 100; $i++){
+   $status = "{0} %" -F $i
+   Write-Progress $activity $status -PercentComplete $i -CurrentOperation $currentOperation
+
+  #
+  # 読込処理
+  #
+
+}
+```
+
+
+## プロセス
+<a id="markdown-%E3%83%97%E3%83%AD%E3%82%BB%E3%82%B9" name="%E3%83%97%E3%83%AD%E3%82%BB%E3%82%B9"></a>
+
+### 管理者権限で実行
+<a id="markdown-%E7%AE%A1%E7%90%86%E8%80%85%E6%A8%A9%E9%99%90%E3%81%A7%E5%AE%9F%E8%A1%8C" name="%E7%AE%A1%E7%90%86%E8%80%85%E6%A8%A9%E9%99%90%E3%81%A7%E5%AE%9F%E8%A1%8C"></a>
+
+```powershell
+$currentPrincipal = New-Object Security.Principal.WindowsPrincipal([Security.Principal.WindowsIdentity]::GetCurrent())
+$isAdmin = $currentPrincipal.IsInRole([Security.Principal.WindowsBuiltInRole]::Administrator)
+
+if (!$isAdmin) {
+    Start-Process pwsh "-File `"$PSCommandPath`"" -Verb RunAs
+    exit
+}
+else {
+    # 管理者権限で実行する処理
+}
+```
+
+### 待機
+<a id="markdown-%E5%BE%85%E6%A9%9F" name="%E5%BE%85%E6%A9%9F"></a>
+
+#### キー押下を待機(Pause)
+<a id="markdown-%E3%82%AD%E3%83%BC%E6%8A%BC%E4%B8%8B%E3%82%92%E5%BE%85%E6%A9%9Fpause" name="%E3%82%AD%E3%83%BC%E6%8A%BC%E4%B8%8B%E3%82%92%E5%BE%85%E6%A9%9Fpause"></a>
+
+```powershell
+function Pause {
+    if ($psISE) {
+        $null = Read-Host 'Press Enter Key...'
+    }
+    else {
+        Write-Host "Press Any Key..."
+        (Get-Host).UI.RawUI.ReadKey("NoEcho,IncludeKeyDown") | Out-Null
+    }
+}
+```
+
+#### 一定時間待機(Sleep, Wait)
+<a id="markdown-%E4%B8%80%E5%AE%9A%E6%99%82%E9%96%93%E5%BE%85%E6%A9%9Fsleep%2C-wait" name="%E4%B8%80%E5%AE%9A%E6%99%82%E9%96%93%E5%BE%85%E6%A9%9Fsleep%2C-wait"></a>
+
+```powershell
+# 10s
+Start-Sleep -s 10; Write-Host "###"
+
+#3000ms
+Start-Sleep -m 3000; Write-Host "###"
+```
+
 
 ## 制御構文
 <a id="markdown-%E5%88%B6%E5%BE%A1%E6%A7%8B%E6%96%87" name="%E5%88%B6%E5%BE%A1%E6%A7%8B%E6%96%87"></a>
@@ -828,80 +944,6 @@ foreach ($i in .4) {
 > 2
 > 4
 
-### 関数
-<a id="markdown-%E9%96%A2%E6%95%B0" name="%E9%96%A2%E6%95%B0"></a>
-
-#### 関数の基本形
-<a id="markdown-%E9%96%A2%E6%95%B0%E3%81%AE%E5%9F%BA%E6%9C%AC%E5%BD%A2" name="%E9%96%A2%E6%95%B0%E3%81%AE%E5%9F%BA%E6%9C%AC%E5%BD%A2"></a>
-
-```powershell
-function Func ($arg){
-    return "戻り値"
-}
-
-# 呼出しに括弧を使わない
-$result = Func $arg1 $arg2 $arg3
-```
-
-#### 引数
-<a id="markdown-%E5%BC%95%E6%95%B0" name="%E5%BC%95%E6%95%B0"></a>
-
-##### 引数の取り方
-<a id="markdown-%E5%BC%95%E6%95%B0%E3%81%AE%E5%8F%96%E3%82%8A%E6%96%B9" name="%E5%BC%95%E6%95%B0%E3%81%AE%E5%8F%96%E3%82%8A%E6%96%B9"></a>
-
-```powershell
-function Func1($arg1, $arg2){ # 引数リストの使用
-
-    # 処理
-
-    return "戻り値"
-}
-
-function Func2 {
-    param($arg1, $arg2) # paramキーワードを使用
-
-    # 処理
-
-    return "戻り値"
-}
-
-function Func3 {
-    $arg1 = $args[0] # 自動変数$argsを使用
-    $arg2 = $args[1]
-
-    # 処理
-
-    return "戻り値"
-}
-```
-
-##### 引数の型を指定
-<a id="markdown-%E5%BC%95%E6%95%B0%E3%81%AE%E5%9E%8B%E3%82%92%E6%8C%87%E5%AE%9A" name="%E5%BC%95%E6%95%B0%E3%81%AE%E5%9E%8B%E3%82%92%E6%8C%87%E5%AE%9A"></a>
-
-```powershell
-function Func4([int]$arg1, [int]$arg2){
-    return $arg1 + $arg2
-}
-```
-
-##### 引数の参照渡し
-<a id="markdown-%E5%BC%95%E6%95%B0%E3%81%AE%E5%8F%82%E7%85%A7%E6%B8%A1%E3%81%97" name="%E5%BC%95%E6%95%B0%E3%81%AE%E5%8F%82%E7%85%A7%E6%B8%A1%E3%81%97"></a>
-
-```powershell
-function Func5([ref]$arg1, [ref]$arg2){
-    return "戻り値"
-}
-```
-
-##### 引数の既定値
-<a id="markdown-%E5%BC%95%E6%95%B0%E3%81%AE%E6%97%A2%E5%AE%9A%E5%80%A4" name="%E5%BC%95%E6%95%B0%E3%81%AE%E6%97%A2%E5%AE%9A%E5%80%A4"></a>
-
-```powershell
-function Func5($arg1 = 1, $arg2 = 2){
-    return "戻り値"
-}
-```
-
 ### 例外処理
 <a id="markdown-%E4%BE%8B%E5%A4%96%E5%87%A6%E7%90%86" name="%E4%BE%8B%E5%A4%96%E5%87%A6%E7%90%86"></a>
 
@@ -962,55 +1004,283 @@ trap [Exception] {
 # 処理
 ```
 
-## プロセス
-<a id="markdown-%E3%83%97%E3%83%AD%E3%82%BB%E3%82%B9" name="%E3%83%97%E3%83%AD%E3%82%BB%E3%82%B9"></a>
 
-### 管理者権限で実行
-<a id="markdown-%E7%AE%A1%E7%90%86%E8%80%85%E6%A8%A9%E9%99%90%E3%81%A7%E5%AE%9F%E8%A1%8C" name="%E7%AE%A1%E7%90%86%E8%80%85%E6%A8%A9%E9%99%90%E3%81%A7%E5%AE%9F%E8%A1%8C"></a>
+## 関数
+<a id="markdown-%E9%96%A2%E6%95%B0" name="%E9%96%A2%E6%95%B0"></a>
+
+### 関数の基本形
+<a id="markdown-%E9%96%A2%E6%95%B0%E3%81%AE%E5%9F%BA%E6%9C%AC%E5%BD%A2" name="%E9%96%A2%E6%95%B0%E3%81%AE%E5%9F%BA%E6%9C%AC%E5%BD%A2"></a>
 
 ```powershell
-$currentPrincipal = New-Object Security.Principal.WindowsPrincipal([Security.Principal.WindowsIdentity]::GetCurrent())
-$isAdmin = $currentPrincipal.IsInRole([Security.Principal.WindowsBuiltInRole]::Administrator)
-
-if (!$isAdmin) {
-    Start-Process pwsh "-File `"$PSCommandPath`"" -Verb RunAs
-    exit
+function Func ($arg){
+    return "戻り値"
 }
-else {
-    # 管理者権限で実行する処理
+
+# 呼出しに括弧を使わない
+$result = Func $arg1 $arg2 $arg3
+```
+
+### 引数
+<a id="markdown-%E5%BC%95%E6%95%B0" name="%E5%BC%95%E6%95%B0"></a>
+
+#### 引数の取り方
+<a id="markdown-%E5%BC%95%E6%95%B0%E3%81%AE%E5%8F%96%E3%82%8A%E6%96%B9" name="%E5%BC%95%E6%95%B0%E3%81%AE%E5%8F%96%E3%82%8A%E6%96%B9"></a>
+
+```powershell
+function Func1($arg1, $arg2){ # 引数リストの使用
+
+    # 処理
+
+    return "戻り値"
+}
+
+function Func2 {
+    param($arg1, $arg2) # paramキーワードを使用
+
+    # 処理
+
+    return "戻り値"
+}
+
+function Func3 {
+    $arg1 = $args[0] # 自動変数$argsを使用
+    $arg2 = $args[1]
+
+    # 処理
+
+    return "戻り値"
 }
 ```
 
-### 待機
-<a id="markdown-%E5%BE%85%E6%A9%9F" name="%E5%BE%85%E6%A9%9F"></a>
-
-#### キー押下を待機(Pause)
-<a id="markdown-%E3%82%AD%E3%83%BC%E6%8A%BC%E4%B8%8B%E3%82%92%E5%BE%85%E6%A9%9Fpause" name="%E3%82%AD%E3%83%BC%E6%8A%BC%E4%B8%8B%E3%82%92%E5%BE%85%E6%A9%9Fpause"></a>
+#### 引数の型を指定
+<a id="markdown-%E5%BC%95%E6%95%B0%E3%81%AE%E5%9E%8B%E3%82%92%E6%8C%87%E5%AE%9A" name="%E5%BC%95%E6%95%B0%E3%81%AE%E5%9E%8B%E3%82%92%E6%8C%87%E5%AE%9A"></a>
 
 ```powershell
-function Pause {
-    if ($psISE) {
-        $null = Read-Host 'Press Enter Key...'
-    }
-    else {
-        Write-Host "Press Any Key..."
-        (Get-Host).UI.RawUI.ReadKey("NoEcho,IncludeKeyDown") | Out-Null
-    }
+function Func4([int]$arg1, [int]$arg2){
+    return $arg1 + $arg2
 }
 ```
 
-#### 一定時間待機(Sleep, Wait)
-<a id="markdown-%E4%B8%80%E5%AE%9A%E6%99%82%E9%96%93%E5%BE%85%E6%A9%9Fsleep%2C-wait" name="%E4%B8%80%E5%AE%9A%E6%99%82%E9%96%93%E5%BE%85%E6%A9%9Fsleep%2C-wait"></a>
+#### 引数の参照渡し
+<a id="markdown-%E5%BC%95%E6%95%B0%E3%81%AE%E5%8F%82%E7%85%A7%E6%B8%A1%E3%81%97" name="%E5%BC%95%E6%95%B0%E3%81%AE%E5%8F%82%E7%85%A7%E6%B8%A1%E3%81%97"></a>
 
 ```powershell
-# 10s
-Start-Sleep -s 10; Write-Host "###"
-
-#3000ms
-Start-Sleep -m 3000; Write-Host "###"
+function Func5([ref]$arg1, [ref]$arg2){
+    return "戻り値"
+}
 ```
 
-## 日付処理
+#### 引数の既定値
+<a id="markdown-%E5%BC%95%E6%95%B0%E3%81%AE%E6%97%A2%E5%AE%9A%E5%80%A4" name="%E5%BC%95%E6%95%B0%E3%81%AE%E6%97%A2%E5%AE%9A%E5%80%A4"></a>
+
+```powershell
+function Func5($arg1 = 1, $arg2 = 2){
+    return "戻り値"
+}
+```
+
+
+# システム情報
+<a id="markdown-%E3%82%B7%E3%82%B9%E3%83%86%E3%83%A0%E6%83%85%E5%A0%B1" name="%E3%82%B7%E3%82%B9%E3%83%86%E3%83%A0%E6%83%85%E5%A0%B1"></a>
+
+```powershell
+Get-ComputerInfo
+```
+
+```powershell
+Get-ComputerInfo | Get-Member -MemberType Properties
+```
+
+```
+Name                                                    MemberType Definition
+----                                                    ---------- ----------
+BiosBIOSVersion                                         Property   string[] BiosBIOSVersion {get;}
+BiosBuildNumber                                         Property   string BiosBuildNumber {get;}
+BiosCaption                                             Property   string BiosCaption {get;}
+BiosCharacteristics                                     Property   ushort[] BiosCharacteristics {get;}
+BiosCodeSet                                             Property   string BiosCodeSet {get;}
+BiosCurrentLanguage                                     Property   string BiosCurrentLanguage {get;}
+BiosDescription                                         Property   string BiosDescription {get;}
+BiosEmbeddedControllerMajorVersion                      Property   System.Nullable[short] BiosEmbeddedControllerMajorVersion {get;}
+BiosEmbeddedControllerMinorVersion                      Property   System.Nullable[short] BiosEmbeddedControllerMinorVersion {get;}
+BiosFirmwareType                                        Property   System.Nullable[Microsoft.PowerShell.Commands.FirmwareType] BiosFirmwareType {get;}
+BiosIdentificationCode                                  Property   string BiosIdentificationCode {get;}
+BiosInstallableLanguages                                Property   System.Nullable[ushort] BiosInstallableLanguages {get;}
+BiosInstallDate                                         Property   System.Nullable[datetime] BiosInstallDate {get;}
+BiosLanguageEdition                                     Property   string BiosLanguageEdition {get;}
+BiosListOfLanguages                                     Property   string[] BiosListOfLanguages {get;}
+BiosManufacturer                                        Property   string BiosManufacturer {get;}
+BiosName                                                Property   string BiosName {get;}
+BiosOtherTargetOS                                       Property   string BiosOtherTargetOS {get;}
+BiosPrimaryBIOS                                         Property   System.Nullable[bool] BiosPrimaryBIOS {get;}
+BiosReleaseDate                                         Property   System.Nullable[datetime] BiosReleaseDate {get;}
+BiosSerialNumber                                        Property   string BiosSerialNumber {get;}
+BiosSMBIOSBIOSVersion                                   Property   string BiosSMBIOSBIOSVersion {get;}
+BiosSMBIOSMajorVersion                                  Property   System.Nullable[ushort] BiosSMBIOSMajorVersion {get;}
+BiosSMBIOSMinorVersion                                  Property   System.Nullable[ushort] BiosSMBIOSMinorVersion {get;}
+BiosSMBIOSPresent                                       Property   System.Nullable[bool] BiosSMBIOSPresent {get;}
+BiosSoftwareElementState                                Property   System.Nullable[Microsoft.PowerShell.Commands.SoftwareElementState] BiosSoftwareElementState {get;}
+BiosStatus                                              Property   string BiosStatus {get;}
+BiosSystemBiosMajorVersion                              Property   System.Nullable[ushort] BiosSystemBiosMajorVersion {get;}
+BiosSystemBiosMinorVersion                              Property   System.Nullable[ushort] BiosSystemBiosMinorVersion {get;}
+BiosTargetOperatingSystem                               Property   System.Nullable[ushort] BiosTargetOperatingSystem {get;}
+BiosVersion                                             Property   string BiosVersion {get;}
+CsAdminPasswordStatus                                   Property   System.Nullable[Microsoft.PowerShell.Commands.HardwareSecurity] CsAdminPasswordStatus {get;}
+CsAutomaticManagedPagefile                              Property   System.Nullable[bool] CsAutomaticManagedPagefile {get;}
+CsAutomaticResetBootOption                              Property   System.Nullable[bool] CsAutomaticResetBootOption {get;}
+CsAutomaticResetCapability                              Property   System.Nullable[bool] CsAutomaticResetCapability {get;}
+CsBootOptionOnLimit                                     Property   System.Nullable[Microsoft.PowerShell.Commands.BootOptionAction] CsBootOptionOnLimit {get;}
+CsBootOptionOnWatchDog                                  Property   System.Nullable[Microsoft.PowerShell.Commands.BootOptionAction] CsBootOptionOnWatchDog {get;}
+CsBootROMSupported                                      Property   System.Nullable[bool] CsBootROMSupported {get;}
+CsBootStatus                                            Property   ushort[] CsBootStatus {get;}
+CsBootupState                                           Property   string CsBootupState {get;}
+CsCaption                                               Property   string CsCaption {get;}
+CsChassisBootupState                                    Property   System.Nullable[Microsoft.PowerShell.Commands.SystemElementState] CsChassisBootupState {get;}
+CsChassisSKUNumber                                      Property   string CsChassisSKUNumber {get;}
+CsCurrentTimeZone                                       Property   System.Nullable[short] CsCurrentTimeZone {get;}
+CsDaylightInEffect                                      Property   System.Nullable[bool] CsDaylightInEffect {get;}
+CsDescription                                           Property   string CsDescription {get;}
+CsDNSHostName                                           Property   string CsDNSHostName {get;}
+CsDomain                                                Property   string CsDomain {get;}
+CsDomainRole                                            Property   System.Nullable[Microsoft.PowerShell.Commands.DomainRole] CsDomainRole {get;}
+CsEnableDaylightSavingsTime                             Property   System.Nullable[bool] CsEnableDaylightSavingsTime {get;}
+CsFrontPanelResetStatus                                 Property   System.Nullable[Microsoft.PowerShell.Commands.HardwareSecurity] CsFrontPanelResetStatus {get;}
+CsHypervisorPresent                                     Property   System.Nullable[bool] CsHypervisorPresent {get;}
+CsInfraredSupported                                     Property   System.Nullable[bool] CsInfraredSupported {get;}
+CsInitialLoadInfo                                       Property   string CsInitialLoadInfo {get;}
+CsInstallDate                                           Property   System.Nullable[datetime] CsInstallDate {get;}
+CsKeyboardPasswordStatus                                Property   System.Nullable[Microsoft.PowerShell.Commands.HardwareSecurity] CsKeyboardPasswordStatus {get;}
+CsLastLoadInfo                                          Property   string CsLastLoadInfo {get;}
+CsManufacturer                                          Property   string CsManufacturer {get;}
+CsModel                                                 Property   string CsModel {get;}
+CsName                                                  Property   string CsName {get;}
+CsNetworkAdapters                                       Property   Microsoft.PowerShell.Commands.NetworkAdapter[] CsNetworkAdapters {get;}
+CsNetworkServerModeEnabled                              Property   System.Nullable[bool] CsNetworkServerModeEnabled {get;}
+CsNumberOfLogicalProcessors                             Property   System.Nullable[uint] CsNumberOfLogicalProcessors {get;}
+CsNumberOfProcessors                                    Property   System.Nullable[uint] CsNumberOfProcessors {get;}
+CsOEMStringArray                                        Property   string[] CsOEMStringArray {get;}
+CsPartOfDomain                                          Property   System.Nullable[bool] CsPartOfDomain {get;}
+CsPauseAfterReset                                       Property   System.Nullable[long] CsPauseAfterReset {get;}
+CsPCSystemType                                          Property   System.Nullable[Microsoft.PowerShell.Commands.PCSystemType] CsPCSystemType {get;}
+CsPCSystemTypeEx                                        Property   System.Nullable[Microsoft.PowerShell.Commands.PCSystemTypeEx] CsPCSystemTypeEx {get;}
+CsPhysicallyInstalledMemory                             Property   System.Nullable[ulong] CsPhysicallyInstalledMemory {get;}
+CsPowerManagementCapabilities                           Property   Microsoft.PowerShell.Commands.PowerManagementCapabilities[] CsPowerManagementCapabilities {get;}
+CsPowerManagementSupported                              Property   System.Nullable[bool] CsPowerManagementSupported {get;}
+CsPowerOnPasswordStatus                                 Property   System.Nullable[Microsoft.PowerShell.Commands.HardwareSecurity] CsPowerOnPasswordStatus {get;}
+CsPowerState                                            Property   System.Nullable[Microsoft.PowerShell.Commands.PowerState] CsPowerState {get;}
+CsPowerSupplyState                                      Property   System.Nullable[Microsoft.PowerShell.Commands.SystemElementState] CsPowerSupplyState {get;}
+CsPrimaryOwnerContact                                   Property   string CsPrimaryOwnerContact {get;}
+CsPrimaryOwnerName                                      Property   string CsPrimaryOwnerName {get;}
+CsProcessors                                            Property   Microsoft.PowerShell.Commands.Processor[] CsProcessors {get;}
+CsResetCapability                                       Property   System.Nullable[Microsoft.PowerShell.Commands.ResetCapability] CsResetCapability {get;}
+CsResetCount                                            Property   System.Nullable[short] CsResetCount {get;}
+CsResetLimit                                            Property   System.Nullable[short] CsResetLimit {get;}
+CsRoles                                                 Property   string[] CsRoles {get;}
+CsStatus                                                Property   string CsStatus {get;}
+CsSupportContactDescription                             Property   string[] CsSupportContactDescription {get;}
+CsSystemFamily                                          Property   string CsSystemFamily {get;}
+CsSystemSKUNumber                                       Property   string CsSystemSKUNumber {get;}
+CsSystemType                                            Property   string CsSystemType {get;}
+CsThermalState                                          Property   System.Nullable[Microsoft.PowerShell.Commands.SystemElementState] CsThermalState {get;}
+CsTotalPhysicalMemory                                   Property   System.Nullable[ulong] CsTotalPhysicalMemory {get;}
+CsUserName                                              Property   string CsUserName {get;}
+CsWakeUpType                                            Property   System.Nullable[Microsoft.PowerShell.Commands.WakeUpType] CsWakeUpType {get;}
+CsWorkgroup                                             Property   string CsWorkgroup {get;}
+DeviceGuardAvailableSecurityProperties                  Property   Microsoft.PowerShell.Commands.DeviceGuardHardwareSecure[] DeviceGuardAvailableSecurityProperties {get;}
+DeviceGuardCodeIntegrityPolicyEnforcementStatus         Property   System.Nullable[Microsoft.PowerShell.Commands.DeviceGuardConfigCodeIntegrityStatus] DeviceGuardCodeIntegrityPolicyEnforce…
+DeviceGuardRequiredSecurityProperties                   Property   Microsoft.PowerShell.Commands.DeviceGuardHardwareSecure[] DeviceGuardRequiredSecurityProperties {get;}
+DeviceGuardSecurityServicesConfigured                   Property   Microsoft.PowerShell.Commands.DeviceGuardSoftwareSecure[] DeviceGuardSecurityServicesConfigured {get;}
+DeviceGuardSecurityServicesRunning                      Property   Microsoft.PowerShell.Commands.DeviceGuardSoftwareSecure[] DeviceGuardSecurityServicesRunning {get;}
+DeviceGuardSmartStatus                                  Property   System.Nullable[Microsoft.PowerShell.Commands.DeviceGuardSmartStatus] DeviceGuardSmartStatus {get;}
+DeviceGuardUserModeCodeIntegrityPolicyEnforcementStatus Property   System.Nullable[Microsoft.PowerShell.Commands.DeviceGuardConfigCodeIntegrityStatus] DeviceGuardUserModeCodeIntegrityPolic…
+HyperVisorPresent                                       Property   System.Nullable[bool] HyperVisorPresent {get;}
+HyperVRequirementDataExecutionPreventionAvailable       Property   System.Nullable[bool] HyperVRequirementDataExecutionPreventionAvailable {get;}
+HyperVRequirementSecondLevelAddressTranslation          Property   System.Nullable[bool] HyperVRequirementSecondLevelAddressTranslation {get;}
+HyperVRequirementVirtualizationFirmwareEnabled          Property   System.Nullable[bool] HyperVRequirementVirtualizationFirmwareEnabled {get;}
+HyperVRequirementVMMonitorModeExtensions                Property   System.Nullable[bool] HyperVRequirementVMMonitorModeExtensions {get;}
+KeyboardLayout                                          Property   string KeyboardLayout {get;}
+LogonServer                                             Property   string LogonServer {get;}
+OsArchitecture                                          Property   string OsArchitecture {get;}
+OsBootDevice                                            Property   string OsBootDevice {get;}
+OsBuildNumber                                           Property   string OsBuildNumber {get;}
+OsBuildType                                             Property   string OsBuildType {get;}
+OsCodeSet                                               Property   string OsCodeSet {get;}
+OsCountryCode                                           Property   string OsCountryCode {get;}
+OsCSDVersion                                            Property   string OsCSDVersion {get;}
+OsCurrentTimeZone                                       Property   System.Nullable[short] OsCurrentTimeZone {get;}
+OsDataExecutionPrevention32BitApplications              Property   System.Nullable[bool] OsDataExecutionPrevention32BitApplications {get;}
+OsDataExecutionPreventionAvailable                      Property   System.Nullable[bool] OsDataExecutionPreventionAvailable {get;}
+OsDataExecutionPreventionDrivers                        Property   System.Nullable[bool] OsDataExecutionPreventionDrivers {get;}
+OsDataExecutionPreventionSupportPolicy                  Property   System.Nullable[Microsoft.PowerShell.Commands.DataExecutionPreventionSupportPolicy] OsDataExecutionPreventionSupportPolic…
+OsDebug                                                 Property   System.Nullable[bool] OsDebug {get;}
+OsDistributed                                           Property   System.Nullable[bool] OsDistributed {get;}
+OsEncryptionLevel                                       Property   System.Nullable[Microsoft.PowerShell.Commands.OSEncryptionLevel] OsEncryptionLevel {get;}
+OsForegroundApplicationBoost                            Property   System.Nullable[Microsoft.PowerShell.Commands.ForegroundApplicationBoost] OsForegroundApplicationBoost {get;}
+OsFreePhysicalMemory                                    Property   System.Nullable[ulong] OsFreePhysicalMemory {get;}
+OsFreeSpaceInPagingFiles                                Property   System.Nullable[ulong] OsFreeSpaceInPagingFiles {get;}
+OsFreeVirtualMemory                                     Property   System.Nullable[ulong] OsFreeVirtualMemory {get;}
+OsHardwareAbstractionLayer                              Property   string OsHardwareAbstractionLayer {get;}
+OsHotFixes                                              Property   Microsoft.PowerShell.Commands.HotFix[] OsHotFixes {get;}
+OsInstallDate                                           Property   System.Nullable[datetime] OsInstallDate {get;}
+OsInUseVirtualMemory                                    Property   System.Nullable[ulong] OsInUseVirtualMemory {get;}
+OsLanguage                                              Property   string OsLanguage {get;}
+OsLastBootUpTime                                        Property   System.Nullable[datetime] OsLastBootUpTime {get;}
+OsLocalDateTime                                         Property   System.Nullable[datetime] OsLocalDateTime {get;}
+OsLocale                                                Property   string OsLocale {get;}
+OsLocaleID                                              Property   string OsLocaleID {get;}
+OsManufacturer                                          Property   string OsManufacturer {get;}
+OsMaxNumberOfProcesses                                  Property   System.Nullable[uint] OsMaxNumberOfProcesses {get;}
+OsMaxProcessMemorySize                                  Property   System.Nullable[ulong] OsMaxProcessMemorySize {get;}
+OsMuiLanguages                                          Property   string[] OsMuiLanguages {get;}
+OsName                                                  Property   string OsName {get;}
+OsNumberOfLicensedUsers                                 Property   System.Nullable[uint] OsNumberOfLicensedUsers {get;}
+OsNumberOfProcesses                                     Property   System.Nullable[uint] OsNumberOfProcesses {get;}
+OsNumberOfUsers                                         Property   System.Nullable[uint] OsNumberOfUsers {get;}
+OsOperatingSystemSKU                                    Property   System.Nullable[Microsoft.PowerShell.Commands.OperatingSystemSKU] OsOperatingSystemSKU {get;}
+OsOrganization                                          Property   string OsOrganization {get;}
+OsOtherTypeDescription                                  Property   string OsOtherTypeDescription {get;}
+OsPAEEnabled                                            Property   System.Nullable[bool] OsPAEEnabled {get;}
+OsPagingFiles                                           Property   string[] OsPagingFiles {get;}
+OsPortableOperatingSystem                               Property   System.Nullable[bool] OsPortableOperatingSystem {get;}
+OsPrimary                                               Property   System.Nullable[bool] OsPrimary {get;}
+OsProductSuites                                         Property   Microsoft.PowerShell.Commands.OSProductSuite[] OsProductSuites {get;}
+OsProductType                                           Property   System.Nullable[Microsoft.PowerShell.Commands.ProductType] OsProductType {get;}
+OsRegisteredUser                                        Property   string OsRegisteredUser {get;}
+OsSerialNumber                                          Property   string OsSerialNumber {get;}
+OsServerLevel                                           Property   System.Nullable[Microsoft.PowerShell.Commands.ServerLevel] OsServerLevel {get;}
+OsServicePackMajorVersion                               Property   System.Nullable[ushort] OsServicePackMajorVersion {get;}
+OsServicePackMinorVersion                               Property   System.Nullable[ushort] OsServicePackMinorVersion {get;}
+OsSizeStoredInPagingFiles                               Property   System.Nullable[ulong] OsSizeStoredInPagingFiles {get;}
+OsStatus                                                Property   string OsStatus {get;}
+OsSuites                                                Property   Microsoft.PowerShell.Commands.OSProductSuite[] OsSuites {get;}
+OsSystemDevice                                          Property   string OsSystemDevice {get;}
+OsSystemDirectory                                       Property   string OsSystemDirectory {get;}
+OsSystemDrive                                           Property   string OsSystemDrive {get;}
+OsTotalSwapSpaceSize                                    Property   System.Nullable[ulong] OsTotalSwapSpaceSize {get;}
+OsTotalVirtualMemorySize                                Property   System.Nullable[ulong] OsTotalVirtualMemorySize {get;}
+OsTotalVisibleMemorySize                                Property   System.Nullable[ulong] OsTotalVisibleMemorySize {get;}
+OsType                                                  Property   System.Nullable[Microsoft.PowerShell.Commands.OSType] OsType {get;}
+OsUptime                                                Property   System.Nullable[timespan] OsUptime {get;}
+OsVersion                                               Property   string OsVersion {get;}
+OsWindowsDirectory                                      Property   string OsWindowsDirectory {get;}
+PowerPlatformRole                                       Property   System.Nullable[Microsoft.PowerShell.Commands.PowerPlatformRole] PowerPlatformRole {get;}
+TimeZone                                                Property   string TimeZone {get;}
+WindowsBuildLabEx                                       Property   string WindowsBuildLabEx {get;}
+WindowsCurrentVersion                                   Property   string WindowsCurrentVersion {get;}
+WindowsEditionId                                        Property   string WindowsEditionId {get;}
+WindowsInstallationType                                 Property   string WindowsInstallationType {get;}
+WindowsInstallDateFromRegistry                          Property   System.Nullable[datetime] WindowsInstallDateFromRegistry {get;}
+WindowsProductId                                        Property   string WindowsProductId {get;}
+WindowsProductName                                      Property   string WindowsProductName {get;}
+WindowsRegisteredOrganization                           Property   string WindowsRegisteredOrganization {get;}
+WindowsRegisteredOwner                                  Property   string WindowsRegisteredOwner {get;}
+WindowsSystemRoot                                       Property   string WindowsSystemRoot {get;}
+WindowsUBR                                              Property   System.Nullable[int] WindowsUBR {get;}
+WindowsVersion                                          Property   string WindowsVersion {get;}
+```
+
+
+# 日付処理
 <a id="markdown-%E6%97%A5%E4%BB%98%E5%87%A6%E7%90%86" name="%E6%97%A5%E4%BB%98%E5%87%A6%E7%90%86"></a>
 
 ```powershell
@@ -1034,10 +1304,11 @@ $datetime = [DateTime]::ParseExact("20150101-013000",$format, $null)
 Write-Host $datetime.ToString($format)
 ```
 
-## ファイル操作
+
+# ファイル操作
 <a id="markdown-%E3%83%95%E3%82%A1%E3%82%A4%E3%83%AB%E6%93%8D%E4%BD%9C" name="%E3%83%95%E3%82%A1%E3%82%A4%E3%83%AB%E6%93%8D%E4%BD%9C"></a>
 
-### カレントディレクトリ
+## カレントディレクトリ
 <a id="markdown-%E3%82%AB%E3%83%AC%E3%83%B3%E3%83%88%E3%83%87%E3%82%A3%E3%83%AC%E3%82%AF%E3%83%88%E3%83%AA" name="%E3%82%AB%E3%83%AC%E3%83%B3%E3%83%88%E3%83%87%E3%82%A3%E3%83%AC%E3%82%AF%E3%83%88%E3%83%AA"></a>
 
 ```powershell
@@ -1046,7 +1317,7 @@ Write-Host $datetime.ToString($format)
 Set-Location $dirPath
 ```
 
-### ファイルフォルダの新規作成
+## ファイルフォルダの新規作成
 <a id="markdown-%E3%83%95%E3%82%A1%E3%82%A4%E3%83%AB%E3%83%95%E3%82%A9%E3%83%AB%E3%83%80%E3%81%AE%E6%96%B0%E8%A6%8F%E4%BD%9C%E6%88%90" name="%E3%83%95%E3%82%A1%E3%82%A4%E3%83%AB%E3%83%95%E3%82%A9%E3%83%AB%E3%83%80%E3%81%AE%E6%96%B0%E8%A6%8F%E4%BD%9C%E6%88%90"></a>
 
 ```powershell
@@ -1076,7 +1347,7 @@ Function touch($file) {
 touch test_touch.txt
 ```
 
-### ファイルフォルダの削除
+## ファイルフォルダの削除
 <a id="markdown-%E3%83%95%E3%82%A1%E3%82%A4%E3%83%AB%E3%83%95%E3%82%A9%E3%83%AB%E3%83%80%E3%81%AE%E5%89%8A%E9%99%A4" name="%E3%83%95%E3%82%A1%E3%82%A4%E3%83%AB%E3%83%95%E3%82%A9%E3%83%AB%E3%83%80%E3%81%AE%E5%89%8A%E9%99%A4"></a>
 
 ```powershell
@@ -1091,7 +1362,7 @@ if( $(Test-Path $dirPath) -ne $True ){
 }
 ```
 
-### ファイルフォルダのコピーと移動
+## ファイルフォルダのコピーと移動
 <a id="markdown-%E3%83%95%E3%82%A1%E3%82%A4%E3%83%AB%E3%83%95%E3%82%A9%E3%83%AB%E3%83%80%E3%81%AE%E3%82%B3%E3%83%94%E3%83%BC%E3%81%A8%E7%A7%BB%E5%8B%95" name="%E3%83%95%E3%82%A1%E3%82%A4%E3%83%AB%E3%83%95%E3%82%A9%E3%83%AB%E3%83%80%E3%81%AE%E3%82%B3%E3%83%94%E3%83%BC%E3%81%A8%E7%A7%BB%E5%8B%95"></a>
 
 ```powershell
@@ -1103,12 +1374,12 @@ Move-Item -force $filepathToRemove $filepathToRemove+".bak"
 
 
 
-### テキストファイル
+## テキストファイル
 <a id="markdown-%E3%83%86%E3%82%AD%E3%82%B9%E3%83%88%E3%83%95%E3%82%A1%E3%82%A4%E3%83%AB" name="%E3%83%86%E3%82%AD%E3%82%B9%E3%83%88%E3%83%95%E3%82%A1%E3%82%A4%E3%83%AB"></a>
 
 文字コードについては、「-Encoding Default」と指定すればShift_JIS、「-Encoding UTF8」と指定すればUTF-8で読み書きされる。
 
-#### 1行ごとに読込み
+### 1行ごとに読込み
 <a id="markdown-%E8%A1%8C%E3%81%94%E3%81%A8%E3%81%AB%E8%AA%AD%E8%BE%BC%E3%81%BF" name="%E8%A1%8C%E3%81%94%E3%81%A8%E3%81%AB%E8%AA%AD%E8%BE%BC%E3%81%BF"></a>
 
 ```powershell
@@ -1151,7 +1422,7 @@ if (Split-Path $filepath -Parent) {
 }
 ```
 
-#### 書出し
+### 書出し
 <a id="markdown-%E6%9B%B8%E5%87%BA%E3%81%97" name="%E6%9B%B8%E5%87%BA%E3%81%97"></a>
 
 ```powershell
@@ -1191,10 +1462,10 @@ Add-Content $filepath $text
 
 ```
 
-### CSVファイル
+## CSVファイル
 <a id="markdown-csv%E3%83%95%E3%82%A1%E3%82%A4%E3%83%AB" name="csv%E3%83%95%E3%82%A1%E3%82%A4%E3%83%AB"></a>
 
-#### 読込み
+### 読込み
 <a id="markdown-%E8%AA%AD%E8%BE%BC%E3%81%BF" name="%E8%AA%AD%E8%BE%BC%E3%81%BF"></a>
 
 ```powershell
@@ -1227,7 +1498,7 @@ if (Split-Path $filepath -Parent) {
 }
 ```
 
-#### 書出し
+### 書出し
 <a id="markdown-%E6%9B%B8%E5%87%BA%E3%81%97" name="%E6%9B%B8%E5%87%BA%E3%81%97"></a>
 
 ```powershell
@@ -1266,10 +1537,10 @@ $Datas | ft -AutoSize
 $Datas | Export-Csv $filepath -Encoding Default  # Shift-JIS
 ```
 
-### 設定ファイル(.ini)
+## 設定ファイル(.ini)
 <a id="markdown-%E8%A8%AD%E5%AE%9A%E3%83%95%E3%82%A1%E3%82%A4%E3%83%AB.ini" name="%E8%A8%AD%E5%AE%9A%E3%83%95%E3%82%A1%E3%82%A4%E3%83%AB.ini"></a>
 
-#### 読込み
+### 読込み
 <a id="markdown-%E8%AA%AD%E8%BE%BC%E3%81%BF" name="%E8%AA%AD%E8%BE%BC%E3%81%BF"></a>
 
 ```powershell
@@ -1288,10 +1559,10 @@ USERNAME=admin@contoso.onmicrosoft.com
 PASSWORD=foobar
 ```
 
-### 構成ファイル(Web.config)
+## 構成ファイル(Web.config)
 <a id="markdown-%E6%A7%8B%E6%88%90%E3%83%95%E3%82%A1%E3%82%A4%E3%83%ABweb.config" name="%E6%A7%8B%E6%88%90%E3%83%95%E3%82%A1%E3%82%A4%E3%83%ABweb.config"></a>
 
-#### 読み書き
+### 読み書き
 <a id="markdown-%E8%AA%AD%E3%81%BF%E6%9B%B8%E3%81%8D" name="%E8%AA%AD%E3%81%BF%E6%9B%B8%E3%81%8D"></a>
 
 ```powershell
@@ -1321,10 +1592,10 @@ $Config.Save();
 </configuration>
 ```
 
-### XMLファイル
+## XMLファイル
 <a id="markdown-xml%E3%83%95%E3%82%A1%E3%82%A4%E3%83%AB" name="xml%E3%83%95%E3%82%A1%E3%82%A4%E3%83%AB"></a>
 
-#### 読込み
+### 読込み
 <a id="markdown-%E8%AA%AD%E8%BE%BC%E3%81%BF" name="%E8%AA%AD%E8%BE%BC%E3%81%BF"></a>
 
 ```powershell
@@ -1343,7 +1614,7 @@ $xml = [xml]$xmlString
  Write-Host $xml.item.itemitem
 ```
 
-#### 書出し
+### 書出し
 <a id="markdown-%E6%9B%B8%E5%87%BA%E3%81%97" name="%E6%9B%B8%E5%87%BA%E3%81%97"></a>
 
 ```powershell
@@ -1361,10 +1632,10 @@ $xml.AppendChild($item)
 $xml.Save($filepath)
 ```
 
-### 1 CSVファイル
+## CSVファイル
 <a id="markdown-csv%E3%83%95%E3%82%A1%E3%82%A4%E3%83%AB" name="csv%E3%83%95%E3%82%A1%E3%82%A4%E3%83%AB"></a>
 
-#### 1 読込み
+### 読込み
 <a id="markdown-%E8%AA%AD%E8%BE%BC%E3%81%BF" name="%E8%AA%AD%E8%BE%BC%E3%81%BF"></a>
 
 ```powershell
@@ -1387,10 +1658,10 @@ key2=value2
 key3=value3
 ```
 
-## 1 ログ出力
+## ログ出力
 <a id="markdown-%E3%83%AD%E3%82%B0%E5%87%BA%E5%8A%9B" name="%E3%83%AD%E3%82%B0%E5%87%BA%E5%8A%9B"></a>
 
-### 1 ログファイル
+### ログファイル
 <a id="markdown-%E3%83%AD%E3%82%B0%E3%83%95%E3%82%A1%E3%82%A4%E3%83%AB" name="%E3%83%AD%E3%82%B0%E3%83%95%E3%82%A1%E3%82%A4%E3%83%AB"></a>
 
 ```powershell
@@ -1411,7 +1682,7 @@ if (Test-Path $filepath) {
 
 ```
 
-### 1 イベントログ
+### イベントログ
 <a id="markdown-%E3%82%A4%E3%83%99%E3%83%B3%E3%83%88%E3%83%AD%E3%82%B0" name="%E3%82%A4%E3%83%99%E3%83%B3%E3%83%88%E3%83%AD%E3%82%B0"></a>
 
 ```powershell
@@ -1428,8 +1699,8 @@ $eventIdError   = "50008"
 $eventIdInfo    = "50007"
 $eventTypeError = "Err"
 $eventTypeInfo  = "Info"
-$messageError   = "エラーが発生しました。ログを確認してください。（処理開始：${startTime}、処理終了：${endTime}）"
-$messageInfo    = "処理が正常に完了しました。（処理開始：${startTime}、処理終了：${endTime}）"
+$messageError   = "エラーが発生しました。ログを確認してください。(処理開始：${startTime}、処理終了：${endTime})"
+$messageInfo    = "処理が正常に完了しました。(処理開始：${startTime}、処理終了：${endTime})"
 
 # ソースが既に存在するか確認
 if ([System.Diagnostics.EventLog]::SourceExists($source) -eq $false){
@@ -1444,6 +1715,9 @@ Write-EventLog -EntryType $eventTypeError -EventId $eventIdError -LogName $logNa
 # Remove-EventLog -Source $source
 ```
 
----
 
-Copyright (c) 2017 YA-androidapp(https://github.com/YA-androidapp) All rights reserved.
+<hr>
+
+Copyright (c) 2022 YA-androidapp(https://github.com/YA-androidapp) All rights reserved.
+
+
