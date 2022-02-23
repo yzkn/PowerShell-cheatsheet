@@ -14,6 +14,7 @@
     - [配列](#%E9%85%8D%E5%88%97)
     - [表示](#%E8%A1%A8%E7%A4%BA)
     - [Tee](#tee)
+  - [データ型](#%E3%83%87%E3%83%BC%E3%82%BF%E5%9E%8B)
   - [リテラル](#%E3%83%AA%E3%83%86%E3%83%A9%E3%83%AB)
     - [数値](#%E6%95%B0%E5%80%A4)
     - [文字列](#%E6%96%87%E5%AD%97%E5%88%97)
@@ -33,10 +34,11 @@
     - [型を指定](#%E5%9E%8B%E3%82%92%E6%8C%87%E5%AE%9A)
     - [スコープ](#%E3%82%B9%E3%82%B3%E3%83%BC%E3%83%97)
     - [自動変数・設定変数](#%E8%87%AA%E5%8B%95%E5%A4%89%E6%95%B0%E3%83%BB%E8%A8%AD%E5%AE%9A%E5%A4%89%E6%95%B0)
-    - [設定変数のみ一覧化](#%E8%A8%AD%E5%AE%9A%E5%A4%89%E6%95%B0%E3%81%AE%E3%81%BF%E4%B8%80%E8%A6%A7%E5%8C%96)
+      - [設定変数のみ一覧化](#%E8%A8%AD%E5%AE%9A%E5%A4%89%E6%95%B0%E3%81%AE%E3%81%BF%E4%B8%80%E8%A6%A7%E5%8C%96)
     - [配列](#%E9%85%8D%E5%88%97)
       - [多次元配列](#%E5%A4%9A%E6%AC%A1%E5%85%83%E9%85%8D%E5%88%97)
-      - [連想配列ハッシュテーブル](#%E9%80%A3%E6%83%B3%E9%85%8D%E5%88%97%E3%83%8F%E3%83%83%E3%82%B7%E3%83%A5%E3%83%86%E3%83%BC%E3%83%96%E3%83%AB)
+    - [ArrayList](#arraylist)
+    - [ハッシュテーブル](#%E3%83%8F%E3%83%83%E3%82%B7%E3%83%A5%E3%83%86%E3%83%BC%E3%83%96%E3%83%AB)
   - [画面出力](#%E7%94%BB%E9%9D%A2%E5%87%BA%E5%8A%9B)
     - [デバッグ出力](#%E3%83%87%E3%83%90%E3%83%83%E3%82%B0%E5%87%BA%E5%8A%9B)
       - [Write-Error](#write-error)
@@ -469,6 +471,46 @@ $fileList
 Get-ChildItem | Tee-Object -FilePath "fileList.txt" -Append
 ```
 
+## データ型
+
+<a id="markdown-%E3%83%87%E3%83%BC%E3%82%BF%E5%9E%8B" name="%E3%83%87%E3%83%BC%E3%82%BF%E5%9E%8B"></a>
+
+| type                | FullName                                       | MinValue                         | MaxValue                        |
+| ------------------- | ---------------------------------------------- | -------------------------------- | ------------------------------- |
+| `[array]`           | `System.Array`                                 |                                  |                                 |
+| `[bool]`            | `System.Boolean`                               |                                  |                                 |
+| `[byte]`            | `System.Byte`                                  | `0`                              | `255`                           |
+| `[char]`            | `System.Char`                                  |                                  |                                 |
+| `[datetime]`        | `System.DateTime`                              | `0001/01/01 0:00:00`             | `9999/12/31 23:59:59`           |
+| `[decimal]`         | `System.Decimal`                               | `-79228162514264337593543950335` | `79228162514264337593543950335` |
+| `[double]`          | `System.Double`                                | `-1.79769313486232E+308`         | `1.79769313486232E+308`         |
+| `[guid]`            | `System.Guid`                                  |                                  |                                 |
+| `[hashtable]`       | `System.Collections.Hashtable`                 |                                  |                                 |
+| `[int16]`           | `System.Int16`                                 | `-32768`                         | `32767`                         |
+| `[int32], [int]`    | `System.Int32`                                 | `-2147483648`                    | `2147483647`                    |
+| `[int64], [long]`   | `System.Int64`                                 | `-9223372036854775808`           | `9223372036854775807`           |
+| `[nullable]`        | `System.Nullable`                              |                                  |                                 |
+| `[psobject]`        | `System.Management.Automation.PSObject`        |                                  |                                 |
+| `[regex]`           | `System.Text.RegularExpressions.Regex`         |                                  |                                 |
+| `[sbyte]`           | `System.SByte`                                 | `-128`                           | `127`                           |
+| `[scriptblock]`     | `System.Management.Automation.ScriptBlock`     |                                  |                                 |
+| `[single], [float]` | `System.Single`                                | `-3.402823E+38`                  | `3.402823E+38`                  |
+| `[string]`          | `System.String`                                |                                  |                                 |
+| `[switch]`          | `System.Management.Automation.SwitchParameter` |                                  |                                 |
+| `[timespan]`        | `System.TimeSpan`                              | `-10675199.02:48:05.4775808`     | `10675199.02:48:05.4775807`     |
+| `[type]`            | `System.Type`                                  |                                  |                                 |
+| `[uint16]`          | `System.UInt16`                                | `0`                              | `65535`                         |
+| `[uint32]`          | `System.UInt32`                                | `0`                              | `4294967295`                    |
+| `[uint64]`          | `System.UInt64`                                | `0`                              | `18446744073709551615`          |
+| `[xml]`             | `System.Xml.XmlDocument`                       |                                  |                                 |
+
+```powershell
+$type = [array]
+# $type = $var.GetType()
+
+Write-Output ("| {0} | {1} | {2} | {3} |" -f $type.Name, $type.FullName, $type::MinValue, $type::MaxValue)
+```
+
 ## リテラル
 
 <a id="markdown-%E3%83%AA%E3%83%86%E3%83%A9%E3%83%AB" name="%E3%83%AA%E3%83%86%E3%83%A9%E3%83%AB"></a>
@@ -608,7 +650,7 @@ $ipsum
 | -lt          | より小さい                              |
 | -contains    | 含む ( `"abc", "def" -contains "def"` ) |
 | -notcontains | 含まない                                |
-| -in          | 含む ( `"def" -in "abc", "def"` )       |
+| -in          | 含む ( `"def" -in "abc", "def"` )      |
 | -notin       | 含まない                                |
 | -is          | 型が等しい                              |
 | -isnot       | 型が等しくない                          |
@@ -822,7 +864,7 @@ Get-Variable | Get-Member -MemberType Properties
 | WarningPreference           |                                                      |
 | WhatIfPreference            |                                                      |
 
-### 設定変数のみ一覧化
+#### 設定変数のみ一覧化
 
 <a id="markdown-%E8%A8%AD%E5%AE%9A%E5%A4%89%E6%95%B0%E3%81%AE%E3%81%BF%E4%B8%80%E8%A6%A7%E5%8C%96" name="%E8%A8%AD%E5%AE%9A%E5%A4%89%E6%95%B0%E3%81%AE%E3%81%BF%E4%B8%80%E8%A6%A7%E5%8C%96"></a>
 
@@ -848,9 +890,9 @@ $array3 = @(1)
 $array3 = ,1
 
 $array4 = @(2,3,4)
-$array4 = @(..4)
+$array4 = @(0..4)
 $array4 = 2,3,4
-$array4 = ..4
+$array4 = 0..4
 
 # 配列の結合
 $array = $array1 + $array2
@@ -912,13 +954,41 @@ $array[1][2]
 
 > 2-3
 
-#### 連想配列(ハッシュテーブル)
+### ArrayList
 
-<a id="markdown-%E9%80%A3%E6%83%B3%E9%85%8D%E5%88%97%E3%83%8F%E3%83%83%E3%82%B7%E3%83%A5%E3%83%86%E3%83%BC%E3%83%96%E3%83%AB" name="%E9%80%A3%E6%83%B3%E9%85%8D%E5%88%97%E3%83%8F%E3%83%83%E3%82%B7%E3%83%A5%E3%83%86%E3%83%BC%E3%83%96%E3%83%AB"></a>
+<a id="markdown-arraylist" name="arraylist"></a>
+
+```powershell
+$list = New-Object -TypeName 'System.Collections.ArrayList';
+$list.Add("lorem")
+$list.Add("ipsum")
+$list.Add(123)
+$list.Add("dolor")
+$list.Add("sit")
+$list.Add(456)
+$list.Add("amet")
+$list.RemoveAt(0)
+$list.RemoveRange(1,4)
+$list.Count
+
+$list | sort-object
+```
+
+> amet
+>
+> ipsum
+
+### ハッシュテーブル
+
+<a id="markdown-%E3%83%8F%E3%83%83%E3%82%B7%E3%83%A5%E3%83%86%E3%83%BC%E3%83%96%E3%83%AB" name="%E3%83%8F%E3%83%83%E3%82%B7%E3%83%A5%E3%83%86%E3%83%BC%E3%83%96%E3%83%AB"></a>
 
 ```powershell
 # 連想配列の宣言と代入
 $table = @{key1 = "value1"; key2 = "value2"; key3 = "value3"}
+
+# 順序付けられたディクショナリ
+$table = [ordered]@{key1 = "value1"; key2 = "value2"; key3 = "value3"}
+
 $table["key1"]
 ```
 
@@ -971,6 +1041,14 @@ $values = $table.Values
 foreach ($key in $table.Keys) {
     $key + ": " + $table[$key]
 }
+
+$table.GetEnumerator() | ForEach-Object {
+  $key = $_.Key
+  $value = $_.Value
+
+  $key + ": " + $value
+}
+
 ```
 
 > key3: value3
