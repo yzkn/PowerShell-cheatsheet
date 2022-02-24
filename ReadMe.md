@@ -98,6 +98,10 @@
 - [ネットワーク](#%E3%83%8D%E3%83%83%E3%83%88%E3%83%AF%E3%83%BC%E3%82%AF)
   - [ping](#ping)
   - [ARP](#arp)
+  - [Webリクエスト](#web%E3%83%AA%E3%82%AF%E3%82%A8%E3%82%B9%E3%83%88)
+    - [コンテンツを取得する](#%E3%82%B3%E3%83%B3%E3%83%86%E3%83%B3%E3%83%84%E3%82%92%E5%8F%96%E5%BE%97%E3%81%99%E3%82%8B)
+      - [GET](#get)
+    - [ファイルをダウンロードする](#%E3%83%95%E3%82%A1%E3%82%A4%E3%83%AB%E3%82%92%E3%83%80%E3%82%A6%E3%83%B3%E3%83%AD%E3%83%BC%E3%83%89%E3%81%99%E3%82%8B)
 
 <!-- /TOC -->
 
@@ -1058,6 +1062,7 @@ $table.GetEnumerator() | ForEach-Object {
 ## 画面出力
 
 <a id="markdown-%E7%94%BB%E9%9D%A2%E5%87%BA%E5%8A%9B" name="%E7%94%BB%E9%9D%A2%E5%87%BA%E5%8A%9B"></a>
+<a id="markdown-%E7%94%BB%E9%9D%A2%E5%87%BA%E5%8A%9B" name="%E7%94%BB%E9%9D%A2%E5%87%BA%E5%8A%9B"></a>
 
 ```powershell
 "画面出力 $a" # Write-Outputと同じ
@@ -1088,9 +1093,11 @@ $Host.UI.WriteWarningLine()
 ### デバッグ出力
 
 <a id="markdown-%E3%83%87%E3%83%90%E3%83%83%E3%82%B0%E5%87%BA%E5%8A%9B" name="%E3%83%87%E3%83%90%E3%83%83%E3%82%B0%E5%87%BA%E5%8A%9B"></a>
+<a id="markdown-%E3%83%87%E3%83%90%E3%83%83%E3%82%B0%E5%87%BA%E5%8A%9B" name="%E3%83%87%E3%83%90%E3%83%83%E3%82%B0%E5%87%BA%E5%8A%9B"></a>
 
 #### Write-Error
 
+<a id="markdown-write-error" name="write-error"></a>
 <a id="markdown-write-error" name="write-error"></a>
 
 ```powershell
@@ -1108,6 +1115,7 @@ try {
 
 #### その他のログレベル
 
+<a id="markdown-%E3%81%9D%E3%81%AE%E4%BB%96%E3%81%AE%E3%83%AD%E3%82%B0%E3%83%AC%E3%83%99%E3%83%AB" name="%E3%81%9D%E3%81%AE%E4%BB%96%E3%81%AE%E3%83%AD%E3%82%B0%E3%83%AC%E3%83%99%E3%83%AB"></a>
 <a id="markdown-%E3%81%9D%E3%81%AE%E4%BB%96%E3%81%AE%E3%83%AD%E3%82%B0%E3%83%AC%E3%83%99%E3%83%AB" name="%E3%81%9D%E3%81%AE%E4%BB%96%E3%81%AE%E3%83%AD%E3%82%B0%E3%83%AC%E3%83%99%E3%83%AB"></a>
 
 ```powershell
@@ -1133,6 +1141,7 @@ $Host.UI.WriteWarningLine("画面出力")
 
 ### プログレスバー
 
+<a id="markdown-%E3%83%97%E3%83%AD%E3%82%B0%E3%83%AC%E3%82%B9%E3%83%90%E3%83%BC" name="%E3%83%97%E3%83%AD%E3%82%B0%E3%83%AC%E3%82%B9%E3%83%90%E3%83%BC"></a>
 <a id="markdown-%E3%83%97%E3%83%AD%E3%82%B0%E3%83%AC%E3%82%B9%E3%83%90%E3%83%BC" name="%E3%83%97%E3%83%AD%E3%82%B0%E3%83%AC%E3%82%B9%E3%83%90%E3%83%BC"></a>
 
 ```powershell
@@ -2213,6 +2222,44 @@ Get-NetNeighbor
 > ------- ---------                                          ----------------      -----       -----------
 >
 > 16      192.168.0.255                                      FF-FF-FF-FF-FF-FF     Permanent   ActiveStore
+
+## Webリクエスト
+
+<a id="markdown-web%E3%83%AA%E3%82%AF%E3%82%A8%E3%82%B9%E3%83%88" name="web%E3%83%AA%E3%82%AF%E3%82%A8%E3%82%B9%E3%83%88"></a>
+
+### コンテンツを取得する
+
+<a id="markdown-%E3%82%B3%E3%83%B3%E3%83%86%E3%83%B3%E3%83%84%E3%82%92%E5%8F%96%E5%BE%97%E3%81%99%E3%82%8B" name="%E3%82%B3%E3%83%B3%E3%83%86%E3%83%B3%E3%83%84%E3%82%92%E5%8F%96%E5%BE%97%E3%81%99%E3%82%8B"></a>
+
+#### GET
+
+<a id="markdown-get" name="get"></a>
+
+```powershell
+# http://httpbin.org/get?q=qwerty
+$url = 'http://httpbin.org/get'
+$url = 'http://example.exampleexample'
+$params = @{"q"="qwerty"}
+
+
+try {
+  $res = Invoke-WebRequest $url -Body $params
+  $res.StatusCode.ToString() + " " + $res.StatusDescription
+  Write-Host "Headers" $res.Headers
+  Write-Host "Content" $res.Content
+} catch {
+  Write-Host $_.Exception
+}
+```
+
+### ファイルをダウンロードする
+
+<a id="markdown-%E3%83%95%E3%82%A1%E3%82%A4%E3%83%AB%E3%82%92%E3%83%80%E3%82%A6%E3%83%B3%E3%83%AD%E3%83%BC%E3%83%89%E3%81%99%E3%82%8B" name="%E3%83%95%E3%82%A1%E3%82%A4%E3%83%AB%E3%82%92%E3%83%80%E3%82%A6%E3%83%B3%E3%83%AD%E3%83%BC%E3%83%89%E3%81%99%E3%82%8B"></a>
+
+```powershell
+$url = 'https://raw.githubusercontent.com/pandas-dev/pandas/main/pandas/tests/io/data/csv/iris.csv'
+Invoke-WebRequest $url -Body $params -OutFile '.\iris.csv'
+```
 
 <hr>
 
