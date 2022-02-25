@@ -1,116 +1,124 @@
 <!-- TOC -->
 
 - [おまじない](#%E3%81%8A%E3%81%BE%E3%81%98%E3%81%AA%E3%81%84)
-  - [PowerShell実行ポリシーの変更](#powershell%E5%AE%9F%E8%A1%8C%E3%83%9D%E3%83%AA%E3%82%B7%E3%83%BC%E3%81%AE%E5%A4%89%E6%9B%B4)
-    - [署名する](#%E7%BD%B2%E5%90%8D%E3%81%99%E3%82%8B)
-  - [PowerShell バージョン](#powershell-%E3%83%90%E3%83%BC%E3%82%B8%E3%83%A7%E3%83%B3)
-  - [ヘルプ](#%E3%83%98%E3%83%AB%E3%83%97)
+    - [PowerShell実行ポリシーの変更](#powershell%E5%AE%9F%E8%A1%8C%E3%83%9D%E3%83%AA%E3%82%B7%E3%83%BC%E3%81%AE%E5%A4%89%E6%9B%B4)
+        - [署名する](#%E7%BD%B2%E5%90%8D%E3%81%99%E3%82%8B)
+    - [PowerShell バージョン](#powershell-%E3%83%90%E3%83%BC%E3%82%B8%E3%83%A7%E3%83%B3)
+    - [ヘルプ](#%E3%83%98%E3%83%AB%E3%83%97)
 - [文法](#%E6%96%87%E6%B3%95)
-  - [コメント](#%E3%82%B3%E3%83%A1%E3%83%B3%E3%83%88)
-  - [コマンドレット](#%E3%82%B3%E3%83%9E%E3%83%B3%E3%83%89%E3%83%AC%E3%83%83%E3%83%88)
-    - [引数の指定](#%E5%BC%95%E6%95%B0%E3%81%AE%E6%8C%87%E5%AE%9A)
-    - [動詞の完全な一覧](#%E5%8B%95%E8%A9%9E%E3%81%AE%E5%AE%8C%E5%85%A8%E3%81%AA%E4%B8%80%E8%A6%A7)
-  - [パイプライン](#%E3%83%91%E3%82%A4%E3%83%97%E3%83%A9%E3%82%A4%E3%83%B3)
-    - [配列](#%E9%85%8D%E5%88%97)
-    - [表示](#%E8%A1%A8%E7%A4%BA)
-    - [Tee](#tee)
-  - [データ型](#%E3%83%87%E3%83%BC%E3%82%BF%E5%9E%8B)
-  - [リテラル](#%E3%83%AA%E3%83%86%E3%83%A9%E3%83%AB)
-    - [数値](#%E6%95%B0%E5%80%A4)
-    - [文字列](#%E6%96%87%E5%AD%97%E5%88%97)
-      - [エスケープ](#%E3%82%A8%E3%82%B9%E3%82%B1%E3%83%BC%E3%83%97)
-      - [変数展開](#%E5%A4%89%E6%95%B0%E5%B1%95%E9%96%8B)
-      - [式展開](#%E5%BC%8F%E5%B1%95%E9%96%8B)
-      - [ヒアドキュメント](#%E3%83%92%E3%82%A2%E3%83%89%E3%82%AD%E3%83%A5%E3%83%A1%E3%83%B3%E3%83%88)
-  - [演算子](#%E6%BC%94%E7%AE%97%E5%AD%90)
-    - [算術演算子](#%E7%AE%97%E8%A1%93%E6%BC%94%E7%AE%97%E5%AD%90)
-    - [比較演算子](#%E6%AF%94%E8%BC%83%E6%BC%94%E7%AE%97%E5%AD%90)
-    - [論理演算子](#%E8%AB%96%E7%90%86%E6%BC%94%E7%AE%97%E5%AD%90)
-    - [ビット演算子](#%E3%83%93%E3%83%83%E3%83%88%E6%BC%94%E7%AE%97%E5%AD%90)
-    - [文字列演算子](#%E6%96%87%E5%AD%97%E5%88%97%E6%BC%94%E7%AE%97%E5%AD%90)
-    - [](#)
-    - [](#)
-  - [変数](#%E5%A4%89%E6%95%B0)
-    - [型を指定](#%E5%9E%8B%E3%82%92%E6%8C%87%E5%AE%9A)
-    - [スコープ](#%E3%82%B9%E3%82%B3%E3%83%BC%E3%83%97)
-    - [自動変数・設定変数](#%E8%87%AA%E5%8B%95%E5%A4%89%E6%95%B0%E3%83%BB%E8%A8%AD%E5%AE%9A%E5%A4%89%E6%95%B0)
-      - [設定変数のみ一覧化](#%E8%A8%AD%E5%AE%9A%E5%A4%89%E6%95%B0%E3%81%AE%E3%81%BF%E4%B8%80%E8%A6%A7%E5%8C%96)
-    - [配列](#%E9%85%8D%E5%88%97)
-      - [多次元配列](#%E5%A4%9A%E6%AC%A1%E5%85%83%E9%85%8D%E5%88%97)
-    - [ArrayList](#arraylist)
-    - [ハッシュテーブル](#%E3%83%8F%E3%83%83%E3%82%B7%E3%83%A5%E3%83%86%E3%83%BC%E3%83%96%E3%83%AB)
-  - [画面出力](#%E7%94%BB%E9%9D%A2%E5%87%BA%E5%8A%9B)
-    - [デバッグ出力](#%E3%83%87%E3%83%90%E3%83%83%E3%82%B0%E5%87%BA%E5%8A%9B)
-      - [Write-Error](#write-error)
-      - [その他のログレベル](#%E3%81%9D%E3%81%AE%E4%BB%96%E3%81%AE%E3%83%AD%E3%82%B0%E3%83%AC%E3%83%99%E3%83%AB)
-    - [プログレスバー](#%E3%83%97%E3%83%AD%E3%82%B0%E3%83%AC%E3%82%B9%E3%83%90%E3%83%BC)
-  - [プロセス](#%E3%83%97%E3%83%AD%E3%82%BB%E3%82%B9)
-    - [管理者権限で実行](#%E7%AE%A1%E7%90%86%E8%80%85%E6%A8%A9%E9%99%90%E3%81%A7%E5%AE%9F%E8%A1%8C)
-    - [待機](#%E5%BE%85%E6%A9%9F)
-      - [キー押下を待機Pause](#%E3%82%AD%E3%83%BC%E6%8A%BC%E4%B8%8B%E3%82%92%E5%BE%85%E6%A9%9Fpause)
-      - [一定時間待機Sleep, Wait](#%E4%B8%80%E5%AE%9A%E6%99%82%E9%96%93%E5%BE%85%E6%A9%9Fsleep-wait)
-  - [制御構文](#%E5%88%B6%E5%BE%A1%E6%A7%8B%E6%96%87)
-    - [条件分岐](#%E6%9D%A1%E4%BB%B6%E5%88%86%E5%B2%90)
-      - [if文](#if%E6%96%87)
-      - [TRUEと評価される値](#true%E3%81%A8%E8%A9%95%E4%BE%A1%E3%81%95%E3%82%8C%E3%82%8B%E5%80%A4)
-      - [FALSEと評価される値](#false%E3%81%A8%E8%A9%95%E4%BE%A1%E3%81%95%E3%82%8C%E3%82%8B%E5%80%A4)
-      - [switch文](#switch%E6%96%87)
-    - [ループ](#%E3%83%AB%E3%83%BC%E3%83%97)
-      - [ループ文](#%E3%83%AB%E3%83%BC%E3%83%97%E6%96%87)
-      - [ループ制御文](#%E3%83%AB%E3%83%BC%E3%83%97%E5%88%B6%E5%BE%A1%E6%96%87)
-    - [例外処理](#%E4%BE%8B%E5%A4%96%E5%87%A6%E7%90%86)
-      - [try節](#try%E7%AF%80)
-      - [trap節](#trap%E7%AF%80)
-  - [関数](#%E9%96%A2%E6%95%B0)
-    - [関数の基本形](#%E9%96%A2%E6%95%B0%E3%81%AE%E5%9F%BA%E6%9C%AC%E5%BD%A2)
-    - [引数](#%E5%BC%95%E6%95%B0)
-      - [引数の取り方](#%E5%BC%95%E6%95%B0%E3%81%AE%E5%8F%96%E3%82%8A%E6%96%B9)
-      - [引数の型を指定](#%E5%BC%95%E6%95%B0%E3%81%AE%E5%9E%8B%E3%82%92%E6%8C%87%E5%AE%9A)
-      - [引数の参照渡し](#%E5%BC%95%E6%95%B0%E3%81%AE%E5%8F%82%E7%85%A7%E6%B8%A1%E3%81%97)
-      - [引数の既定値](#%E5%BC%95%E6%95%B0%E3%81%AE%E6%97%A2%E5%AE%9A%E5%80%A4)
+    - [コメント](#%E3%82%B3%E3%83%A1%E3%83%B3%E3%83%88)
+    - [コマンドレット](#%E3%82%B3%E3%83%9E%E3%83%B3%E3%83%89%E3%83%AC%E3%83%83%E3%83%88)
+        - [引数の指定](#%E5%BC%95%E6%95%B0%E3%81%AE%E6%8C%87%E5%AE%9A)
+        - [動詞の完全な一覧](#%E5%8B%95%E8%A9%9E%E3%81%AE%E5%AE%8C%E5%85%A8%E3%81%AA%E4%B8%80%E8%A6%A7)
+    - [パイプライン](#%E3%83%91%E3%82%A4%E3%83%97%E3%83%A9%E3%82%A4%E3%83%B3)
+        - [配列](#%E9%85%8D%E5%88%97)
+        - [表示](#%E8%A1%A8%E7%A4%BA)
+        - [Tee](#tee)
+    - [データ型](#%E3%83%87%E3%83%BC%E3%82%BF%E5%9E%8B)
+    - [リテラル](#%E3%83%AA%E3%83%86%E3%83%A9%E3%83%AB)
+        - [数値](#%E6%95%B0%E5%80%A4)
+        - [文字列](#%E6%96%87%E5%AD%97%E5%88%97)
+            - [エスケープ](#%E3%82%A8%E3%82%B9%E3%82%B1%E3%83%BC%E3%83%97)
+            - [変数展開](#%E5%A4%89%E6%95%B0%E5%B1%95%E9%96%8B)
+            - [式展開](#%E5%BC%8F%E5%B1%95%E9%96%8B)
+            - [ヒアドキュメント](#%E3%83%92%E3%82%A2%E3%83%89%E3%82%AD%E3%83%A5%E3%83%A1%E3%83%B3%E3%83%88)
+            - [部分文字列](#%E9%83%A8%E5%88%86%E6%96%87%E5%AD%97%E5%88%97)
+    - [演算子](#%E6%BC%94%E7%AE%97%E5%AD%90)
+        - [算術演算子](#%E7%AE%97%E8%A1%93%E6%BC%94%E7%AE%97%E5%AD%90)
+        - [比較演算子](#%E6%AF%94%E8%BC%83%E6%BC%94%E7%AE%97%E5%AD%90)
+        - [論理演算子](#%E8%AB%96%E7%90%86%E6%BC%94%E7%AE%97%E5%AD%90)
+        - [ビット演算子](#%E3%83%93%E3%83%83%E3%83%88%E6%BC%94%E7%AE%97%E5%AD%90)
+        - [文字列演算子](#%E6%96%87%E5%AD%97%E5%88%97%E6%BC%94%E7%AE%97%E5%AD%90)
+        - [](#)
+        - [](#)
+    - [変数](#%E5%A4%89%E6%95%B0)
+        - [型を指定](#%E5%9E%8B%E3%82%92%E6%8C%87%E5%AE%9A)
+        - [スコープ](#%E3%82%B9%E3%82%B3%E3%83%BC%E3%83%97)
+        - [自動変数・設定変数](#%E8%87%AA%E5%8B%95%E5%A4%89%E6%95%B0%E3%83%BB%E8%A8%AD%E5%AE%9A%E5%A4%89%E6%95%B0)
+            - [設定変数のみ一覧化](#%E8%A8%AD%E5%AE%9A%E5%A4%89%E6%95%B0%E3%81%AE%E3%81%BF%E4%B8%80%E8%A6%A7%E5%8C%96)
+        - [配列](#%E9%85%8D%E5%88%97)
+            - [多次元配列](#%E5%A4%9A%E6%AC%A1%E5%85%83%E9%85%8D%E5%88%97)
+        - [ArrayList](#arraylist)
+        - [ハッシュテーブル](#%E3%83%8F%E3%83%83%E3%82%B7%E3%83%A5%E3%83%86%E3%83%BC%E3%83%96%E3%83%AB)
+    - [画面出力](#%E7%94%BB%E9%9D%A2%E5%87%BA%E5%8A%9B)
+        - [デバッグ出力](#%E3%83%87%E3%83%90%E3%83%83%E3%82%B0%E5%87%BA%E5%8A%9B)
+            - [Write-Error](#write-error)
+            - [その他のログレベル](#%E3%81%9D%E3%81%AE%E4%BB%96%E3%81%AE%E3%83%AD%E3%82%B0%E3%83%AC%E3%83%99%E3%83%AB)
+        - [プログレスバー](#%E3%83%97%E3%83%AD%E3%82%B0%E3%83%AC%E3%82%B9%E3%83%90%E3%83%BC)
+    - [プロセス](#%E3%83%97%E3%83%AD%E3%82%BB%E3%82%B9)
+        - [管理者権限で実行](#%E7%AE%A1%E7%90%86%E8%80%85%E6%A8%A9%E9%99%90%E3%81%A7%E5%AE%9F%E8%A1%8C)
+        - [待機](#%E5%BE%85%E6%A9%9F)
+            - [キー押下を待機Pause](#%E3%82%AD%E3%83%BC%E6%8A%BC%E4%B8%8B%E3%82%92%E5%BE%85%E6%A9%9Fpause)
+            - [一定時間待機Sleep, Wait](#%E4%B8%80%E5%AE%9A%E6%99%82%E9%96%93%E5%BE%85%E6%A9%9Fsleep-wait)
+    - [制御構文](#%E5%88%B6%E5%BE%A1%E6%A7%8B%E6%96%87)
+        - [条件分岐](#%E6%9D%A1%E4%BB%B6%E5%88%86%E5%B2%90)
+            - [if文](#if%E6%96%87)
+            - [TRUEと評価される値](#true%E3%81%A8%E8%A9%95%E4%BE%A1%E3%81%95%E3%82%8C%E3%82%8B%E5%80%A4)
+            - [FALSEと評価される値](#false%E3%81%A8%E8%A9%95%E4%BE%A1%E3%81%95%E3%82%8C%E3%82%8B%E5%80%A4)
+            - [switch文](#switch%E6%96%87)
+        - [ループ](#%E3%83%AB%E3%83%BC%E3%83%97)
+            - [ループ文](#%E3%83%AB%E3%83%BC%E3%83%97%E6%96%87)
+            - [ループ制御文](#%E3%83%AB%E3%83%BC%E3%83%97%E5%88%B6%E5%BE%A1%E6%96%87)
+        - [例外処理](#%E4%BE%8B%E5%A4%96%E5%87%A6%E7%90%86)
+            - [try節](#try%E7%AF%80)
+            - [trap節](#trap%E7%AF%80)
+    - [関数](#%E9%96%A2%E6%95%B0)
+        - [関数の基本形](#%E9%96%A2%E6%95%B0%E3%81%AE%E5%9F%BA%E6%9C%AC%E5%BD%A2)
+        - [引数](#%E5%BC%95%E6%95%B0)
+            - [引数の取り方](#%E5%BC%95%E6%95%B0%E3%81%AE%E5%8F%96%E3%82%8A%E6%96%B9)
+            - [引数の型を指定](#%E5%BC%95%E6%95%B0%E3%81%AE%E5%9E%8B%E3%82%92%E6%8C%87%E5%AE%9A)
+            - [引数の参照渡し](#%E5%BC%95%E6%95%B0%E3%81%AE%E5%8F%82%E7%85%A7%E6%B8%A1%E3%81%97)
+            - [引数の既定値](#%E5%BC%95%E6%95%B0%E3%81%AE%E6%97%A2%E5%AE%9A%E5%80%A4)
 - [システム情報](#%E3%82%B7%E3%82%B9%E3%83%86%E3%83%A0%E6%83%85%E5%A0%B1)
-  - [サービス](#%E3%82%B5%E3%83%BC%E3%83%93%E3%82%B9)
+    - [Windows Update](#windows-update)
+    - [Windows Firewall](#windows-firewall)
+    - [プロセス](#%E3%83%97%E3%83%AD%E3%82%BB%E3%82%B9)
+    - [サービス](#%E3%82%B5%E3%83%BC%E3%83%93%E3%82%B9)
 - [日付処理](#%E6%97%A5%E4%BB%98%E5%87%A6%E7%90%86)
 - [ファイル操作](#%E3%83%95%E3%82%A1%E3%82%A4%E3%83%AB%E6%93%8D%E4%BD%9C)
-  - [カレントディレクトリ](#%E3%82%AB%E3%83%AC%E3%83%B3%E3%83%88%E3%83%87%E3%82%A3%E3%83%AC%E3%82%AF%E3%83%88%E3%83%AA)
-  - [ファイルフォルダの新規作成](#%E3%83%95%E3%82%A1%E3%82%A4%E3%83%AB%E3%83%95%E3%82%A9%E3%83%AB%E3%83%80%E3%81%AE%E6%96%B0%E8%A6%8F%E4%BD%9C%E6%88%90)
-    - [touch](#touch)
-  - [ファイルフォルダの削除](#%E3%83%95%E3%82%A1%E3%82%A4%E3%83%AB%E3%83%95%E3%82%A9%E3%83%AB%E3%83%80%E3%81%AE%E5%89%8A%E9%99%A4)
-  - [ファイルフォルダのコピーと移動](#%E3%83%95%E3%82%A1%E3%82%A4%E3%83%AB%E3%83%95%E3%82%A9%E3%83%AB%E3%83%80%E3%81%AE%E3%82%B3%E3%83%94%E3%83%BC%E3%81%A8%E7%A7%BB%E5%8B%95)
-  - [テキストファイル](#%E3%83%86%E3%82%AD%E3%82%B9%E3%83%88%E3%83%95%E3%82%A1%E3%82%A4%E3%83%AB)
-    - [行ごとに読込み](#%E8%A1%8C%E3%81%94%E3%81%A8%E3%81%AB%E8%AA%AD%E8%BE%BC%E3%81%BF)
-    - [書出し](#%E6%9B%B8%E5%87%BA%E3%81%97)
-  - [CSVファイル](#csv%E3%83%95%E3%82%A1%E3%82%A4%E3%83%AB)
-    - [読込み](#%E8%AA%AD%E8%BE%BC%E3%81%BF)
-    - [書出し](#%E6%9B%B8%E5%87%BA%E3%81%97)
-  - [設定ファイル.ini](#%E8%A8%AD%E5%AE%9A%E3%83%95%E3%82%A1%E3%82%A4%E3%83%ABini)
-    - [読込み](#%E8%AA%AD%E8%BE%BC%E3%81%BF)
-  - [構成ファイルWeb.config](#%E6%A7%8B%E6%88%90%E3%83%95%E3%82%A1%E3%82%A4%E3%83%ABwebconfig)
-    - [読み書き](#%E8%AA%AD%E3%81%BF%E6%9B%B8%E3%81%8D)
-  - [XMLファイル](#xml%E3%83%95%E3%82%A1%E3%82%A4%E3%83%AB)
-    - [読込み](#%E8%AA%AD%E8%BE%BC%E3%81%BF)
-    - [書出し](#%E6%9B%B8%E5%87%BA%E3%81%97)
-  - [CSVファイル](#csv%E3%83%95%E3%82%A1%E3%82%A4%E3%83%AB)
-    - [読込み](#%E8%AA%AD%E8%BE%BC%E3%81%BF)
-  - [ログ出力](#%E3%83%AD%E3%82%B0%E5%87%BA%E5%8A%9B)
-    - [ログファイル](#%E3%83%AD%E3%82%B0%E3%83%95%E3%82%A1%E3%82%A4%E3%83%AB)
-    - [イベントログ](#%E3%82%A4%E3%83%99%E3%83%B3%E3%83%88%E3%83%AD%E3%82%B0)
+    - [カレントディレクトリ](#%E3%82%AB%E3%83%AC%E3%83%B3%E3%83%88%E3%83%87%E3%82%A3%E3%83%AC%E3%82%AF%E3%83%88%E3%83%AA)
+    - [特別なフォルダのパスを取得](#%E7%89%B9%E5%88%A5%E3%81%AA%E3%83%95%E3%82%A9%E3%83%AB%E3%83%80%E3%81%AE%E3%83%91%E3%82%B9%E3%82%92%E5%8F%96%E5%BE%97)
+    - [ファイル一覧](#%E3%83%95%E3%82%A1%E3%82%A4%E3%83%AB%E4%B8%80%E8%A6%A7)
+    - [フォルダの合計サイズ（再帰）](#%E3%83%95%E3%82%A9%E3%83%AB%E3%83%80%E3%81%AE%E5%90%88%E8%A8%88%E3%82%B5%E3%82%A4%E3%82%BA%E5%86%8D%E5%B8%B0)
+    - [ファイルフォルダの新規作成](#%E3%83%95%E3%82%A1%E3%82%A4%E3%83%AB%E3%83%95%E3%82%A9%E3%83%AB%E3%83%80%E3%81%AE%E6%96%B0%E8%A6%8F%E4%BD%9C%E6%88%90)
+        - [touch](#touch)
+    - [ファイルフォルダの削除](#%E3%83%95%E3%82%A1%E3%82%A4%E3%83%AB%E3%83%95%E3%82%A9%E3%83%AB%E3%83%80%E3%81%AE%E5%89%8A%E9%99%A4)
+    - [ファイルフォルダのコピーと移動](#%E3%83%95%E3%82%A1%E3%82%A4%E3%83%AB%E3%83%95%E3%82%A9%E3%83%AB%E3%83%80%E3%81%AE%E3%82%B3%E3%83%94%E3%83%BC%E3%81%A8%E7%A7%BB%E5%8B%95)
+    - [テキストファイル](#%E3%83%86%E3%82%AD%E3%82%B9%E3%83%88%E3%83%95%E3%82%A1%E3%82%A4%E3%83%AB)
+        - [行ごとに読込み](#%E8%A1%8C%E3%81%94%E3%81%A8%E3%81%AB%E8%AA%AD%E8%BE%BC%E3%81%BF)
+        - [書出し](#%E6%9B%B8%E5%87%BA%E3%81%97)
+    - [CSVファイル](#csv%E3%83%95%E3%82%A1%E3%82%A4%E3%83%AB)
+        - [読込み](#%E8%AA%AD%E8%BE%BC%E3%81%BF)
+        - [書出し](#%E6%9B%B8%E5%87%BA%E3%81%97)
+    - [設定ファイル.ini](#%E8%A8%AD%E5%AE%9A%E3%83%95%E3%82%A1%E3%82%A4%E3%83%ABini)
+        - [読込み](#%E8%AA%AD%E8%BE%BC%E3%81%BF)
+    - [構成ファイルWeb.config](#%E6%A7%8B%E6%88%90%E3%83%95%E3%82%A1%E3%82%A4%E3%83%ABwebconfig)
+        - [読み書き](#%E8%AA%AD%E3%81%BF%E6%9B%B8%E3%81%8D)
+    - [XMLファイル](#xml%E3%83%95%E3%82%A1%E3%82%A4%E3%83%AB)
+        - [読込み](#%E8%AA%AD%E8%BE%BC%E3%81%BF)
+        - [書出し](#%E6%9B%B8%E5%87%BA%E3%81%97)
+    - [CSVファイル](#csv%E3%83%95%E3%82%A1%E3%82%A4%E3%83%AB)
+        - [読込み](#%E8%AA%AD%E8%BE%BC%E3%81%BF)
+    - [ログ出力](#%E3%83%AD%E3%82%B0%E5%87%BA%E5%8A%9B)
+        - [ログファイル](#%E3%83%AD%E3%82%B0%E3%83%95%E3%82%A1%E3%82%A4%E3%83%AB)
+        - [イベントログ](#%E3%82%A4%E3%83%99%E3%83%B3%E3%83%88%E3%83%AD%E3%82%B0)
+            - [Level キー](#level-%E3%82%AD%E3%83%BC)
 - [ネットワーク](#%E3%83%8D%E3%83%83%E3%83%88%E3%83%AF%E3%83%BC%E3%82%AF)
-  - [ping](#ping)
-  - [ARP](#arp)
-  - [Webリクエスト](#web%E3%83%AA%E3%82%AF%E3%82%A8%E3%82%B9%E3%83%88)
-    - [コンテンツを取得する](#%E3%82%B3%E3%83%B3%E3%83%86%E3%83%B3%E3%83%84%E3%82%92%E5%8F%96%E5%BE%97%E3%81%99%E3%82%8B)
-      - [GET](#get)
-    - [ファイルをダウンロードする](#%E3%83%95%E3%82%A1%E3%82%A4%E3%83%AB%E3%82%92%E3%83%80%E3%82%A6%E3%83%B3%E3%83%AD%E3%83%BC%E3%83%89%E3%81%99%E3%82%8B)
+    - [ping](#ping)
+    - [ARP](#arp)
+    - [Webリクエスト](#web%E3%83%AA%E3%82%AF%E3%82%A8%E3%82%B9%E3%83%88)
+        - [コンテンツを取得する](#%E3%82%B3%E3%83%B3%E3%83%86%E3%83%B3%E3%83%84%E3%82%92%E5%8F%96%E5%BE%97%E3%81%99%E3%82%8B)
+            - [GET](#get)
+        - [ファイルをダウンロードする](#%E3%83%95%E3%82%A1%E3%82%A4%E3%83%AB%E3%82%92%E3%83%80%E3%82%A6%E3%83%B3%E3%83%AD%E3%83%BC%E3%83%89%E3%81%99%E3%82%8B)
+        - [リンクURLの一覧を取得する](#%E3%83%AA%E3%83%B3%E3%82%AFurl%E3%81%AE%E4%B8%80%E8%A6%A7%E3%82%92%E5%8F%96%E5%BE%97%E3%81%99%E3%82%8B)
 
 <!-- /TOC -->
 
 # おまじない
-
 <a id="markdown-%E3%81%8A%E3%81%BE%E3%81%98%E3%81%AA%E3%81%84" name="%E3%81%8A%E3%81%BE%E3%81%98%E3%81%AA%E3%81%84"></a>
 
-## PowerShell実行ポリシーの変更
 
+## PowerShell実行ポリシーの変更
 <a id="markdown-powershell%E5%AE%9F%E8%A1%8C%E3%83%9D%E3%83%AA%E3%82%B7%E3%83%BC%E3%81%AE%E5%A4%89%E6%9B%B4" name="powershell%E5%AE%9F%E8%A1%8C%E3%83%9D%E3%83%AA%E3%82%B7%E3%83%BC%E3%81%AE%E5%A4%89%E6%9B%B4"></a>
 
 ```powershell
@@ -130,7 +138,6 @@ Set-ExecutionPolicy RemoteSigned -Scope CurrentUser -Force
 | Bypass       | 全てのスクリプトが制限なし(警告なし)                       |
 
 ### 署名する
-
 <a id="markdown-%E7%BD%B2%E5%90%8D%E3%81%99%E3%82%8B" name="%E7%BD%B2%E5%90%8D%E3%81%99%E3%82%8B"></a>
 
 ```powershell
@@ -145,8 +152,8 @@ $cert = (Get-ChildItem Cert:\CurrentUser\My | ? {$_.Subject -eq "CN=PS証明書"
 Set-AuthenticodeSignature -Cert $cert -Filepath $targetScriptPath
 ```
 
-## PowerShell バージョン
 
+## PowerShell バージョン
 <a id="markdown-powershell-%E3%83%90%E3%83%BC%E3%82%B8%E3%83%A7%E3%83%B3" name="powershell-%E3%83%90%E3%83%BC%E3%82%B8%E3%83%A7%E3%83%B3"></a>
 
 スクリプト内から確認
@@ -186,11 +193,11 @@ if ($PSVersionTable["PSVersion"].Major -lt 7) {
 ターミナルから確認
 
 ```powershell
-pwsh --version
+$ pwsh --version
 ```
 
-## ヘルプ
 
+## ヘルプ
 <a id="markdown-%E3%83%98%E3%83%AB%E3%83%97" name="%E3%83%98%E3%83%AB%E3%83%97"></a>
 
 ```powershell
@@ -198,12 +205,12 @@ pwsh --version
 Get-Help Get-ChildItem
 ```
 
-# 文法
 
+# 文法
 <a id="markdown-%E6%96%87%E6%B3%95" name="%E6%96%87%E6%B3%95"></a>
 
-## コメント
 
+## コメント
 <a id="markdown-%E3%82%B3%E3%83%A1%E3%83%B3%E3%83%88" name="%E3%82%B3%E3%83%A1%E3%83%B3%E3%83%88"></a>
 
 ```powershell
@@ -216,8 +223,8 @@ Get-Help Get-ChildItem
 #>
 ```
 
-## コマンドレット
 
+## コマンドレット
 <a id="markdown-%E3%82%B3%E3%83%9E%E3%83%B3%E3%83%89%E3%83%AC%E3%83%83%E3%83%88" name="%E3%82%B3%E3%83%9E%E3%83%B3%E3%83%89%E3%83%AC%E3%83%83%E3%83%88"></a>
 
 ```powershell
@@ -227,7 +234,6 @@ get-service # 大小文字の区別はない
 ```
 
 ### 引数の指定
-
 <a id="markdown-%E5%BC%95%E6%95%B0%E3%81%AE%E6%8C%87%E5%AE%9A" name="%E5%BC%95%E6%95%B0%E3%81%AE%E6%8C%87%E5%AE%9A"></a>
 
 ```powershell
@@ -248,7 +254,6 @@ Write-Host p$iyo   # 変数展開
 > pi
 
 ### 動詞の完全な一覧
-
 <a id="markdown-%E5%8B%95%E8%A9%9E%E3%81%AE%E5%AE%8C%E5%85%A8%E3%81%AA%E4%B8%80%E8%A6%A7" name="%E5%8B%95%E8%A9%9E%E3%81%AE%E5%AE%8C%E5%85%A8%E3%81%AA%E4%B8%80%E8%A6%A7"></a>
 
 ```powershell
@@ -361,12 +366,11 @@ Unblock     ul          Security       Removes restrictions to a resource
 Unprotect   up          Security       Removes safeguards from a resource that were added to prevent it from attack or loss
 ```
 
-## パイプライン
 
+## パイプライン
 <a id="markdown-%E3%83%91%E3%82%A4%E3%83%97%E3%83%A9%E3%82%A4%E3%83%B3" name="%E3%83%91%E3%82%A4%E3%83%97%E3%83%A9%E3%82%A4%E3%83%B3"></a>
 
 ### 配列
-
 <a id="markdown-%E9%85%8D%E5%88%97" name="%E9%85%8D%E5%88%97"></a>
 
 ```powershell
@@ -442,7 +446,6 @@ Unprotect   up          Security       Removes safeguards from a resource that w
 > 1
 
 ### 表示
-
 <a id="markdown-%E8%A1%A8%E7%A4%BA" name="%E8%A1%A8%E7%A4%BA"></a>
 
 ```powershell
@@ -460,7 +463,6 @@ Get-ChildItem | Format-Wide Name -Column 1
 ```
 
 ### Tee
-
 <a id="markdown-tee" name="tee"></a>
 
 ファイルまたは変数にコマンド出力を保存しつつ標準出力
@@ -475,8 +477,9 @@ $fileList
 Get-ChildItem | Tee-Object -FilePath "fileList.txt" -Append
 ```
 
-## データ型
 
+
+## データ型
 <a id="markdown-%E3%83%87%E3%83%BC%E3%82%BF%E5%9E%8B" name="%E3%83%87%E3%83%BC%E3%82%BF%E5%9E%8B"></a>
 
 | type                | FullName                                       | MinValue                         | MaxValue                        |
@@ -515,12 +518,11 @@ $type = [array]
 Write-Output ("| {0} | {1} | {2} | {3} |" -f $type.Name, $type.FullName, $type::MinValue, $type::MaxValue)
 ```
 
-## リテラル
 
+## リテラル
 <a id="markdown-%E3%83%AA%E3%83%86%E3%83%A9%E3%83%AB" name="%E3%83%AA%E3%83%86%E3%83%A9%E3%83%AB"></a>
 
 ### 数値
-
 <a id="markdown-%E6%95%B0%E5%80%A4" name="%E6%95%B0%E5%80%A4"></a>
 
 ```powershell
@@ -539,7 +541,6 @@ Write-Output ("| {0} | {1} | {2} | {3} |" -f $type.Name, $type.FullName, $type::
 > 10485760
 
 ### 文字列
-
 <a id="markdown-%E6%96%87%E5%AD%97%E5%88%97" name="%E6%96%87%E5%AD%97%E5%88%97"></a>
 
 ```powershell
@@ -552,7 +553,6 @@ Write-Output ("| {0} | {1} | {2} | {3} |" -f $type.Name, $type.FullName, $type::
 > Lorem ipsum
 
 #### エスケープ
-
 <a id="markdown-%E3%82%A8%E3%82%B9%E3%82%B1%E3%83%BC%E3%83%97" name="%E3%82%A8%E3%82%B9%E3%82%B1%E3%83%BC%E3%83%97"></a>
 
 ```powershell
@@ -570,7 +570,6 @@ Write-Output ("| {0} | {1} | {2} | {3} |" -f $type.Name, $type.FullName, $type::
 ```
 
 #### 変数展開
-
 <a id="markdown-%E5%A4%89%E6%95%B0%E5%B1%95%E9%96%8B" name="%E5%A4%89%E6%95%B0%E5%B1%95%E9%96%8B"></a>
 
 ```powershell
@@ -585,7 +584,6 @@ $ipsum  = "ipsum"
 > Lorem ipsum
 
 #### 式展開
-
 <a id="markdown-%E5%BC%8F%E5%B1%95%E9%96%8B" name="%E5%BC%8F%E5%B1%95%E9%96%8B"></a>
 
 ```powershell
@@ -595,7 +593,6 @@ $ipsum  = "ipsum"
 > LoremLoooipsum
 
 #### ヒアドキュメント
-
 <a id="markdown-%E3%83%92%E3%82%A2%E3%83%89%E3%82%AD%E3%83%A5%E3%83%A1%E3%83%B3%E3%83%88" name="%E3%83%92%E3%82%A2%E3%83%89%E3%82%AD%E3%83%A5%E3%83%A1%E3%83%B3%E3%83%88"></a>
 
 ```powershell
@@ -620,12 +617,28 @@ $ipsum
 >
 > ipsum
 
-## 演算子
+#### 部分文字列
+<a id="markdown-%E9%83%A8%E5%88%86%E6%96%87%E5%AD%97%E5%88%97" name="%E9%83%A8%E5%88%86%E6%96%87%E5%AD%97%E5%88%97"></a>
 
+```powershell
+$lipsum = "Lorem ipsum"
+$len=2
+
+
+Write-Host $lipsum.Substring(0, $len)
+
+Write-Host $lipsum.Substring($lipsum.Length - $len, $len)
+```
+
+> Lo
+>
+> um
+
+
+## 演算子
 <a id="markdown-%E6%BC%94%E7%AE%97%E5%AD%90" name="%E6%BC%94%E7%AE%97%E5%AD%90"></a>
 
 ### 算術演算子
-
 <a id="markdown-%E7%AE%97%E8%A1%93%E6%BC%94%E7%AE%97%E5%AD%90" name="%E7%AE%97%E8%A1%93%E6%BC%94%E7%AE%97%E5%AD%90"></a>
 
 | 演算子 | 比較内容       |
@@ -641,7 +654,6 @@ $ipsum
 冪乗には関数Powを用いる
 
 ### 比較演算子
-
 <a id="markdown-%E6%AF%94%E8%BC%83%E6%BC%94%E7%AE%97%E5%AD%90" name="%E6%AF%94%E8%BC%83%E6%BC%94%E7%AE%97%E5%AD%90"></a>
 
 | 演算子       | 比較内容                                |
@@ -654,7 +666,7 @@ $ipsum
 | -lt          | より小さい                              |
 | -contains    | 含む ( `"abc", "def" -contains "def"` ) |
 | -notcontains | 含まない                                |
-| -in          | 含む ( `"def" -in "abc", "def"` )      |
+| -in          | 含む ( `"def" -in "abc", "def" ` )      |
 | -notin       | 含まない                                |
 | -is          | 型が等しい                              |
 | -isnot       | 型が等しくない                          |
@@ -667,7 +679,6 @@ $a -is $b.GetType() # False
 ```
 
 ### 論理演算子
-
 <a id="markdown-%E8%AB%96%E7%90%86%E6%BC%94%E7%AE%97%E5%AD%90" name="%E8%AB%96%E7%90%86%E6%BC%94%E7%AE%97%E5%AD%90"></a>
 
 | 演算子 | 比較内容     |
@@ -678,7 +689,6 @@ $a -is $b.GetType() # False
 | -xor   | 排他的論理和 |
 
 ### ビット演算子
-
 <a id="markdown-%E3%83%93%E3%83%83%E3%83%88%E6%BC%94%E7%AE%97%E5%AD%90" name="%E3%83%93%E3%83%83%E3%83%88%E6%BC%94%E7%AE%97%E5%AD%90"></a>
 
 | 演算子 | 比較内容     |
@@ -688,8 +698,8 @@ $a -is $b.GetType() # False
 | -bnot  | 否定         |
 | -bxor  | 排他的論理和 |
 
-### 文字列演算子
 
+### 文字列演算子
 <a id="markdown-%E6%96%87%E5%AD%97%E5%88%97%E6%BC%94%E7%AE%97%E5%AD%90" name="%E6%96%87%E5%AD%97%E5%88%97%E6%BC%94%E7%AE%97%E5%AD%90"></a>
 
 | 演算子             | 比較内容                                                       |
@@ -761,8 +771,8 @@ $a -is $b.GetType() # False
 ```powershell
 ```
 
-## 変数
 
+## 変数
 <a id="markdown-%E5%A4%89%E6%95%B0" name="%E5%A4%89%E6%95%B0"></a>
 
 ```powershell
@@ -773,7 +783,6 @@ New-Variable -name a
 ```
 
 ### 型を指定
-
 <a id="markdown-%E5%9E%8B%E3%82%92%E6%8C%87%E5%AE%9A" name="%E5%9E%8B%E3%82%92%E6%8C%87%E5%AE%9A"></a>
 
 ```powershell
@@ -786,8 +795,8 @@ $a = 1 # 型を指定しなければObject型
 [string]$val = "4"
 ```
 
-### スコープ
 
+### スコープ
 <a id="markdown-%E3%82%B9%E3%82%B3%E3%83%BC%E3%83%97" name="%E3%82%B9%E3%82%B3%E3%83%BC%E3%83%97"></a>
 
 | スコープ | 内容                 |
@@ -797,8 +806,8 @@ $a = 1 # 型を指定しなければObject型
 | script   | ファイル内           |
 | global   | ファイル外           |
 
-### 自動変数・設定変数
 
+### 自動変数・設定変数
 <a id="markdown-%E8%87%AA%E5%8B%95%E5%A4%89%E6%95%B0%E3%83%BB%E8%A8%AD%E5%AE%9A%E5%A4%89%E6%95%B0" name="%E8%87%AA%E5%8B%95%E5%A4%89%E6%95%B0%E3%83%BB%E8%A8%AD%E5%AE%9A%E5%A4%89%E6%95%B0"></a>
 
 ```powershell
@@ -869,7 +878,6 @@ Get-Variable | Get-Member -MemberType Properties
 | WhatIfPreference            |                                                      |
 
 #### 設定変数のみ一覧化
-
 <a id="markdown-%E8%A8%AD%E5%AE%9A%E5%A4%89%E6%95%B0%E3%81%AE%E3%81%BF%E4%B8%80%E8%A6%A7%E5%8C%96" name="%E8%A8%AD%E5%AE%9A%E5%A4%89%E6%95%B0%E3%81%AE%E3%81%BF%E4%B8%80%E8%A6%A7%E5%8C%96"></a>
 
 ```powershell
@@ -880,8 +888,8 @@ Get-Variable |
   } | % Name
 ```
 
-### 配列
 
+### 配列
 <a id="markdown-%E9%85%8D%E5%88%97" name="%E9%85%8D%E5%88%97"></a>
 
 ```powershell
@@ -948,7 +956,6 @@ $array[10..200] # 添え字も配列
 > 201
 
 #### 多次元配列
-
 <a id="markdown-%E5%A4%9A%E6%AC%A1%E5%85%83%E9%85%8D%E5%88%97" name="%E5%A4%9A%E6%AC%A1%E5%85%83%E9%85%8D%E5%88%97"></a>
 
 ```powershell
@@ -958,8 +965,8 @@ $array[1][2]
 
 > 2-3
 
-### ArrayList
 
+### ArrayList
 <a id="markdown-arraylist" name="arraylist"></a>
 
 ```powershell
@@ -982,8 +989,8 @@ $list | sort-object
 >
 > ipsum
 
-### ハッシュテーブル
 
+### ハッシュテーブル
 <a id="markdown-%E3%83%8F%E3%83%83%E3%82%B7%E3%83%A5%E3%83%86%E3%83%BC%E3%83%96%E3%83%AB" name="%E3%83%8F%E3%83%83%E3%82%B7%E3%83%A5%E3%83%86%E3%83%BC%E3%83%96%E3%83%AB"></a>
 
 ```powershell
@@ -1059,8 +1066,8 @@ $table.GetEnumerator() | ForEach-Object {
 > key1: value1
 > key2: value2
 
-## 画面出力
 
+## 画面出力
 <a id="markdown-%E7%94%BB%E9%9D%A2%E5%87%BA%E5%8A%9B" name="%E7%94%BB%E9%9D%A2%E5%87%BA%E5%8A%9B"></a>
 <a id="markdown-%E7%94%BB%E9%9D%A2%E5%87%BA%E5%8A%9B" name="%E7%94%BB%E9%9D%A2%E5%87%BA%E5%8A%9B"></a>
 
@@ -1091,12 +1098,10 @@ $Host.UI.WriteWarningLine()
 ```
 
 ### デバッグ出力
-
 <a id="markdown-%E3%83%87%E3%83%90%E3%83%83%E3%82%B0%E5%87%BA%E5%8A%9B" name="%E3%83%87%E3%83%90%E3%83%83%E3%82%B0%E5%87%BA%E5%8A%9B"></a>
 <a id="markdown-%E3%83%87%E3%83%90%E3%83%83%E3%82%B0%E5%87%BA%E5%8A%9B" name="%E3%83%87%E3%83%90%E3%83%83%E3%82%B0%E5%87%BA%E5%8A%9B"></a>
 
 #### Write-Error
-
 <a id="markdown-write-error" name="write-error"></a>
 <a id="markdown-write-error" name="write-error"></a>
 
@@ -1114,7 +1119,6 @@ try {
 ```
 
 #### その他のログレベル
-
 <a id="markdown-%E3%81%9D%E3%81%AE%E4%BB%96%E3%81%AE%E3%83%AD%E3%82%B0%E3%83%AC%E3%83%99%E3%83%AB" name="%E3%81%9D%E3%81%AE%E4%BB%96%E3%81%AE%E3%83%AD%E3%82%B0%E3%83%AC%E3%83%99%E3%83%AB"></a>
 <a id="markdown-%E3%81%9D%E3%81%AE%E4%BB%96%E3%81%AE%E3%83%AD%E3%82%B0%E3%83%AC%E3%83%99%E3%83%AB" name="%E3%81%9D%E3%81%AE%E4%BB%96%E3%81%AE%E3%83%AD%E3%82%B0%E3%83%AC%E3%83%99%E3%83%AB"></a>
 
@@ -1140,7 +1144,6 @@ $Host.UI.WriteWarningLine("画面出力")
 ```
 
 ### プログレスバー
-
 <a id="markdown-%E3%83%97%E3%83%AD%E3%82%B0%E3%83%AC%E3%82%B9%E3%83%90%E3%83%BC" name="%E3%83%97%E3%83%AD%E3%82%B0%E3%83%AC%E3%82%B9%E3%83%90%E3%83%BC"></a>
 <a id="markdown-%E3%83%97%E3%83%AD%E3%82%B0%E3%83%AC%E3%82%B9%E3%83%90%E3%83%BC" name="%E3%83%97%E3%83%AD%E3%82%B0%E3%83%AC%E3%82%B9%E3%83%90%E3%83%BC"></a>
 
@@ -1158,12 +1161,11 @@ for($i = 0;$i -le 100; $i++){
 }
 ```
 
-## プロセス
 
+## プロセス
 <a id="markdown-%E3%83%97%E3%83%AD%E3%82%BB%E3%82%B9" name="%E3%83%97%E3%83%AD%E3%82%BB%E3%82%B9"></a>
 
 ### 管理者権限で実行
-
 <a id="markdown-%E7%AE%A1%E7%90%86%E8%80%85%E6%A8%A9%E9%99%90%E3%81%A7%E5%AE%9F%E8%A1%8C" name="%E7%AE%A1%E7%90%86%E8%80%85%E6%A8%A9%E9%99%90%E3%81%A7%E5%AE%9F%E8%A1%8C"></a>
 
 ```powershell
@@ -1180,11 +1182,9 @@ else {
 ```
 
 ### 待機
-
 <a id="markdown-%E5%BE%85%E6%A9%9F" name="%E5%BE%85%E6%A9%9F"></a>
 
 #### キー押下を待機(Pause)
-
 <a id="markdown-%E3%82%AD%E3%83%BC%E6%8A%BC%E4%B8%8B%E3%82%92%E5%BE%85%E6%A9%9Fpause" name="%E3%82%AD%E3%83%BC%E6%8A%BC%E4%B8%8B%E3%82%92%E5%BE%85%E6%A9%9Fpause"></a>
 
 ```powershell
@@ -1200,7 +1200,6 @@ function Pause {
 ```
 
 #### 一定時間待機(Sleep, Wait)
-
 <a id="markdown-%E4%B8%80%E5%AE%9A%E6%99%82%E9%96%93%E5%BE%85%E6%A9%9Fsleep%2C-wait" name="%E4%B8%80%E5%AE%9A%E6%99%82%E9%96%93%E5%BE%85%E6%A9%9Fsleep%2C-wait"></a>
 
 ```powershell
@@ -1211,16 +1210,14 @@ Start-Sleep -s 10; Write-Host "###"
 Start-Sleep -m 3000; Write-Host "###"
 ```
 
-## 制御構文
 
+## 制御構文
 <a id="markdown-%E5%88%B6%E5%BE%A1%E6%A7%8B%E6%96%87" name="%E5%88%B6%E5%BE%A1%E6%A7%8B%E6%96%87"></a>
 
 ### 条件分岐
-
 <a id="markdown-%E6%9D%A1%E4%BB%B6%E5%88%86%E5%B2%90" name="%E6%9D%A1%E4%BB%B6%E5%88%86%E5%B2%90"></a>
 
 #### if文
-
 <a id="markdown-if%E6%96%87" name="if%E6%96%87"></a>
 
 ```powershell
@@ -1234,7 +1231,6 @@ if ($cond1) {
 ```
 
 #### TRUEと評価される値
-
 <a id="markdown-true%E3%81%A8%E8%A9%95%E4%BE%A1%E3%81%95%E3%82%8C%E3%82%8B%E5%80%A4" name="true%E3%81%A8%E8%A9%95%E4%BE%A1%E3%81%95%E3%82%8C%E3%82%8B%E5%80%A4"></a>
 
 ```powershell
@@ -1245,7 +1241,6 @@ $true
 ```
 
 #### FALSEと評価される値
-
 <a id="markdown-false%E3%81%A8%E8%A9%95%E4%BE%A1%E3%81%95%E3%82%8C%E3%82%8B%E5%80%A4" name="false%E3%81%A8%E8%A9%95%E4%BE%A1%E3%81%95%E3%82%8C%E3%82%8B%E5%80%A4"></a>
 
 ```powershell
@@ -1255,7 +1250,6 @@ $false
 ```
 
 #### switch文
-
 <a id="markdown-switch%E6%96%87" name="switch%E6%96%87"></a>
 
 ```powershell
@@ -1268,11 +1262,9 @@ switch ($v) {
 ```
 
 ### ループ
-
 <a id="markdown-%E3%83%AB%E3%83%BC%E3%83%97" name="%E3%83%AB%E3%83%BC%E3%83%97"></a>
 
 #### ループ文
-
 <a id="markdown-%E3%83%AB%E3%83%BC%E3%83%97%E6%96%87" name="%E3%83%AB%E3%83%BC%E3%83%97%E6%96%87"></a>
 
 ```powershell
@@ -1336,7 +1328,6 @@ do {
 > 3
 
 #### ループ制御文
-
 <a id="markdown-%E3%83%AB%E3%83%BC%E3%83%97%E5%88%B6%E5%BE%A1%E6%96%87" name="%E3%83%AB%E3%83%BC%E3%83%97%E5%88%B6%E5%BE%A1%E6%96%87"></a>
 
 ```powershell
@@ -1365,11 +1356,9 @@ foreach ($i in 0..4) {
 > 4
 
 ### 例外処理
-
 <a id="markdown-%E4%BE%8B%E5%A4%96%E5%87%A6%E7%90%86" name="%E4%BE%8B%E5%A4%96%E5%87%A6%E7%90%86"></a>
 
 #### try節
-
 <a id="markdown-try%E7%AF%80" name="try%E7%AF%80"></a>
 
 PowerShellのエラー「終了するエラー」「続行するエラー」のうち、デフォルトでCatchできるのは「終了するエラー」のみだが、$ErrorActionPreferenceに「Stop」を代入することで、両方例外としてCatchすることができるようになる。
@@ -1404,7 +1393,6 @@ exit $rc
 ```
 
 #### trap節
-
 <a id="markdown-trap%E7%AF%80" name="trap%E7%AF%80"></a>
 
 ```powershell
@@ -1427,12 +1415,11 @@ trap [Exception] {
 # 処理
 ```
 
-## 関数
 
+## 関数
 <a id="markdown-%E9%96%A2%E6%95%B0" name="%E9%96%A2%E6%95%B0"></a>
 
 ### 関数の基本形
-
 <a id="markdown-%E9%96%A2%E6%95%B0%E3%81%AE%E5%9F%BA%E6%9C%AC%E5%BD%A2" name="%E9%96%A2%E6%95%B0%E3%81%AE%E5%9F%BA%E6%9C%AC%E5%BD%A2"></a>
 
 ```powershell
@@ -1445,11 +1432,9 @@ $result = Func $arg1 $arg2 $arg3
 ```
 
 ### 引数
-
 <a id="markdown-%E5%BC%95%E6%95%B0" name="%E5%BC%95%E6%95%B0"></a>
 
 #### 引数の取り方
-
 <a id="markdown-%E5%BC%95%E6%95%B0%E3%81%AE%E5%8F%96%E3%82%8A%E6%96%B9" name="%E5%BC%95%E6%95%B0%E3%81%AE%E5%8F%96%E3%82%8A%E6%96%B9"></a>
 
 ```powershell
@@ -1479,7 +1464,6 @@ function Func3 {
 ```
 
 #### 引数の型を指定
-
 <a id="markdown-%E5%BC%95%E6%95%B0%E3%81%AE%E5%9E%8B%E3%82%92%E6%8C%87%E5%AE%9A" name="%E5%BC%95%E6%95%B0%E3%81%AE%E5%9E%8B%E3%82%92%E6%8C%87%E5%AE%9A"></a>
 
 ```powershell
@@ -1489,7 +1473,6 @@ function Func4([int]$arg1, [int]$arg2){
 ```
 
 #### 引数の参照渡し
-
 <a id="markdown-%E5%BC%95%E6%95%B0%E3%81%AE%E5%8F%82%E7%85%A7%E6%B8%A1%E3%81%97" name="%E5%BC%95%E6%95%B0%E3%81%AE%E5%8F%82%E7%85%A7%E6%B8%A1%E3%81%97"></a>
 
 ```powershell
@@ -1499,7 +1482,6 @@ function Func5([ref]$arg1, [ref]$arg2){
 ```
 
 #### 引数の既定値
-
 <a id="markdown-%E5%BC%95%E6%95%B0%E3%81%AE%E6%97%A2%E5%AE%9A%E5%80%A4" name="%E5%BC%95%E6%95%B0%E3%81%AE%E6%97%A2%E5%AE%9A%E5%80%A4"></a>
 
 ```powershell
@@ -1508,8 +1490,8 @@ function Func5($arg1 = 1, $arg2 = 2){
 }
 ```
 
-# システム情報
 
+# システム情報
 <a id="markdown-%E3%82%B7%E3%82%B9%E3%83%86%E3%83%A0%E6%83%85%E5%A0%B1" name="%E3%82%B7%E3%82%B9%E3%83%86%E3%83%A0%E6%83%85%E5%A0%B1"></a>
 
 ```powershell
@@ -1708,16 +1690,87 @@ WindowsUBR                                              Property   System.Nullab
 WindowsVersion                                          Property   string WindowsVersion {get;}
 ```
 
-## サービス
 
+## Windows Update
+<a id="markdown-windows-update" name="windows-update"></a>
+
+```powershell
+$windowsUpdate = New-Object -ComObject "Microsoft.Update.AutoUpdate"
+$windowsUpdate.Settings
+$windowsUpdate.Results
+```
+
+```
+NotificationLevel         : 4
+ReadOnly                  : False
+Required                  : True
+ScheduledInstallationDay  : 0
+ScheduledInstallationTime : 3
+IncludeRecommendedUpdates : True
+NonAdministratorsElevated : True
+FeaturedUpdatesEnabled    : False
+
+LastSearchSuccessDate LastInstallationSuccessDate
+--------------------- ---------------------------
+yyyy/mm/dd h:mm:ss    yyyy/mm/dd h:mm:ss
+```
+
+
+## Windows Firewall
+<a id="markdown-windows-firewall" name="windows-firewall"></a>
+
+```powershell
+$fw = new-object -com HNetCfg.FwMgr
+$profile = $fw.LocalPolicy.CurrentProfile
+$profile
+```
+
+```
+Type                                         : 1
+FirewallEnabled                              : True
+ExceptionsNotAllowed                         : False
+NotificationsDisabled                        : False
+UnicastResponsesToMulticastBroadcastDisabled : False
+RemoteAdminSettings                          : System.__ComObject
+IcmpSettings                                 : System.__ComObject
+GloballyOpenPorts                            : System.__ComObject
+Services                                     : System.__ComObject
+AuthorizedApplications                       : System.__ComObject
+```
+
+
+## プロセス
+<a id="markdown-%E3%83%97%E3%83%AD%E3%82%BB%E3%82%B9" name="%E3%83%97%E3%83%AD%E3%82%BB%E3%82%B9"></a>
+
+```powershell
+Get-Process |
+Where-Object {(($_.ProcessName -like "*firefox*") -or ($_.ProcessName -like "*chrome*"))} |
+Select-Object -Property ProcessName,CPU |
+Group-Object ProcessName |
+Select-Object @{n='ProcessName';e={$_.Group | Select -Expand ProcessName -First 1}},@{n='CPU';e={($_.Group | Measure-Object CPU -Sum).Sum}}
+```
+
+| プロパティ  | 内容                                                                       | 単位           |
+| ----------- | -------------------------------------------------------------------------- | -------------- |
+| CPU(s)      | すべてのプロセッサで使用したプロセッサ時間                                 | 秒単位         |
+| Handles     | オープンしたハンドルの数                                                   |                |
+| ID          | プロセスID（PID）                                                          |                |
+| NPM(K)      | 使用している非ページメモリのサイズ                                         | キロバイト単位 |
+| PM(K)       | 使用しているページ可能なメモリのサイズ                                     | キロバイト単位 |
+| ProcessName | プロセスの名前                                                             |                |
+| VM(M)       | 使用している仮想メモリ（ディスク上のページングファイルの記憶領域）のサイズ | メガバイト単位 |
+| WS(K)       | ワーキングセット（最近参照したメモリのページ）のサイズ                     | キロバイト単位 |
+
+
+## サービス
 <a id="markdown-%E3%82%B5%E3%83%BC%E3%83%93%E3%82%B9" name="%E3%82%B5%E3%83%BC%E3%83%93%E3%82%B9"></a>
 
 ```powershell
 
 ```
 
-# 日付処理
 
+# 日付処理
 <a id="markdown-%E6%97%A5%E4%BB%98%E5%87%A6%E7%90%86" name="%E6%97%A5%E4%BB%98%E5%87%A6%E7%90%86"></a>
 
 ```powershell
@@ -1741,12 +1794,11 @@ $datetime = [DateTime]::ParseExact("20150101-013000",$format, $null)
 Write-Host $datetime.ToString($format)
 ```
 
-# ファイル操作
 
+# ファイル操作
 <a id="markdown-%E3%83%95%E3%82%A1%E3%82%A4%E3%83%AB%E6%93%8D%E4%BD%9C" name="%E3%83%95%E3%82%A1%E3%82%A4%E3%83%AB%E6%93%8D%E4%BD%9C"></a>
 
 ## カレントディレクトリ
-
 <a id="markdown-%E3%82%AB%E3%83%AC%E3%83%B3%E3%83%88%E3%83%87%E3%82%A3%E3%83%AC%E3%82%AF%E3%83%88%E3%83%AA" name="%E3%82%AB%E3%83%AC%E3%83%B3%E3%83%88%E3%83%87%E3%82%A3%E3%83%AC%E3%82%AF%E3%83%88%E3%83%AA"></a>
 
 ```powershell
@@ -1755,8 +1807,45 @@ Write-Host $datetime.ToString($format)
 Set-Location $dirPath
 ```
 
-## ファイルフォルダの新規作成
+## 特別なフォルダのパスを取得
+<a id="markdown-%E7%89%B9%E5%88%A5%E3%81%AA%E3%83%95%E3%82%A9%E3%83%AB%E3%83%80%E3%81%AE%E3%83%91%E3%82%B9%E3%82%92%E5%8F%96%E5%BE%97" name="%E7%89%B9%E5%88%A5%E3%81%AA%E3%83%95%E3%82%A9%E3%83%AB%E3%83%80%E3%81%AE%E3%83%91%E3%82%B9%E3%82%92%E5%8F%96%E5%BE%97"></a>
 
+```powershell
+$path = [System.Environment]::GetFolderPath("Desktop")
+
+# 特別なフォルダの一覧
+[System.Enum]::GetValues([System.Environment+SpecialFolder])
+```
+
+## ファイル一覧
+<a id="markdown-%E3%83%95%E3%82%A1%E3%82%A4%E3%83%AB%E4%B8%80%E8%A6%A7" name="%E3%83%95%E3%82%A1%E3%82%A4%E3%83%AB%E4%B8%80%E8%A6%A7"></a>
+
+```powershell
+$dirPath = [System.Environment]::GetFolderPath("Desktop")
+
+Get-ChildItem -Path $dirPath -Recurse
+```
+
+## フォルダの合計サイズ（再帰）
+<a id="markdown-%E3%83%95%E3%82%A9%E3%83%AB%E3%83%80%E3%81%AE%E5%90%88%E8%A8%88%E3%82%B5%E3%82%A4%E3%82%BA%EF%BC%88%E5%86%8D%E5%B8%B0%EF%BC%89" name="%E3%83%95%E3%82%A9%E3%83%AB%E3%83%80%E3%81%AE%E5%90%88%E8%A8%88%E3%82%B5%E3%82%A4%E3%82%BA%EF%BC%88%E5%86%8D%E5%B8%B0%EF%BC%89"></a>
+
+```powershell
+$dirPath = [System.Environment]::GetFolderPath("Desktop")
+
+Function Format-FileSize() {
+    Param ([int64]$size)
+    If     ($size -gt 1TB) {[string]::Format("{0:0.00} TB", $size / 1TB)}
+    ElseIf ($size -gt 1GB) {[string]::Format("{0:0.00} GB", $size / 1GB)}
+    ElseIf ($size -gt 1MB) {[string]::Format("{0:0.00} MB", $size / 1MB)}
+    ElseIf ($size -gt 1KB) {[string]::Format("{0:0.00} kB", $size / 1KB)}
+    ElseIf ($size -gt 0)   {[string]::Format("{0:0.00} B", $size)}
+    Else                   {""}
+}
+
+Get-ChildItem -Path $dirPath -Recurse -Force | ForEach-Object -Begin { $Len = 0 } -Process { $Len = $Len + $_.Length } -End { write-host ("total size is " + (Format-FileSize $Len)) }
+```
+
+## ファイルフォルダの新規作成
 <a id="markdown-%E3%83%95%E3%82%A1%E3%82%A4%E3%83%AB%E3%83%95%E3%82%A9%E3%83%AB%E3%83%80%E3%81%AE%E6%96%B0%E8%A6%8F%E4%BD%9C%E6%88%90" name="%E3%83%95%E3%82%A1%E3%82%A4%E3%83%AB%E3%83%95%E3%82%A9%E3%83%AB%E3%83%80%E3%81%AE%E6%96%B0%E8%A6%8F%E4%BD%9C%E6%88%90"></a>
 
 ```powershell
@@ -1768,7 +1857,6 @@ New-Item .\temp -itemType Directory
 ```
 
 ### touch
-
 <a id="markdown-touch" name="touch"></a>
 
 ```powershell
@@ -1788,7 +1876,6 @@ touch test_touch.txt
 ```
 
 ## ファイルフォルダの削除
-
 <a id="markdown-%E3%83%95%E3%82%A1%E3%82%A4%E3%83%AB%E3%83%95%E3%82%A9%E3%83%AB%E3%83%80%E3%81%AE%E5%89%8A%E9%99%A4" name="%E3%83%95%E3%82%A1%E3%82%A4%E3%83%AB%E3%83%95%E3%82%A9%E3%83%AB%E3%83%80%E3%81%AE%E5%89%8A%E9%99%A4"></a>
 
 ```powershell
@@ -1804,7 +1891,6 @@ if( $(Test-Path $dirPath) -ne $True ){
 ```
 
 ## ファイルフォルダのコピーと移動
-
 <a id="markdown-%E3%83%95%E3%82%A1%E3%82%A4%E3%83%AB%E3%83%95%E3%82%A9%E3%83%AB%E3%83%80%E3%81%AE%E3%82%B3%E3%83%94%E3%83%BC%E3%81%A8%E7%A7%BB%E5%8B%95" name="%E3%83%95%E3%82%A1%E3%82%A4%E3%83%AB%E3%83%95%E3%82%A9%E3%83%AB%E3%83%80%E3%81%AE%E3%82%B3%E3%83%94%E3%83%BC%E3%81%A8%E7%A7%BB%E5%8B%95"></a>
 
 ```powershell
@@ -1815,13 +1901,11 @@ Move-Item -force $filepathToRemove $filepathToRemove+".bak"
 ```
 
 ## テキストファイル
-
 <a id="markdown-%E3%83%86%E3%82%AD%E3%82%B9%E3%83%88%E3%83%95%E3%82%A1%E3%82%A4%E3%83%AB" name="%E3%83%86%E3%82%AD%E3%82%B9%E3%83%88%E3%83%95%E3%82%A1%E3%82%A4%E3%83%AB"></a>
 
 文字コードについては、「-Encoding Default」と指定すればShift_JIS、「-Encoding UTF8」と指定すればUTF-8で読み書きされる。
 
 ### 1行ごとに読込み
-
 <a id="markdown-%E8%A1%8C%E3%81%94%E3%81%A8%E3%81%AB%E8%AA%AD%E8%BE%BC%E3%81%BF" name="%E8%A1%8C%E3%81%94%E3%81%A8%E3%81%AB%E8%AA%AD%E8%BE%BC%E3%81%BF"></a>
 
 ```powershell
@@ -1865,7 +1949,6 @@ if (Split-Path $filepath -Parent) {
 ```
 
 ### 書出し
-
 <a id="markdown-%E6%9B%B8%E5%87%BA%E3%81%97" name="%E6%9B%B8%E5%87%BA%E3%81%97"></a>
 
 ```powershell
@@ -1906,11 +1989,9 @@ Add-Content $filepath $text
 ```
 
 ## CSVファイル
-
 <a id="markdown-csv%E3%83%95%E3%82%A1%E3%82%A4%E3%83%AB" name="csv%E3%83%95%E3%82%A1%E3%82%A4%E3%83%AB"></a>
 
 ### 読込み
-
 <a id="markdown-%E8%AA%AD%E8%BE%BC%E3%81%BF" name="%E8%AA%AD%E8%BE%BC%E3%81%BF"></a>
 
 ```powershell
@@ -1944,7 +2025,6 @@ if (Split-Path $filepath -Parent) {
 ```
 
 ### 書出し
-
 <a id="markdown-%E6%9B%B8%E5%87%BA%E3%81%97" name="%E6%9B%B8%E5%87%BA%E3%81%97"></a>
 
 ```powershell
@@ -1984,11 +2064,9 @@ $Datas | Export-Csv $filepath -Encoding Default  # Shift-JIS
 ```
 
 ## 設定ファイル(.ini)
-
 <a id="markdown-%E8%A8%AD%E5%AE%9A%E3%83%95%E3%82%A1%E3%82%A4%E3%83%AB.ini" name="%E8%A8%AD%E5%AE%9A%E3%83%95%E3%82%A1%E3%82%A4%E3%83%AB.ini"></a>
 
 ### 読込み
-
 <a id="markdown-%E8%AA%AD%E8%BE%BC%E3%81%BF" name="%E8%AA%AD%E8%BE%BC%E3%81%BF"></a>
 
 ```powershell
@@ -2008,11 +2086,9 @@ PASSWORD=foobar
 ```
 
 ## 構成ファイル(Web.config)
-
 <a id="markdown-%E6%A7%8B%E6%88%90%E3%83%95%E3%82%A1%E3%82%A4%E3%83%ABweb.config" name="%E6%A7%8B%E6%88%90%E3%83%95%E3%82%A1%E3%82%A4%E3%83%ABweb.config"></a>
 
 ### 読み書き
-
 <a id="markdown-%E8%AA%AD%E3%81%BF%E6%9B%B8%E3%81%8D" name="%E8%AA%AD%E3%81%BF%E6%9B%B8%E3%81%8D"></a>
 
 ```powershell
@@ -2043,11 +2119,9 @@ $Config.Save();
 ```
 
 ## XMLファイル
-
 <a id="markdown-xml%E3%83%95%E3%82%A1%E3%82%A4%E3%83%AB" name="xml%E3%83%95%E3%82%A1%E3%82%A4%E3%83%AB"></a>
 
 ### 読込み
-
 <a id="markdown-%E8%AA%AD%E8%BE%BC%E3%81%BF" name="%E8%AA%AD%E8%BE%BC%E3%81%BF"></a>
 
 ```powershell
@@ -2067,7 +2141,6 @@ $xml = [xml]$xmlString
 ```
 
 ### 書出し
-
 <a id="markdown-%E6%9B%B8%E5%87%BA%E3%81%97" name="%E6%9B%B8%E5%87%BA%E3%81%97"></a>
 
 ```powershell
@@ -2086,11 +2159,9 @@ $xml.Save($filepath)
 ```
 
 ## CSVファイル
-
 <a id="markdown-csv%E3%83%95%E3%82%A1%E3%82%A4%E3%83%AB" name="csv%E3%83%95%E3%82%A1%E3%82%A4%E3%83%AB"></a>
 
 ### 読込み
-
 <a id="markdown-%E8%AA%AD%E8%BE%BC%E3%81%BF" name="%E8%AA%AD%E8%BE%BC%E3%81%BF"></a>
 
 ```powershell
@@ -2114,11 +2185,9 @@ key3=value3
 ```
 
 ## ログ出力
-
 <a id="markdown-%E3%83%AD%E3%82%B0%E5%87%BA%E5%8A%9B" name="%E3%83%AD%E3%82%B0%E5%87%BA%E5%8A%9B"></a>
 
 ### ログファイル
-
 <a id="markdown-%E3%83%AD%E3%82%B0%E3%83%95%E3%82%A1%E3%82%A4%E3%83%AB" name="%E3%83%AD%E3%82%B0%E3%83%95%E3%82%A1%E3%82%A4%E3%83%AB"></a>
 
 ```powershell
@@ -2140,7 +2209,6 @@ if (Test-Path $filepath) {
 ```
 
 ### イベントログ
-
 <a id="markdown-%E3%82%A4%E3%83%99%E3%83%B3%E3%83%88%E3%83%AD%E3%82%B0" name="%E3%82%A4%E3%83%99%E3%83%B3%E3%83%88%E3%83%AD%E3%82%B0"></a>
 
 ```powershell
@@ -2171,14 +2239,34 @@ Write-EventLog -EntryType $eventTypeError -EventId $eventIdError -LogName $logNa
 
 # ソースを削除する場合
 # Remove-EventLog -Source $source
+
+# イベントログを取得
+Get-WinEvent -FilterHashtable @{
+    LogName='System', 'Application'
+    Level=1,2,3
+    StartTime=(Get-Date).Date.AddDays(-1)
+} |
+Select-Object -Property * | Format-Table -AutoSize -Wrap -Property TimeCreated,Id,Level,LevelDisplayName,ProviderName
 ```
 
-# ネットワーク
+#### Level キー
+<a id="markdown-level-%E3%82%AD%E3%83%BC" name="level-%E3%82%AD%E3%83%BC"></a>
 
+| Name          | Value |
+| ------------- | ----- |
+| Verbose       | 5     |
+| Informational | 4     |
+| Warning       | 3     |
+| Error         | 2     |
+| Critical      | 1     |
+| LogAlways     | 0     |
+
+
+# ネットワーク
 <a id="markdown-%E3%83%8D%E3%83%83%E3%83%88%E3%83%AF%E3%83%BC%E3%82%AF" name="%E3%83%8D%E3%83%83%E3%83%88%E3%83%AF%E3%83%BC%E3%82%AF"></a>
 
-## ping
 
+## ping
 <a id="markdown-ping" name="ping"></a>
 
 ```powershell
@@ -2193,7 +2281,7 @@ Test-Connection -computername "nohost" -count 1
 
 > True
 
-> Destination: localhost
+>    Destination: localhost
 >
 >
 >
@@ -2203,14 +2291,14 @@ Test-Connection -computername "nohost" -count 1
 >
 > ---- ------           -------                   ------- ---------- ------
 >
-> 1 *******          ::1                             0         32 Success
+>    1 *******          ::1                             0         32 Success
 
 > Flase
 
 > Test-Connection: Testing connection to computer 'localhos' failed: Cannot resolve the target name.
 
-## ARP
 
+## ARP
 <a id="markdown-arp" name="arp"></a>
 
 ```powershell
@@ -2223,23 +2311,23 @@ Get-NetNeighbor
 >
 > 16      192.168.0.255                                      FF-FF-FF-FF-FF-FF     Permanent   ActiveStore
 
-## Webリクエスト
 
+## Webリクエスト
 <a id="markdown-web%E3%83%AA%E3%82%AF%E3%82%A8%E3%82%B9%E3%83%88" name="web%E3%83%AA%E3%82%AF%E3%82%A8%E3%82%B9%E3%83%88"></a>
 
 ### コンテンツを取得する
-
 <a id="markdown-%E3%82%B3%E3%83%B3%E3%83%86%E3%83%B3%E3%83%84%E3%82%92%E5%8F%96%E5%BE%97%E3%81%99%E3%82%8B" name="%E3%82%B3%E3%83%B3%E3%83%86%E3%83%B3%E3%83%84%E3%82%92%E5%8F%96%E5%BE%97%E3%81%99%E3%82%8B"></a>
 
 #### GET
-
 <a id="markdown-get" name="get"></a>
 
 ```powershell
 # http://httpbin.org/get?q=qwerty
 $url = 'http://httpbin.org/get'
-$url = 'http://example.exampleexample'
 $params = @{"q"="qwerty"}
+
+
+# $url = 'http://example.exampleexample'
 
 
 try {
@@ -2253,7 +2341,6 @@ try {
 ```
 
 ### ファイルをダウンロードする
-
 <a id="markdown-%E3%83%95%E3%82%A1%E3%82%A4%E3%83%AB%E3%82%92%E3%83%80%E3%82%A6%E3%83%B3%E3%83%AD%E3%83%BC%E3%83%89%E3%81%99%E3%82%8B" name="%E3%83%95%E3%82%A1%E3%82%A4%E3%83%AB%E3%82%92%E3%83%80%E3%82%A6%E3%83%B3%E3%83%AD%E3%83%BC%E3%83%89%E3%81%99%E3%82%8B"></a>
 
 ```powershell
@@ -2261,6 +2348,20 @@ $url = 'https://raw.githubusercontent.com/pandas-dev/pandas/main/pandas/tests/io
 Invoke-WebRequest $url -Body $params -OutFile '.\iris.csv'
 ```
 
+### リンクURLの一覧を取得する
+<a id="markdown-%E3%83%AA%E3%83%B3%E3%82%AFurl%E3%81%AE%E4%B8%80%E8%A6%A7%E3%82%92%E5%8F%96%E5%BE%97%E3%81%99%E3%82%8B" name="%E3%83%AA%E3%83%B3%E3%82%AFurl%E3%81%AE%E4%B8%80%E8%A6%A7%E3%82%92%E5%8F%96%E5%BE%97%E3%81%99%E3%82%8B"></a>
+
+```powershell
+$url = 'http://www.google.co.jp'
+$res = Invoke-WebRequest $url
+
+$links = $res.Links
+$links | Where-Object {(($_.href -like "http://www.google.co.jp/intl/*") -or ($_.href -like "https://accounts.google.com/*"))} | Select-Object -ExpandProperty href
+```
+
+
 <hr>
 
-Copyright (c) 2022 YA-androidapp(<https://github.com/YA-androidapp>) All rights reserved.
+Copyright (c) 2022 YA-androidapp(https://github.com/YA-androidapp) All rights reserved.
+
+
