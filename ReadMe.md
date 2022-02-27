@@ -75,6 +75,7 @@
     - [プロセス](#%E3%83%97%E3%83%AD%E3%82%BB%E3%82%B9)
     - [サービス](#%E3%82%B5%E3%83%BC%E3%83%93%E3%82%B9)
 - [日付処理](#%E6%97%A5%E4%BB%98%E5%87%A6%E7%90%86)
+    - [日付の差](#%E6%97%A5%E4%BB%98%E3%81%AE%E5%B7%AE)
 - [ファイル操作](#%E3%83%95%E3%82%A1%E3%82%A4%E3%83%AB%E6%93%8D%E4%BD%9C)
     - [カレントディレクトリ](#%E3%82%AB%E3%83%AC%E3%83%B3%E3%83%88%E3%83%87%E3%82%A3%E3%83%AC%E3%82%AF%E3%83%88%E3%83%AA)
     - [特別なフォルダのパスを取得](#%E7%89%B9%E5%88%A5%E3%81%AA%E3%83%95%E3%82%A9%E3%83%AB%E3%83%80%E3%81%AE%E3%83%91%E3%82%B9%E3%82%92%E5%8F%96%E5%BE%97)
@@ -99,6 +100,7 @@
         - [書出し](#%E6%9B%B8%E5%87%BA%E3%81%97)
     - [CSVファイル](#csv%E3%83%95%E3%82%A1%E3%82%A4%E3%83%AB)
         - [読込み](#%E8%AA%AD%E8%BE%BC%E3%81%BF)
+    - [ZIPファイル](#zip%E3%83%95%E3%82%A1%E3%82%A4%E3%83%AB)
     - [ログ出力](#%E3%83%AD%E3%82%B0%E5%87%BA%E5%8A%9B)
         - [ログファイル](#%E3%83%AD%E3%82%B0%E3%83%95%E3%82%A1%E3%82%A4%E3%83%AB)
         - [イベントログ](#%E3%82%A4%E3%83%99%E3%83%B3%E3%83%88%E3%83%AD%E3%82%B0)
@@ -1794,6 +1796,28 @@ $datetime = [DateTime]::ParseExact("20150101-013000",$format, $null)
 Write-Host $datetime.ToString($format)
 ```
 
+## 日付の差
+<a id="markdown-%E6%97%A5%E4%BB%98%E3%81%AE%E5%B7%AE" name="%E6%97%A5%E4%BB%98%E3%81%AE%E5%B7%AE"></a>
+
+```powershell
+$since    = [DateTime]::ParseExact("2022/02/28 01:23:45","yyyy/MM/dd HH:mm:ss", $null)
+$until    = [DateTime]::ParseExact("2022/03/01 12:34:56","yyyy/MM/dd HH:mm:ss", $null)
+$timeDiff = $until - $since
+
+$timeDiff.Days
+$timeDiff.Hours
+$timeDiff.Minutes
+$timeDiff.Seconds
+```
+
+> 1
+>
+> 11
+>
+> 11
+>
+> 11
+
 
 # ファイル操作
 <a id="markdown-%E3%83%95%E3%82%A1%E3%82%A4%E3%83%AB%E6%93%8D%E4%BD%9C" name="%E3%83%95%E3%82%A1%E3%82%A4%E3%83%AB%E6%93%8D%E4%BD%9C"></a>
@@ -2182,6 +2206,19 @@ foreach($line in $lines){
 key1=value1
 key2=value2
 key3=value3
+```
+
+## ZIPファイル
+<a id="markdown-zip%E3%83%95%E3%82%A1%E3%82%A4%E3%83%AB" name="zip%E3%83%95%E3%82%A1%E3%82%A4%E3%83%AB"></a>
+
+```powershell
+Compress-Archive -Path .\*.ps1 -DestinationPath .\archive.zip
+
+$date = Get-Date -Format "yyyyMMddHHmmss"
+New-Item .\$date -ItemType Directory -Force
+Expand-Archive -Path .\archive.zip -DestinationPath .\$date
+Get-ChildItem .\*.zip | Expand-Archive -DestinationPath .\
+
 ```
 
 ## ログ出力
