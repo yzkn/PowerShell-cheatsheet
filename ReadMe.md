@@ -73,6 +73,17 @@
     - [Windows Update](#windows-update)
     - [Windows Firewall](#windows-firewall)
     - [プロセス](#%E3%83%97%E3%83%AD%E3%82%BB%E3%82%B9)
+        - [アプリケーション](#%E3%82%A2%E3%83%97%E3%83%AA%E3%82%B1%E3%83%BC%E3%82%B7%E3%83%A7%E3%83%B3)
+            - [アプリケーション一覧](#%E3%82%A2%E3%83%97%E3%83%AA%E3%82%B1%E3%83%BC%E3%82%B7%E3%83%A7%E3%83%B3%E4%B8%80%E8%A6%A7)
+            - [Explorer](#explorer)
+        - [ブラウザ](#%E3%83%96%E3%83%A9%E3%82%A6%E3%82%B6)
+            - [既定のブラウザ](#%E6%97%A2%E5%AE%9A%E3%81%AE%E3%83%96%E3%83%A9%E3%82%A6%E3%82%B6)
+            - [Edge](#edge)
+            - [Firefox](#firefox)
+            - [Office](#office)
+                - [Excel](#excel)
+                - [PowerPoint](#powerpoint)
+                - [Word](#word)
     - [サービス](#%E3%82%B5%E3%83%BC%E3%83%93%E3%82%B9)
 - [日付処理](#%E6%97%A5%E4%BB%98%E5%87%A6%E7%90%86)
     - [日付の差](#%E6%97%A5%E4%BB%98%E3%81%AE%E5%B7%AE)
@@ -1762,6 +1773,105 @@ Select-Object @{n='ProcessName';e={$_.Group | Select -Expand ProcessName -First 
 | ProcessName | プロセスの名前                                                             |                |
 | VM(M)       | 使用している仮想メモリ（ディスク上のページングファイルの記憶領域）のサイズ | メガバイト単位 |
 | WS(K)       | ワーキングセット（最近参照したメモリのページ）のサイズ                     | キロバイト単位 |
+
+
+### アプリケーション
+<a id="markdown-%E3%82%A2%E3%83%97%E3%83%AA%E3%82%B1%E3%83%BC%E3%82%B7%E3%83%A7%E3%83%B3" name="%E3%82%A2%E3%83%97%E3%83%AA%E3%82%B1%E3%83%BC%E3%82%B7%E3%83%A7%E3%83%B3"></a>
+
+
+#### アプリケーション一覧
+<a id="markdown-%E3%82%A2%E3%83%97%E3%83%AA%E3%82%B1%E3%83%BC%E3%82%B7%E3%83%A7%E3%83%B3%E4%B8%80%E8%A6%A7" name="%E3%82%A2%E3%83%97%E3%83%AA%E3%82%B1%E3%83%BC%E3%82%B7%E3%83%A7%E3%83%B3%E4%B8%80%E8%A6%A7"></a>
+
+```powershell
+Get-ItemProperty HKLM:Software\Microsoft\Windows\CurrentVersion\Uninstall\* | Select-Object DisplayName, DisplayVersion, Comments, Publisher, InstallDate | Format-Table -Property DisplayName,Publisher,DisplayVersion,InstallDate
+```
+
+
+#### Explorer
+<a id="markdown-explorer" name="explorer"></a>
+
+```powershell
+$path = [System.Environment]::GetFolderPath("Desktop")
+
+Start-Process $path
+```
+
+```powershell
+$path = [System.Environment]::GetFolderPath("MyDocuments")
+
+Invoke-Item $path
+```
+
+
+### ブラウザ
+<a id="markdown-%E3%83%96%E3%83%A9%E3%82%A6%E3%82%B6" name="%E3%83%96%E3%83%A9%E3%82%A6%E3%82%B6"></a>
+
+#### 既定のブラウザ
+<a id="markdown-%E6%97%A2%E5%AE%9A%E3%81%AE%E3%83%96%E3%83%A9%E3%82%A6%E3%82%B6" name="%E6%97%A2%E5%AE%9A%E3%81%AE%E3%83%96%E3%83%A9%E3%82%A6%E3%82%B6"></a>
+
+```powershell
+start http://google.com
+```
+
+#### Edge
+<a id="markdown-edge" name="edge"></a>
+
+```powershell
+start microsoft-edge:http://google.com
+Start-Process microsoft-edge:https://google.com -WindowStyle maximized
+
+[System.Diagnostics.Process]::Start("C:\Program Files (x86)\Microsoft\Edge\Application\msedge.exe", "-InPrivate https://google.com")
+```
+
+#### Firefox
+<a id="markdown-firefox" name="firefox"></a>
+
+```powershell
+Start-Process 'C:\Program Files\Mozilla Firefox\firefox.exe' -argumentlist "-url http://google.com"
+
+[System.Diagnostics.Process]::Start("C:\Program Files\Mozilla Firefox\firefox.exe", "-private-window https://google.com")
+```
+
+
+#### Office
+<a id="markdown-office" name="office"></a>
+
+
+##### Excel
+<a id="markdown-excel" name="excel"></a>
+
+```powershell
+$excel = New-Object -ComObject Excel.Application
+$excel.Workbooks.Open("C:\Users\Y\Desktop\excel.xlsx")
+$excel.Visible = $true
+$excel.DisplayAlerts = $False
+
+$excel.Quit()
+```
+
+
+##### PowerPoint
+<a id="markdown-powerpoint" name="powerpoint"></a>
+
+```powershell
+$ppt = New-Object -ComObject PowerPoint.Application
+$ppt.Presentations.open("C:\Users\Y\Desktop\ppt.pptx")
+# `$ppt.visible = $true` なしで起動
+
+$ppt.Quit()
+```
+
+
+##### Word
+<a id="markdown-word" name="word"></a>
+
+```powershell
+$word = New-Object -ComObject word.application
+$Word.documents.open("C:\Users\Y\Desktop\word.docx")
+$word.visible = $true
+
+$word.Quit()
+```
 
 
 ## サービス
