@@ -99,31 +99,34 @@
     - [テキストファイル](#%E3%83%86%E3%82%AD%E3%82%B9%E3%83%88%E3%83%95%E3%82%A1%E3%82%A4%E3%83%AB)
         - [行ごとに読込み](#%E8%A1%8C%E3%81%94%E3%81%A8%E3%81%AB%E8%AA%AD%E8%BE%BC%E3%81%BF)
         - [書出し](#%E6%9B%B8%E5%87%BA%E3%81%97)
+    - [JSONファイル](#json%E3%83%95%E3%82%A1%E3%82%A4%E3%83%AB)
+        - [読込み](#%E8%AA%AD%E8%BE%BC%E3%81%BF)
+        - [書込み](#%E6%9B%B8%E8%BE%BC%E3%81%BF)
     - [CSVファイル](#csv%E3%83%95%E3%82%A1%E3%82%A4%E3%83%AB)
         - [読込み](#%E8%AA%AD%E8%BE%BC%E3%81%BF)
         - [書出し](#%E6%9B%B8%E5%87%BA%E3%81%97)
     - [設定ファイル.ini](#%E8%A8%AD%E5%AE%9A%E3%83%95%E3%82%A1%E3%82%A4%E3%83%ABini)
         - [読込み](#%E8%AA%AD%E8%BE%BC%E3%81%BF)
+            - [コメント行対応](#%E3%82%B3%E3%83%A1%E3%83%B3%E3%83%88%E8%A1%8C%E5%AF%BE%E5%BF%9C)
     - [構成ファイルWeb.config](#%E6%A7%8B%E6%88%90%E3%83%95%E3%82%A1%E3%82%A4%E3%83%ABwebconfig)
         - [読み書き](#%E8%AA%AD%E3%81%BF%E6%9B%B8%E3%81%8D)
     - [XMLファイル](#xml%E3%83%95%E3%82%A1%E3%82%A4%E3%83%AB)
         - [読込み](#%E8%AA%AD%E8%BE%BC%E3%81%BF)
         - [書出し](#%E6%9B%B8%E5%87%BA%E3%81%97)
-    - [CSVファイル](#csv%E3%83%95%E3%82%A1%E3%82%A4%E3%83%AB)
-        - [読込み](#%E8%AA%AD%E8%BE%BC%E3%81%BF)
     - [ZIPファイル](#zip%E3%83%95%E3%82%A1%E3%82%A4%E3%83%AB)
     - [ログ出力](#%E3%83%AD%E3%82%B0%E5%87%BA%E5%8A%9B)
         - [ログファイル](#%E3%83%AD%E3%82%B0%E3%83%95%E3%82%A1%E3%82%A4%E3%83%AB)
         - [イベントログ](#%E3%82%A4%E3%83%99%E3%83%B3%E3%83%88%E3%83%AD%E3%82%B0)
             - [Level キー](#level-%E3%82%AD%E3%83%BC)
 - [ネットワーク](#%E3%83%8D%E3%83%83%E3%83%88%E3%83%AF%E3%83%BC%E3%82%AF)
+    - [URLエンコード](#url%E3%82%A8%E3%83%B3%E3%82%B3%E3%83%BC%E3%83%89)
     - [ping](#ping)
     - [ARP](#arp)
     - [Webリクエスト](#web%E3%83%AA%E3%82%AF%E3%82%A8%E3%82%B9%E3%83%88)
-        - [コンテンツを取得する](#%E3%82%B3%E3%83%B3%E3%83%86%E3%83%B3%E3%83%84%E3%82%92%E5%8F%96%E5%BE%97%E3%81%99%E3%82%8B)
-            - [GET](#get)
-        - [ファイルをダウンロードする](#%E3%83%95%E3%82%A1%E3%82%A4%E3%83%AB%E3%82%92%E3%83%80%E3%82%A6%E3%83%B3%E3%83%AD%E3%83%BC%E3%83%89%E3%81%99%E3%82%8B)
-        - [リンクURLの一覧を取得する](#%E3%83%AA%E3%83%B3%E3%82%AFurl%E3%81%AE%E4%B8%80%E8%A6%A7%E3%82%92%E5%8F%96%E5%BE%97%E3%81%99%E3%82%8B)
+        - [GET](#get)
+            - [ファイルをダウンロードする](#%E3%83%95%E3%82%A1%E3%82%A4%E3%83%AB%E3%82%92%E3%83%80%E3%82%A6%E3%83%B3%E3%83%AD%E3%83%BC%E3%83%89%E3%81%99%E3%82%8B)
+            - [リンクURLの一覧を取得する](#%E3%83%AA%E3%83%B3%E3%82%AFurl%E3%81%AE%E4%B8%80%E8%A6%A7%E3%82%92%E5%8F%96%E5%BE%97%E3%81%99%E3%82%8B)
+        - [POST](#post)
 
 <!-- /TOC -->
 
@@ -2118,8 +2121,28 @@ $file.Close()
 Add-Content $filepath $text
 ```
 
-```powershell
+## JSONファイル
+<a id="markdown-json%E3%83%95%E3%82%A1%E3%82%A4%E3%83%AB" name="json%E3%83%95%E3%82%A1%E3%82%A4%E3%83%AB"></a>
 
+### 読込み
+<a id="markdown-%E8%AA%AD%E8%BE%BC%E3%81%BF" name="%E8%AA%AD%E8%BE%BC%E3%81%BF"></a>
+
+```powershell
+$json = ConvertFrom-Json -InputObject (Get-Content .\sample.json -Raw)
+Write-Host $json.key1
+```
+
+### 書込み
+<a id="markdown-%E6%9B%B8%E8%BE%BC%E3%81%BF" name="%E6%9B%B8%E8%BE%BC%E3%81%BF"></a>
+
+```powershell
+$jsonStr = @{
+  "Foo Bar" = @{Key1=111; Key2="222"};
+  "Hoge Piyo" = @{Key1=222; Key2="222"};
+}
+
+$jsonStr | ConvertTo-Json | Out-File .\sample.json -Encoding utf8 -Append
+$jsonStr | ConvertTo-Json -Compress | Out-File .\sample.json -Encoding utf8 -Append
 ```
 
 ## CSVファイル
@@ -2219,6 +2242,29 @@ USERNAME=admin@contoso.onmicrosoft.com
 PASSWORD=foobar
 ```
 
+#### コメント行対応
+<a id="markdown-%E3%82%B3%E3%83%A1%E3%83%B3%E3%83%88%E8%A1%8C%E5%AF%BE%E5%BF%9C" name="%E3%82%B3%E3%83%A1%E3%83%B3%E3%83%88%E8%A1%8C%E5%AF%BE%E5%BF%9C"></a>
+
+```powershell
+[string] $filepath = Convert-Path ".\test_read.ini"
+
+$lines = Get-Content $filepath
+foreach($line in $lines){
+    if($line -match "^$" -or $line -match "^\s*;"){ continue }
+
+    $kv = $line.split("=",2)
+    Write-Host("key : " + $kv[0])
+    Write-Host("val : " + $kv[1])
+}
+```
+
+```ini
+; コメント行
+key1=value1
+key2=value2
+key3=value3
+```
+
 ## 構成ファイル(Web.config)
 <a id="markdown-%E6%A7%8B%E6%88%90%E3%83%95%E3%82%A1%E3%82%A4%E3%83%ABweb.config" name="%E6%A7%8B%E6%88%90%E3%83%95%E3%82%A1%E3%82%A4%E3%83%ABweb.config"></a>
 
@@ -2259,6 +2305,12 @@ $Config.Save();
 <a id="markdown-%E8%AA%AD%E8%BE%BC%E3%81%BF" name="%E8%AA%AD%E8%BE%BC%E3%81%BF"></a>
 
 ```powershell
+$xml = New-Object System.Xml.XmlDocument
+$xml.Load(".\test_read.xml")
+Write-Output $xml.item.itemitem
+
+# OR
+
 [string] $filepath = Convert-Path ".\test_read.xml"
 $xmlString = [xml](Get-Content $filepath)
 
@@ -2290,32 +2342,6 @@ $item.AppendChild($itemitem)
 $xml.AppendChild($item)
 
 $xml.Save($filepath)
-```
-
-## CSVファイル
-<a id="markdown-csv%E3%83%95%E3%82%A1%E3%82%A4%E3%83%AB" name="csv%E3%83%95%E3%82%A1%E3%82%A4%E3%83%AB"></a>
-
-### 読込み
-<a id="markdown-%E8%AA%AD%E8%BE%BC%E3%81%BF" name="%E8%AA%AD%E8%BE%BC%E3%81%BF"></a>
-
-```powershell
-[string] $filepath = Convert-Path ".\test_read.ini"
-
-$lines = Get-Content $filepath
-foreach($line in $lines){
-    if($line -match "^$" -or $line -match "^\s*;"){ continue }
-
-    $kv = $line.split("=",2)
-    Write-Host("key : " + $kv[0])
-    Write-Host("val : " + $kv[1])
-}
-```
-
-```ini
-; コメント行
-key1=value1
-key2=value2
-key3=value3
 ```
 
 ## ZIPファイル
@@ -2413,6 +2439,33 @@ Select-Object -Property * | Format-Table -AutoSize -Wrap -Property TimeCreated,I
 <a id="markdown-%E3%83%8D%E3%83%83%E3%83%88%E3%83%AF%E3%83%BC%E3%82%AF" name="%E3%83%8D%E3%83%83%E3%83%88%E3%83%AF%E3%83%BC%E3%82%AF"></a>
 
 
+## URLエンコード
+<a id="markdown-url%E3%82%A8%E3%83%B3%E3%82%B3%E3%83%BC%E3%83%89" name="url%E3%82%A8%E3%83%B3%E3%82%B3%E3%83%BC%E3%83%89"></a>
+
+```powershell
+$url = 'http://httpbin.org/get?query=あいうえお　12345 abc'
+
+$escapedData = [Uri]::EscapeDataString($url)
+Write-Host $escapedData
+$unescapedData = [Uri]::UnescapeDataString($escapedData)
+
+$escapedUri = [Uri]::EscapeUriString($url)
+Write-Host $escapedUri
+$unescapedUri = [Uri]::UnescapeDataString($escapedUri)
+
+Add-Type -AssemblyName System.Web
+$escapedUrl = [System.Web.HttpUtility]::UrlEncode($url)
+Write-Host $escapedUrl
+$unescapedUrl = [System.Web.HttpUtility]::UrlDecode($escapedUrl)
+```
+
+> http%3A%2F%2Fhttpbin.org%2Fget%3Fquery%3D%E3%81%82%E3%81%84%E3%81%86%E3%81%88%E3%81%8A%E3%80%8012345%20abc
+>
+> http://httpbin.org/get?query=%E3%81%82%E3%81%84%E3%81%86%E3%81%88%E3%81%8A%E3%80%8012345%20abc
+
+> http%3a%2f%2fhttpbin.org%2fget%3fquery%3d%e3%81%82%e3%81%84%e3%81%86%e3%81%88%e3%81%8a%e3%80%8012345+abc
+
+
 ## ping
 <a id="markdown-ping" name="ping"></a>
 
@@ -2462,23 +2515,21 @@ Get-NetNeighbor
 ## Webリクエスト
 <a id="markdown-web%E3%83%AA%E3%82%AF%E3%82%A8%E3%82%B9%E3%83%88" name="web%E3%83%AA%E3%82%AF%E3%82%A8%E3%82%B9%E3%83%88"></a>
 
-### コンテンツを取得する
-<a id="markdown-%E3%82%B3%E3%83%B3%E3%83%86%E3%83%B3%E3%83%84%E3%82%92%E5%8F%96%E5%BE%97%E3%81%99%E3%82%8B" name="%E3%82%B3%E3%83%B3%E3%83%86%E3%83%B3%E3%83%84%E3%82%92%E5%8F%96%E5%BE%97%E3%81%99%E3%82%8B"></a>
-
-#### GET
+### GET
 <a id="markdown-get" name="get"></a>
 
 ```powershell
 # http://httpbin.org/get?q=qwerty
 $url = 'http://httpbin.org/get'
 $params = @{"q"="qwerty"}
+$headers = @{Authorization="Bearer token"; accept="application/json"}
 
 
 # $url = 'http://example.exampleexample'
 
 
 try {
-  $res = Invoke-WebRequest $url -Body $params
+  $res = Invoke-WebRequest $url -Body $params  -Headers $headers
   $res.StatusCode.ToString() + " " + $res.StatusDescription
   Write-Host "Headers" $res.Headers
   Write-Host "Content" $res.Content
@@ -2487,7 +2538,17 @@ try {
 }
 ```
 
-### ファイルをダウンロードする
+```powershell
+# http://httpbin.org/get?q=qwerty
+$url = 'http://httpbin.org/get'
+$params = @{"q"="qwerty"}
+$headers = @{Authorization="Bearer token"; accept="application/json"}
+
+$res = Invoke-RestMethod $url -Headers $headers -Body $params
+$res | FL
+```
+
+#### ファイルをダウンロードする
 <a id="markdown-%E3%83%95%E3%82%A1%E3%82%A4%E3%83%AB%E3%82%92%E3%83%80%E3%82%A6%E3%83%B3%E3%83%AD%E3%83%BC%E3%83%89%E3%81%99%E3%82%8B" name="%E3%83%95%E3%82%A1%E3%82%A4%E3%83%AB%E3%82%92%E3%83%80%E3%82%A6%E3%83%B3%E3%83%AD%E3%83%BC%E3%83%89%E3%81%99%E3%82%8B"></a>
 
 ```powershell
@@ -2495,7 +2556,7 @@ $url = 'https://raw.githubusercontent.com/pandas-dev/pandas/main/pandas/tests/io
 Invoke-WebRequest $url -Body $params -OutFile '.\iris.csv'
 ```
 
-### リンクURLの一覧を取得する
+#### リンクURLの一覧を取得する
 <a id="markdown-%E3%83%AA%E3%83%B3%E3%82%AFurl%E3%81%AE%E4%B8%80%E8%A6%A7%E3%82%92%E5%8F%96%E5%BE%97%E3%81%99%E3%82%8B" name="%E3%83%AA%E3%83%B3%E3%82%AFurl%E3%81%AE%E4%B8%80%E8%A6%A7%E3%82%92%E5%8F%96%E5%BE%97%E3%81%99%E3%82%8B"></a>
 
 ```powershell
@@ -2504,6 +2565,30 @@ $res = Invoke-WebRequest $url
 
 $links = $res.Links
 $links | Where-Object {(($_.href -like "http://www.google.co.jp/intl/*") -or ($_.href -like "https://accounts.google.com/*"))} | Select-Object -ExpandProperty href
+```
+
+### POST
+<a id="markdown-post" name="post"></a>
+
+```powershell
+# http://httpbin.org/post
+$url = 'http://httpbin.org/post'
+
+Invoke-WebRequest -Method Post -Body 'キー1=値1&キー2=値2' $url
+Invoke-WebRequest -Method Post -Body @{キー1="値1"; キー2="値2"} $url # 連想配列の場合はマルチバイト文字がエスケープされる
+Invoke-WebRequest -Method Post -Body '{ "key1":"val1", "key2":"val2" } }' $url
+
+Invoke-WebRequest -Method Post -InFile src/icon.png $url
+```
+
+```powershell
+# http://httpbin.org/post
+$url = 'http://httpbin.org/post'
+$params = @{"q"="qwerty"}
+$headers = @{Authorization="Bearer token"; accept="application/json"}
+
+$res = Invoke-RestMethod $url -Method 'POST' -Headers $headers -Body $params
+$res | FL
 ```
 
 
