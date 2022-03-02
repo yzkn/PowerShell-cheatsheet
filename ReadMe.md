@@ -15,14 +15,15 @@
         - [表示](#%E8%A1%A8%E7%A4%BA)
         - [Tee](#tee)
     - [データ型](#%E3%83%87%E3%83%BC%E3%82%BF%E5%9E%8B)
-    - [リテラル](#%E3%83%AA%E3%83%86%E3%83%A9%E3%83%AB)
-        - [数値](#%E6%95%B0%E5%80%A4)
-        - [文字列](#%E6%96%87%E5%AD%97%E5%88%97)
-            - [エスケープ](#%E3%82%A8%E3%82%B9%E3%82%B1%E3%83%BC%E3%83%97)
-            - [変数展開](#%E5%A4%89%E6%95%B0%E5%B1%95%E9%96%8B)
-            - [式展開](#%E5%BC%8F%E5%B1%95%E9%96%8B)
-            - [ヒアドキュメント](#%E3%83%92%E3%82%A2%E3%83%89%E3%82%AD%E3%83%A5%E3%83%A1%E3%83%B3%E3%83%88)
-            - [部分文字列](#%E9%83%A8%E5%88%86%E6%96%87%E5%AD%97%E5%88%97)
+        - [リテラル](#%E3%83%AA%E3%83%86%E3%83%A9%E3%83%AB)
+            - [数値](#%E6%95%B0%E5%80%A4)
+            - [文字列](#%E6%96%87%E5%AD%97%E5%88%97)
+                - [エスケープ](#%E3%82%A8%E3%82%B9%E3%82%B1%E3%83%BC%E3%83%97)
+                - [変数展開](#%E5%A4%89%E6%95%B0%E5%B1%95%E9%96%8B)
+                - [式展開](#%E5%BC%8F%E5%B1%95%E9%96%8B)
+                - [ヒアドキュメント](#%E3%83%92%E3%82%A2%E3%83%89%E3%82%AD%E3%83%A5%E3%83%A1%E3%83%B3%E3%83%88)
+                - [部分文字列](#%E9%83%A8%E5%88%86%E6%96%87%E5%AD%97%E5%88%97)
+                - [セキュア文字列（Windows PowerShellのみ）](#%E3%82%BB%E3%82%AD%E3%83%A5%E3%82%A2%E6%96%87%E5%AD%97%E5%88%97windows-powershell%E3%81%AE%E3%81%BF)
     - [演算子](#%E6%BC%94%E7%AE%97%E5%AD%90)
         - [算術演算子](#%E7%AE%97%E8%A1%93%E6%BC%94%E7%AE%97%E5%AD%90)
         - [比較演算子](#%E6%AF%94%E8%BC%83%E6%BC%94%E7%AE%97%E5%AD%90)
@@ -84,6 +85,8 @@
                 - [Excel](#excel)
                 - [PowerPoint](#powerpoint)
                 - [Word](#word)
+            - [その他アプリケーション](#%E3%81%9D%E3%81%AE%E4%BB%96%E3%82%A2%E3%83%97%E3%83%AA%E3%82%B1%E3%83%BC%E3%82%B7%E3%83%A7%E3%83%B3)
+                - [音声合成](#%E9%9F%B3%E5%A3%B0%E5%90%88%E6%88%90)
     - [サービス](#%E3%82%B5%E3%83%BC%E3%83%93%E3%82%B9)
 - [日付処理](#%E6%97%A5%E4%BB%98%E5%87%A6%E7%90%86)
     - [日付の差](#%E6%97%A5%E4%BB%98%E3%81%AE%E5%B7%AE)
@@ -118,6 +121,9 @@
         - [ログファイル](#%E3%83%AD%E3%82%B0%E3%83%95%E3%82%A1%E3%82%A4%E3%83%AB)
         - [イベントログ](#%E3%82%A4%E3%83%99%E3%83%B3%E3%83%88%E3%83%AD%E3%82%B0)
             - [Level キー](#level-%E3%82%AD%E3%83%BC)
+    - [ISOファイル](#iso%E3%83%95%E3%82%A1%E3%82%A4%E3%83%AB)
+        - [マウント](#%E3%83%9E%E3%82%A6%E3%83%B3%E3%83%88)
+        - [アンマウント](#%E3%82%A2%E3%83%B3%E3%83%9E%E3%82%A6%E3%83%B3%E3%83%88)
 - [ネットワーク](#%E3%83%8D%E3%83%83%E3%83%88%E3%83%AF%E3%83%BC%E3%82%AF)
     - [URLエンコード](#url%E3%82%A8%E3%83%B3%E3%82%B3%E3%83%BC%E3%83%89)
     - [ping](#ping)
@@ -535,10 +541,10 @@ Write-Output ("| {0} | {1} | {2} | {3} |" -f $type.Name, $type.FullName, $type::
 ```
 
 
-## リテラル
+### リテラル
 <a id="markdown-%E3%83%AA%E3%83%86%E3%83%A9%E3%83%AB" name="%E3%83%AA%E3%83%86%E3%83%A9%E3%83%AB"></a>
 
-### 数値
+#### 数値
 <a id="markdown-%E6%95%B0%E5%80%A4" name="%E6%95%B0%E5%80%A4"></a>
 
 ```powershell
@@ -556,7 +562,7 @@ Write-Output ("| {0} | {1} | {2} | {3} |" -f $type.Name, $type.FullName, $type::
 >
 > 10485760
 
-### 文字列
+#### 文字列
 <a id="markdown-%E6%96%87%E5%AD%97%E5%88%97" name="%E6%96%87%E5%AD%97%E5%88%97"></a>
 
 ```powershell
@@ -568,7 +574,7 @@ Write-Output ("| {0} | {1} | {2} | {3} |" -f $type.Name, $type.FullName, $type::
 >
 > Lorem ipsum
 
-#### エスケープ
+##### エスケープ
 <a id="markdown-%E3%82%A8%E3%82%B9%E3%82%B1%E3%83%BC%E3%83%97" name="%E3%82%A8%E3%82%B9%E3%82%B1%E3%83%BC%E3%83%97"></a>
 
 ```powershell
@@ -585,7 +591,7 @@ Write-Output ("| {0} | {1} | {2} | {3} |" -f $type.Name, $type.FullName, $type::
 "`$PSHOME"
 ```
 
-#### 変数展開
+##### 変数展開
 <a id="markdown-%E5%A4%89%E6%95%B0%E5%B1%95%E9%96%8B" name="%E5%A4%89%E6%95%B0%E5%B1%95%E9%96%8B"></a>
 
 ```powershell
@@ -599,7 +605,7 @@ $ipsum  = "ipsum"
 >
 > Lorem ipsum
 
-#### 式展開
+##### 式展開
 <a id="markdown-%E5%BC%8F%E5%B1%95%E9%96%8B" name="%E5%BC%8F%E5%B1%95%E9%96%8B"></a>
 
 ```powershell
@@ -608,7 +614,7 @@ $ipsum  = "ipsum"
 
 > LoremLoooipsum
 
-#### ヒアドキュメント
+##### ヒアドキュメント
 <a id="markdown-%E3%83%92%E3%82%A2%E3%83%89%E3%82%AD%E3%83%A5%E3%83%A1%E3%83%B3%E3%83%88" name="%E3%83%92%E3%82%A2%E3%83%89%E3%82%AD%E3%83%A5%E3%83%A1%E3%83%B3%E3%83%88"></a>
 
 ```powershell
@@ -633,7 +639,7 @@ $ipsum
 >
 > ipsum
 
-#### 部分文字列
+##### 部分文字列
 <a id="markdown-%E9%83%A8%E5%88%86%E6%96%87%E5%AD%97%E5%88%97" name="%E9%83%A8%E5%88%86%E6%96%87%E5%AD%97%E5%88%97"></a>
 
 ```powershell
@@ -649,6 +655,35 @@ Write-Host $lipsum.Substring($lipsum.Length - $len, $len)
 > Lo
 >
 > um
+
+##### セキュア文字列（Windows PowerShellのみ）
+<a id="markdown-%E3%82%BB%E3%82%AD%E3%83%A5%E3%82%A2%E6%96%87%E5%AD%97%E5%88%97%EF%BC%88windows-powershell%E3%81%AE%E3%81%BF%EF%BC%89" name="%E3%82%BB%E3%82%AD%E3%83%A5%E3%82%A2%E6%96%87%E5%AD%97%E5%88%97%EF%BC%88windows-powershell%E3%81%AE%E3%81%BF%EF%BC%89"></a>
+
+```powershell
+$sourceString = "sensitive text data"
+Write-Host $sourceString
+
+$secureString = ConvertTo-SecureString -string $sourceString -AsPlainText -Force
+Write-Host $secureString
+
+$SecureString | ConvertFrom-SecureString | Out-File .\password.txt
+
+
+
+$SecureString = Get-Content .\password.txt | ConvertTo-SecureString
+Write-Host $secureString
+
+$plainString = [System.Runtime.InteropServices.Marshal]::PtrToStringBSTR([System.Runtime.InteropServices.Marshal]::SecureStringToBSTR($SecureString))
+write-host $plainString
+```
+
+> sensitive text data
+>
+> System.Security.SecureString
+
+> System.Security.SecureString
+>
+> sensitive text data
 
 
 ## 演算子
@@ -1763,7 +1798,8 @@ Get-Process |
 Where-Object {(($_.ProcessName -like "*firefox*") -or ($_.ProcessName -like "*chrome*"))} |
 Select-Object -Property ProcessName,CPU |
 Group-Object ProcessName |
-Select-Object @{n='ProcessName';e={$_.Group | Select -Expand ProcessName -First 1}},@{n='CPU';e={($_.Group | Measure-Object CPU -Sum).Sum}}
+Select-Object @{n='ProcessName';e={$_.Group | Select -Expand ProcessName -First 1}},@{n='CPU';e={($_.Group | Measure-Object CPU -Sum).Sum}} |
+Sort-Object -Property cpu -Descending
 ```
 
 | プロパティ  | 内容                                                                       | 単位           |
@@ -1874,6 +1910,25 @@ $Word.documents.open("C:\Users\Y\Desktop\word.docx")
 $word.visible = $true
 
 $word.Quit()
+```
+
+
+#### その他アプリケーション
+<a id="markdown-%E3%81%9D%E3%81%AE%E4%BB%96%E3%82%A2%E3%83%97%E3%83%AA%E3%82%B1%E3%83%BC%E3%82%B7%E3%83%A7%E3%83%B3" name="%E3%81%9D%E3%81%AE%E4%BB%96%E3%82%A2%E3%83%97%E3%83%AA%E3%82%B1%E3%83%BC%E3%82%B7%E3%83%A7%E3%83%B3"></a>
+
+##### 音声合成
+<a id="markdown-%E9%9F%B3%E5%A3%B0%E5%90%88%E6%88%90" name="%E9%9F%B3%E5%A3%B0%E5%90%88%E6%88%90"></a>
+
+```powershell
+$sapi = New-Object -com SAPI.SpVoice
+
+$sapi.Rate     = 10 # -10 <= Rate <= 10
+$sapi.Volume   =  0 # 0 <= Volume <= 100
+$sapi.Voice = $sapi.GetVoices().Item(0)
+# $sapi.Voice = $sapi.GetVoices().Item(1)
+
+# $sapi.Speak("本日は、晴天なり。", 1) # Async
+$sapi.Speak("本日は、晴天なり。") # Sync
 ```
 
 
@@ -2433,6 +2488,29 @@ Select-Object -Property * | Format-Table -AutoSize -Wrap -Property TimeCreated,I
 | Error         | 2     |
 | Critical      | 1     |
 | LogAlways     | 0     |
+
+## ISOファイル
+<a id="markdown-iso%E3%83%95%E3%82%A1%E3%82%A4%E3%83%AB" name="iso%E3%83%95%E3%82%A1%E3%82%A4%E3%83%AB"></a>
+
+### マウント
+<a id="markdown-%E3%83%9E%E3%82%A6%E3%83%B3%E3%83%88" name="%E3%83%9E%E3%82%A6%E3%83%B3%E3%83%88"></a>
+
+```powershell
+$isoPath = "C:\disc1.iso"
+
+Mount-DiskImage $isoPath
+$driveLetter = (Get-DiskImage -ImagePath $isoPath | Get-Volume).DriveLetter
+"{0}:\" -f $driveLetter | Write-Output
+```
+
+### アンマウント
+<a id="markdown-%E3%82%A2%E3%83%B3%E3%83%9E%E3%82%A6%E3%83%B3%E3%83%88" name="%E3%82%A2%E3%83%B3%E3%83%9E%E3%82%A6%E3%83%B3%E3%83%88"></a>
+
+```powershell
+$isoPath = "C:\disc1.iso"
+
+DisMount-DiskImage $isoPath
+```
 
 
 # ネットワーク
