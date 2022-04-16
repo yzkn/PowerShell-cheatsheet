@@ -4,6 +4,7 @@
     - [PowerShell実行ポリシーの変更](#powershell%E5%AE%9F%E8%A1%8C%E3%83%9D%E3%83%AA%E3%82%B7%E3%83%BC%E3%81%AE%E5%A4%89%E6%9B%B4)
         - [署名する](#%E7%BD%B2%E5%90%8D%E3%81%99%E3%82%8B)
     - [PowerShell バージョン](#powershell-%E3%83%90%E3%83%BC%E3%82%B8%E3%83%A7%E3%83%B3)
+    - [ウィンドウを閉じない](#%E3%82%A6%E3%82%A3%E3%83%B3%E3%83%89%E3%82%A6%E3%82%92%E9%96%89%E3%81%98%E3%81%AA%E3%81%84)
     - [ヘルプ](#%E3%83%98%E3%83%AB%E3%83%97)
 - [文法](#%E6%96%87%E6%B3%95)
     - [コメント](#%E3%82%B3%E3%83%A1%E3%83%B3%E3%83%88)
@@ -99,6 +100,9 @@
         - [touch](#touch)
     - [ファイルフォルダの削除](#%E3%83%95%E3%82%A1%E3%82%A4%E3%83%AB%E3%83%95%E3%82%A9%E3%83%AB%E3%83%80%E3%81%AE%E5%89%8A%E9%99%A4)
     - [ファイルフォルダのコピーと移動](#%E3%83%95%E3%82%A1%E3%82%A4%E3%83%AB%E3%83%95%E3%82%A9%E3%83%AB%E3%83%80%E3%81%AE%E3%82%B3%E3%83%94%E3%83%BC%E3%81%A8%E7%A7%BB%E5%8B%95)
+    - [ファイルの作成日時・最終更新日時・最終アクセス日時](#%E3%83%95%E3%82%A1%E3%82%A4%E3%83%AB%E3%81%AE%E4%BD%9C%E6%88%90%E6%97%A5%E6%99%82%E3%83%BB%E6%9C%80%E7%B5%82%E6%9B%B4%E6%96%B0%E6%97%A5%E6%99%82%E3%83%BB%E6%9C%80%E7%B5%82%E3%82%A2%E3%82%AF%E3%82%BB%E3%82%B9%E6%97%A5%E6%99%82)
+        - [取得](#%E5%8F%96%E5%BE%97)
+        - [設定](#%E8%A8%AD%E5%AE%9A)
     - [テキストファイル](#%E3%83%86%E3%82%AD%E3%82%B9%E3%83%88%E3%83%95%E3%82%A1%E3%82%A4%E3%83%AB)
         - [行ごとに読込み](#%E8%A1%8C%E3%81%94%E3%81%A8%E3%81%AB%E8%AA%AD%E8%BE%BC%E3%81%BF)
         - [書出し](#%E6%9B%B8%E5%87%BA%E3%81%97)
@@ -216,6 +220,23 @@ if ($PSVersionTable["PSVersion"].Major -lt 7) {
 
 ```powershell
 $ pwsh --version
+```
+
+
+## ウィンドウを閉じない
+<a id="markdown-%E3%82%A6%E3%82%A3%E3%83%B3%E3%83%89%E3%82%A6%E3%82%92%E9%96%89%E3%81%98%E3%81%AA%E3%81%84" name="%E3%82%A6%E3%82%A3%E3%83%B3%E3%83%89%E3%82%A6%E3%82%92%E9%96%89%E3%81%98%E3%81%AA%E3%81%84"></a>
+
+エクスプローラーから「PowerShellで実行」でps1ファイルを実行した場合には、コマンド実行が完了した後PowerShellのウィンドウが閉じてしまう。閉じないようにするためにはスクリプトファイルの最後に pause を追記しておく。
+
+```powershell
+<#
+
+処理
+
+#>
+
+pause
+
 ```
 
 
@@ -1120,7 +1141,6 @@ $table.GetEnumerator() | ForEach-Object {
 
 ## 画面出力
 <a id="markdown-%E7%94%BB%E9%9D%A2%E5%87%BA%E5%8A%9B" name="%E7%94%BB%E9%9D%A2%E5%87%BA%E5%8A%9B"></a>
-<a id="markdown-%E7%94%BB%E9%9D%A2%E5%87%BA%E5%8A%9B" name="%E7%94%BB%E9%9D%A2%E5%87%BA%E5%8A%9B"></a>
 
 ```powershell
 "画面出力 $a" # Write-Outputと同じ
@@ -1150,10 +1170,8 @@ $Host.UI.WriteWarningLine()
 
 ### デバッグ出力
 <a id="markdown-%E3%83%87%E3%83%90%E3%83%83%E3%82%B0%E5%87%BA%E5%8A%9B" name="%E3%83%87%E3%83%90%E3%83%83%E3%82%B0%E5%87%BA%E5%8A%9B"></a>
-<a id="markdown-%E3%83%87%E3%83%90%E3%83%83%E3%82%B0%E5%87%BA%E5%8A%9B" name="%E3%83%87%E3%83%90%E3%83%83%E3%82%B0%E5%87%BA%E5%8A%9B"></a>
 
 #### Write-Error
-<a id="markdown-write-error" name="write-error"></a>
 <a id="markdown-write-error" name="write-error"></a>
 
 ```powershell
@@ -1170,7 +1188,6 @@ try {
 ```
 
 #### その他のログレベル
-<a id="markdown-%E3%81%9D%E3%81%AE%E4%BB%96%E3%81%AE%E3%83%AD%E3%82%B0%E3%83%AC%E3%83%99%E3%83%AB" name="%E3%81%9D%E3%81%AE%E4%BB%96%E3%81%AE%E3%83%AD%E3%82%B0%E3%83%AC%E3%83%99%E3%83%AB"></a>
 <a id="markdown-%E3%81%9D%E3%81%AE%E4%BB%96%E3%81%AE%E3%83%AD%E3%82%B0%E3%83%AC%E3%83%99%E3%83%AB" name="%E3%81%9D%E3%81%AE%E4%BB%96%E3%81%AE%E3%83%AD%E3%82%B0%E3%83%AC%E3%83%99%E3%83%AB"></a>
 
 ```powershell
@@ -1195,7 +1212,6 @@ $Host.UI.WriteWarningLine("画面出力")
 ```
 
 ### プログレスバー
-<a id="markdown-%E3%83%97%E3%83%AD%E3%82%B0%E3%83%AC%E3%82%B9%E3%83%90%E3%83%BC" name="%E3%83%97%E3%83%AD%E3%82%B0%E3%83%AC%E3%82%B9%E3%83%90%E3%83%BC"></a>
 <a id="markdown-%E3%83%97%E3%83%AD%E3%82%B0%E3%83%AC%E3%82%B9%E3%83%90%E3%83%BC" name="%E3%83%97%E3%83%AD%E3%82%B0%E3%83%AC%E3%82%B9%E3%83%90%E3%83%BC"></a>
 
 ```powershell
@@ -2090,6 +2106,52 @@ if( $(Test-Path $dirPath) -ne $True ){
 
 Copy-Item -Confirm $filepathToRemove $filepathToRemove+".bak"
 Move-Item -force $filepathToRemove $filepathToRemove+".bak"
+```
+
+## ファイルの作成日時・最終更新日時・最終アクセス日時
+<a id="markdown-%E3%83%95%E3%82%A1%E3%82%A4%E3%83%AB%E3%81%AE%E4%BD%9C%E6%88%90%E6%97%A5%E6%99%82%E3%83%BB%E6%9C%80%E7%B5%82%E6%9B%B4%E6%96%B0%E6%97%A5%E6%99%82%E3%83%BB%E6%9C%80%E7%B5%82%E3%82%A2%E3%82%AF%E3%82%BB%E3%82%B9%E6%97%A5%E6%99%82" name="%E3%83%95%E3%82%A1%E3%82%A4%E3%83%AB%E3%81%AE%E4%BD%9C%E6%88%90%E6%97%A5%E6%99%82%E3%83%BB%E6%9C%80%E7%B5%82%E6%9B%B4%E6%96%B0%E6%97%A5%E6%99%82%E3%83%BB%E6%9C%80%E7%B5%82%E3%82%A2%E3%82%AF%E3%82%BB%E3%82%B9%E6%97%A5%E6%99%82"></a>
+
+### 取得
+<a id="markdown-%E5%8F%96%E5%BE%97" name="%E5%8F%96%E5%BE%97"></a>
+
+```powershell
+$file = ".\test.txt"
+
+Out-File -encoding Default $file
+
+$fc = Get-ChildItem $file
+$fi = Get-ItemProperty $file
+
+# 作成時刻
+$fc.CreationTime
+$fi.CreationTime
+
+# 最終更新時刻
+$fc.LastWriteTime
+$fi.LastWriteTime
+
+# 最終アクセス時刻
+$fc.LastAccessTime
+$fi.LastAccessTime
+```
+
+### 設定
+<a id="markdown-%E8%A8%AD%E5%AE%9A" name="%E8%A8%AD%E5%AE%9A"></a>
+
+```powershell
+$file = ".\test.txt"
+
+# 作成時刻
+Set-ItemProperty $file CreationTime $(Get-Date)
+Set-ItemProperty $file CreationTime $("2022/04/16 12:34:56")
+
+# 最終更新時刻
+Set-ItemProperty $file LastWriteTime $(Get-Date)
+Set-ItemProperty $file LastWriteTime $("2022/04/16 12:34:56")
+
+# 最終アクセス時刻
+Set-ItemProperty $file LastAccessTime $(Get-Date)
+Set-ItemProperty $file LastAccessTime $("2022/04/16 12:34:56")
 ```
 
 ## テキストファイル
