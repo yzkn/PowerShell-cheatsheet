@@ -71,6 +71,11 @@
             - [引数の型を指定](#%E5%BC%95%E6%95%B0%E3%81%AE%E5%9E%8B%E3%82%92%E6%8C%87%E5%AE%9A)
             - [引数の参照渡し](#%E5%BC%95%E6%95%B0%E3%81%AE%E5%8F%82%E7%85%A7%E6%B8%A1%E3%81%97)
             - [引数の既定値](#%E5%BC%95%E6%95%B0%E3%81%AE%E6%97%A2%E5%AE%9A%E5%80%A4)
+    - [数値計算](#%E6%95%B0%E5%80%A4%E8%A8%88%E7%AE%97)
+        - [四捨五入](#%E5%9B%9B%E6%8D%A8%E4%BA%94%E5%85%A5)
+            - [小数](#%E5%B0%8F%E6%95%B0)
+            - [整数](#%E6%95%B4%E6%95%B0)
+        - [切り捨て](#%E5%88%87%E3%82%8A%E6%8D%A8%E3%81%A6)
 - [システム情報](#%E3%82%B7%E3%82%B9%E3%83%86%E3%83%A0%E6%83%85%E5%A0%B1)
     - [Windows Update](#windows-update)
     - [Windows Firewall](#windows-firewall)
@@ -84,8 +89,11 @@
             - [Firefox](#firefox)
             - [Office](#office)
                 - [Excel](#excel)
+                    - [ファイル読み書き](#%E3%83%95%E3%82%A1%E3%82%A4%E3%83%AB%E8%AA%AD%E3%81%BF%E6%9B%B8%E3%81%8D)
+                    - [セル編集](#%E3%82%BB%E3%83%AB%E7%B7%A8%E9%9B%86)
                 - [PowerPoint](#powerpoint)
                 - [Word](#word)
+            - [SQL Server](#sql-server)
             - [その他アプリケーション](#%E3%81%9D%E3%81%AE%E4%BB%96%E3%82%A2%E3%83%97%E3%83%AA%E3%82%B1%E3%83%BC%E3%82%B7%E3%83%A7%E3%83%B3)
                 - [音声合成](#%E9%9F%B3%E5%A3%B0%E5%90%88%E6%88%90)
     - [サービス](#%E3%82%B5%E3%83%BC%E3%83%93%E3%82%B9)
@@ -137,6 +145,8 @@
             - [ファイルをダウンロードする](#%E3%83%95%E3%82%A1%E3%82%A4%E3%83%AB%E3%82%92%E3%83%80%E3%82%A6%E3%83%B3%E3%83%AD%E3%83%BC%E3%83%89%E3%81%99%E3%82%8B)
             - [リンクURLの一覧を取得する](#%E3%83%AA%E3%83%B3%E3%82%AFurl%E3%81%AE%E4%B8%80%E8%A6%A7%E3%82%92%E5%8F%96%E5%BE%97%E3%81%99%E3%82%8B)
         - [POST](#post)
+    - [ネットワークアダプタ](#%E3%83%8D%E3%83%83%E3%83%88%E3%83%AF%E3%83%BC%E3%82%AF%E3%82%A2%E3%83%80%E3%83%97%E3%82%BF)
+        - [IPアドレス](#ip%E3%82%A2%E3%83%89%E3%83%AC%E3%82%B9)
 
 <!-- /TOC -->
 
@@ -890,64 +900,64 @@ Get-Variable
 Get-Variable | Get-Member -MemberType Properties
 ```
 
-| 変数名                      | 内容                                                 |
-| --------------------------- | ---------------------------------------------------- |
-| $env:ENVVAR                 | 環境変数                                             |
-|                             |                                                      |
-| _ ( PSItem と同じ)          | パイプラインオブジェクトの現在のオブジェクト         |
-| ?                           | 最後のコマンドの実行状態(リターンコード)             |
-| ^                           | セッションによって受信された最後の行の最初のトークン |
-| $                           | セッションによって受信された最後の行の最後のトークン |
-| args                        | コマンドライン引数                                   |
-| cert                        |                                                      |
-| ConfirmPreference           |                                                      |
-| DebugPreference             |                                                      |
-| EnabledExperimentalFeatures |                                                      |
-| Error                       | 最後のエラー                                         |
-| ErrorActionPreference       |                                                      |
-| ErrorView                   |                                                      |
-| ExecutionContext            |                                                      |
-| false                       | False                                                |
-| FormatEnumerationLimit      |                                                      |
-| HOME                        | ホームディレクトリのパス                             |
-| Host                        | ホストアプリケーションを表すオブジェクト             |
-| InformationPreference       |                                                      |
-| input                       | 関数に渡される入力                                   |
-| IsCoreCLR                   |                                                      |
-| IsLinux                     |                                                      |
-| IsMacOS                     |                                                      |
-| IsWindows                   |                                                      |
-| MaximumHistoryCount         |                                                      |
-| MyInvocation                | 現在のコマンドに関する情報                           |
-| NestedPromptLevel           |                                                      |
-| null                        | NULL                                                 |
-| OutputEncoding              |                                                      |
-| PID                         | ホストしているプロセスのプロセス識別子 (PID)         |
-| profile                     | PowerShell プロファイルのパス                        |
-| ProgressPreference          |                                                      |
-| PSBoundParameters           |                                                      |
-| PSCommandPath               |                                                      |
-| PSCulture                   |                                                      |
-| PSDefaultParameterValues    |                                                      |
-| PSEdition                   |                                                      |
-| psEditor                    |                                                      |
-| PSEmailServer               |                                                      |
-| PSHOME                      | PowerShell のインストールディレクトリのパス          |
-| PSScriptRoot                | スクリプトの実行元のディレクトリ                     |
-| PSSessionApplicationName    |                                                      |
-| PSSessionConfigurationName  |                                                      |
-| PSSessionOption             |                                                      |
-| PSStyle                     |                                                      |
-| PSUICulture                 |                                                      |
-| PSVersionTable              | PowerShell のバージョン                              |
-| PWD                         | カレントディレクトリ                                 |
-| ShellId                     |                                                      |
-| StackTrace                  |                                                      |
-| targetScriptPath            |                                                      |
-| true                        | True                                                 |
-| VerbosePreference           |                                                      |
-| WarningPreference           |                                                      |
-| WhatIfPreference            |                                                      |
+| 変数名                         | 内容                                         |
+| ------------------------------ | -------------------------------------------- |
+| `$env:ENVVAR`                  | 環境変数                                     |
+|                                |                                              |
+| `$_` ( PSItem と同じ)          | パイプラインオブジェクトの現在のオブジェクト |
+| `$?`                           | 最後のコマンドの実行状態(リターンコード)     |
+| `$^`                           | 1つ前のコマンド履歴                          |
+| `$$`                           | 1つ前のコマンド履歴                          |
+| `$args`                        | コマンドライン引数                           |
+| `$cert`                        |                                              |
+| `$ConfirmPreference`           |                                              |
+| `$DebugPreference`             |                                              |
+| `$EnabledExperimentalFeatures` |                                              |
+| `$Error`                       | 最後のエラー                                 |
+| `$ErrorActionPreference`       |                                              |
+| `$ErrorView`                   |                                              |
+| `$ExecutionContext`            |                                              |
+| `$false`                       | False                                        |
+| `$FormatEnumerationLimit`      |                                              |
+| `$HOME`                        | ホームディレクトリのパス                     |
+| `$Host`                        | ホストアプリケーションを表すオブジェクト     |
+| `$InformationPreference`       |                                              |
+| `$input`                       | 関数に渡される入力                           |
+| `$IsCoreCLR`                   |                                              |
+| `$IsLinux`                     |                                              |
+| `$IsMacOS`                     |                                              |
+| `$IsWindows`                   |                                              |
+| `$MaximumHistoryCount`         |                                              |
+| `$MyInvocation`                | 現在のコマンドに関する情報                   |
+| `$NestedPromptLevel`           |                                              |
+| `$null`                        | NULL                                         |
+| `$OutputEncoding`              |                                              |
+| `$PID`                         | ホストしているプロセスのプロセス識別子 (PID) |
+| `$profile`                     | PowerShell プロファイルのパス                |
+| `$ProgressPreference`          |                                              |
+| `$PSBoundParameters`           |                                              |
+| `$PSCommandPath`               |                                              |
+| `$PSCulture`                   |                                              |
+| `$PSDefaultParameterValues`    |                                              |
+| `$PSEdition`                   |                                              |
+| `$psEditor`                    |                                              |
+| `$PSEmailServer`               |                                              |
+| `$PSHOME`                      | PowerShell のインストールディレクトリのパス  |
+| `$PSScriptRoot`                | スクリプトの実行元のディレクトリ             |
+| `$PSSessionApplicationName`    |                                              |
+| `$PSSessionConfigurationName`  |                                              |
+| `$PSSessionOption`             |                                              |
+| `$PSStyle`                     |                                              |
+| `$PSUICulture`                 |                                              |
+| `$PSVersionTable`              | PowerShell のバージョン                      |
+| `$PWD`                         | カレントディレクトリ                         |
+| `$ShellId`                     |                                              |
+| `$StackTrace`                  |                                              |
+| `$targetScriptPath`            |                                              |
+| `$true`                        | True                                         |
+| `$VerbosePreference`           |                                              |
+| `$WarningPreference`           |                                              |
+| `$WhatIfPreference`            |                                              |
 
 #### 設定変数のみ一覧化
 <a id="markdown-%E8%A8%AD%E5%AE%9A%E5%A4%89%E6%95%B0%E3%81%AE%E3%81%BF%E4%B8%80%E8%A6%A7%E5%8C%96" name="%E8%A8%AD%E5%AE%9A%E5%A4%89%E6%95%B0%E3%81%AE%E3%81%BF%E4%B8%80%E8%A6%A7%E5%8C%96"></a>
@@ -1141,6 +1151,7 @@ $table.GetEnumerator() | ForEach-Object {
 
 ## 画面出力
 <a id="markdown-%E7%94%BB%E9%9D%A2%E5%87%BA%E5%8A%9B" name="%E7%94%BB%E9%9D%A2%E5%87%BA%E5%8A%9B"></a>
+<a id="markdown-%E7%94%BB%E9%9D%A2%E5%87%BA%E5%8A%9B" name="%E7%94%BB%E9%9D%A2%E5%87%BA%E5%8A%9B"></a>
 
 ```powershell
 "画面出力 $a" # Write-Outputと同じ
@@ -1170,8 +1181,10 @@ $Host.UI.WriteWarningLine()
 
 ### デバッグ出力
 <a id="markdown-%E3%83%87%E3%83%90%E3%83%83%E3%82%B0%E5%87%BA%E5%8A%9B" name="%E3%83%87%E3%83%90%E3%83%83%E3%82%B0%E5%87%BA%E5%8A%9B"></a>
+<a id="markdown-%E3%83%87%E3%83%90%E3%83%83%E3%82%B0%E5%87%BA%E5%8A%9B" name="%E3%83%87%E3%83%90%E3%83%83%E3%82%B0%E5%87%BA%E5%8A%9B"></a>
 
 #### Write-Error
+<a id="markdown-write-error" name="write-error"></a>
 <a id="markdown-write-error" name="write-error"></a>
 
 ```powershell
@@ -1188,6 +1201,7 @@ try {
 ```
 
 #### その他のログレベル
+<a id="markdown-%E3%81%9D%E3%81%AE%E4%BB%96%E3%81%AE%E3%83%AD%E3%82%B0%E3%83%AC%E3%83%99%E3%83%AB" name="%E3%81%9D%E3%81%AE%E4%BB%96%E3%81%AE%E3%83%AD%E3%82%B0%E3%83%AC%E3%83%99%E3%83%AB"></a>
 <a id="markdown-%E3%81%9D%E3%81%AE%E4%BB%96%E3%81%AE%E3%83%AD%E3%82%B0%E3%83%AC%E3%83%99%E3%83%AB" name="%E3%81%9D%E3%81%AE%E4%BB%96%E3%81%AE%E3%83%AD%E3%82%B0%E3%83%AC%E3%83%99%E3%83%AB"></a>
 
 ```powershell
@@ -1212,6 +1226,7 @@ $Host.UI.WriteWarningLine("画面出力")
 ```
 
 ### プログレスバー
+<a id="markdown-%E3%83%97%E3%83%AD%E3%82%B0%E3%83%AC%E3%82%B9%E3%83%90%E3%83%BC" name="%E3%83%97%E3%83%AD%E3%82%B0%E3%83%AC%E3%82%B9%E3%83%90%E3%83%BC"></a>
 <a id="markdown-%E3%83%97%E3%83%AD%E3%82%B0%E3%83%AC%E3%82%B9%E3%83%90%E3%83%BC" name="%E3%83%97%E3%83%AD%E3%82%B0%E3%83%AC%E3%82%B9%E3%83%90%E3%83%BC"></a>
 
 ```powershell
@@ -1555,6 +1570,68 @@ function Func5([ref]$arg1, [ref]$arg2){
 function Func5($arg1 = 1, $arg2 = 2){
     return "戻り値"
 }
+```
+
+
+## 数値計算
+<a id="markdown-%E6%95%B0%E5%80%A4%E8%A8%88%E7%AE%97" name="%E6%95%B0%E5%80%A4%E8%A8%88%E7%AE%97"></a>
+
+### 四捨五入
+<a id="markdown-%E5%9B%9B%E6%8D%A8%E4%BA%94%E5%85%A5" name="%E5%9B%9B%E6%8D%A8%E4%BA%94%E5%85%A5"></a>
+
+#### 小数
+<a id="markdown-%E5%B0%8F%E6%95%B0" name="%E5%B0%8F%E6%95%B0"></a>
+
+```powershell
+$numVal = [Math]::Round(1.4, [MidpointRounding]::AwayFromZero)
+$numVal # 1
+$numVal = [Math]::Round(1.5, [MidpointRounding]::AwayFromZero)
+$numVal # 2
+
+$numVal = [Math]::Round(-1.4, [MidpointRounding]::AwayFromZero)
+$numVal # -1
+$numVal = [Math]::Round(-1.5, [MidpointRounding]::AwayFromZero)
+$numVal # -2
+
+# 小数点以下第一位まで残す
+$numVal = [Math]::Round(0.04, 1, [MidpointRounding]::AwayFromZero)
+$numVal # 0
+$numVal = [Math]::Round(0.05, 1, [MidpointRounding]::AwayFromZero)
+$numVal # 0.1
+```
+
+#### 整数
+<a id="markdown-%E6%95%B4%E6%95%B0" name="%E6%95%B4%E6%95%B0"></a>
+
+```powershell
+function Round([double]$num, [int]$numDigits)
+{
+    $m = [Math]::Pow(10, -1 * $numDigits)
+    return [Math]::Round($num * $m, [MidpointRounding]::AwayFromZero) / $m
+}
+
+$numVal = Round 1234 2
+$numVal # 1200
+```
+
+### 切り捨て
+<a id="markdown-%E5%88%87%E3%82%8A%E6%8D%A8%E3%81%A6" name="%E5%88%87%E3%82%8A%E6%8D%A8%E3%81%A6"></a>
+
+```powershell
+$numVal = [Math]::Truncate(1.5)
+$numVal # 1
+$numVal = [Math]::Floor(1.5)
+$numVal # 1
+
+function Truncate([double]$num, [int]$numDigits = 0)
+{
+    $m = [Math]::Pow(10, $numDigits)
+    return [Math]::Truncate($num * $m) / $m
+}
+$numVal = Truncate 1.234 2
+$numVal # 1.23
+$numVal = Truncate -1.234 2
+$numVal # -1.23
 ```
 
 
@@ -1905,6 +1982,82 @@ $excel.Quit()
 ```
 
 
+###### ファイル読み書き
+<a id="markdown-%E3%83%95%E3%82%A1%E3%82%A4%E3%83%AB%E8%AA%AD%E3%81%BF%E6%9B%B8%E3%81%8D" name="%E3%83%95%E3%82%A1%E3%82%A4%E3%83%AB%E8%AA%AD%E3%81%BF%E6%9B%B8%E3%81%8D"></a>
+
+```powershell
+# Excelを開く
+$excel = New-Object -ComObject Excel.Application
+$excel.Visible = $true
+$excel.DisplayAlerts = $False
+
+# ファイルを開く
+$book = $excel.Workbooks.Open("C:\Users\Y\Desktop\excel.xlsx")
+
+# 名前を付けて保存
+$book.SaveAs("C:\Users\Y\Desktop\excel2.xlsx")
+
+# 閉じる
+$excel.Quit()
+$excel = $Null
+[GC]::collect()
+```
+
+```powershell
+# Excelを開く
+$excel = New-Object -ComObject Excel.Application
+$excel.Visible = $true
+$excel.DisplayAlerts = $False
+
+### 新規作成
+$book = $excel.Workbooks.add()
+
+# 名前を付けて保存
+$book.SaveAs("C:\Users\Y\Desktop\excel2.xlsx")
+
+# 閉じる
+$excel.Quit()
+$excel = $Null
+[GC]::collect()
+```
+
+
+###### セル編集
+<a id="markdown-%E3%82%BB%E3%83%AB%E7%B7%A8%E9%9B%86" name="%E3%82%BB%E3%83%AB%E7%B7%A8%E9%9B%86"></a>
+
+```powershell
+# Excelを開く
+$excel = New-Object -ComObject Excel.Application
+$excel.Visible = $true
+$excel.DisplayAlerts = $False
+
+### 新規作成
+$book = $excel.Workbooks.add()
+$sheet = $book.ActiveSheet
+
+# セル編集
+$sheet.Cells.Item(1,1) = "A1"
+$sheet.Range("A1") = "A1A1"
+
+$sheet.Cells.Item(1,1).Font.Bold = $True
+$sheet.Cells.Item(1,1).Font.Size = 24
+$sheet.Cells.Item(1,1).font.ColorIndex = 3
+$sheet.Cells.Item(1,1).font.Name = "MS 明朝"
+$sheet.Cells.Item(1,1).interior.ColorIndex = 6
+
+# $sheet.Range("A2") = "=A1+1"
+$sheet.Cells.Item(2,1) = "=A1&A1"
+
+# 名前を付けて保存
+$book.SaveAs("C:\Users\Y\Desktop\excel2.xlsx")
+
+# 閉じる
+$excel.Quit()
+$excel = $Null
+[GC]::collect()
+```
+
+
 ##### PowerPoint
 <a id="markdown-powerpoint" name="powerpoint"></a>
 
@@ -1927,6 +2080,10 @@ $word.visible = $true
 
 $word.Quit()
 ```
+
+
+#### SQL Server
+<a id="markdown-sql-server" name="sql-server"></a>
 
 
 #### その他アプリケーション
@@ -2729,6 +2886,46 @@ $headers = @{Authorization="Bearer token"; accept="application/json"}
 
 $res = Invoke-RestMethod $url -Method 'POST' -Headers $headers -Body $params
 $res | FL
+```
+
+
+## ネットワークアダプタ
+<a id="markdown-%E3%83%8D%E3%83%83%E3%83%88%E3%83%AF%E3%83%BC%E3%82%AF%E3%82%A2%E3%83%80%E3%83%97%E3%82%BF" name="%E3%83%8D%E3%83%83%E3%83%88%E3%83%AF%E3%83%BC%E3%82%AF%E3%82%A2%E3%83%80%E3%83%97%E3%82%BF"></a>
+
+```powershell
+# ネットワークアダプター一覧
+Get-NetAdapter | Format-Table
+Get-NetAdapter | ? {$_.Name -eq "Wi-Fi"}
+```
+
+```powershell
+# ネットワークアダプターのプロパティ
+Get-NetAdapterBinding | Format-Table
+
+# 設定変更
+# Set-NetAdapterBinding -Name "Wi-Fi" -DisplayName "Internet Protocol Version 4 (TCP/IPv4)" -Enabled $True
+Set-NetAdapterBinding -Name "Wi-Fi" -DisplayName "インターネット プロトコル バージョン 4 (TCP/IPv4)" -Enabled $True
+Set-NetAdapterBinding -Name "Wi-Fi" -ComponentID ms_tcpip -Enabled $True
+```
+
+```powershell
+# ネットワークアダプターの詳細設定
+Get-NetAdapterAdvancedProperty | Format-Table
+```
+
+### IPアドレス
+<a id="markdown-ip%E3%82%A2%E3%83%89%E3%83%AC%E3%82%B9" name="ip%E3%82%A2%E3%83%89%E3%83%AC%E3%82%B9"></a>
+
+```powershell
+# IPアドレスを取得
+Get-NetIPAddress | Format-Table InterfaceAlias, IPAddress
+
+# IPアドレス・デフォルトゲートウェイ・DNSサーバーを変更（削除→追加）
+Remove-NetIPAddress -IPAddress '192.168.1.000'
+New-NetIPAddress -InterfaceIndex 00 -AddressFamily IPv4 -IPAddress '192.168.1.000' -PrefixLength 24
+Remove-NetRoute -InterfaceIndex 00 -NextHop 192.168.1.000
+New-NetRoute -InterfaceIndex 00 -DestinationPrefix '0.0.0.0/0' -AddressFamily IPv4 -NextHop '192.168.1.000' -RouteMetric 0
+Set-DnsClientServerAddress -InterfaceIndex 00 -ServerAddresses 192.168.1.000
 ```
 
 
