@@ -136,6 +136,8 @@
         - [読込み](#%E8%AA%AD%E8%BE%BC%E3%81%BF)
         - [書出し](#%E6%9B%B8%E5%87%BA%E3%81%97)
     - [ZIPファイル](#zip%E3%83%95%E3%82%A1%E3%82%A4%E3%83%AB)
+        - [圧縮](#%E5%9C%A7%E7%B8%AE)
+        - [解凍](#%E8%A7%A3%E5%87%8D)
     - [ログ出力](#%E3%83%AD%E3%82%B0%E5%87%BA%E5%8A%9B)
         - [ログファイル](#%E3%83%AD%E3%82%B0%E3%83%95%E3%82%A1%E3%82%A4%E3%83%AB)
         - [イベントログ](#%E3%82%A4%E3%83%99%E3%83%B3%E3%83%88%E3%83%AD%E3%82%B0)
@@ -143,6 +145,10 @@
     - [ISOファイル](#iso%E3%83%95%E3%82%A1%E3%82%A4%E3%83%AB)
         - [マウント](#%E3%83%9E%E3%82%A6%E3%83%B3%E3%83%88)
         - [アンマウント](#%E3%82%A2%E3%83%B3%E3%83%9E%E3%82%A6%E3%83%B3%E3%83%88)
+    - [画像ファイル](#%E7%94%BB%E5%83%8F%E3%83%95%E3%82%A1%E3%82%A4%E3%83%AB)
+        - [画像編集](#%E7%94%BB%E5%83%8F%E7%B7%A8%E9%9B%86)
+            - [画像のトリミング](#%E7%94%BB%E5%83%8F%E3%81%AE%E3%83%88%E3%83%AA%E3%83%9F%E3%83%B3%E3%82%B0)
+        - [スクリーンショット](#%E3%82%B9%E3%82%AF%E3%83%AA%E3%83%BC%E3%83%B3%E3%82%B7%E3%83%A7%E3%83%83%E3%83%88)
 - [ネットワーク](#%E3%83%8D%E3%83%83%E3%83%88%E3%83%AF%E3%83%BC%E3%82%AF)
     - [URLエンコード](#url%E3%82%A8%E3%83%B3%E3%82%B3%E3%83%BC%E3%83%89)
     - [ping](#ping)
@@ -156,6 +162,7 @@
         - [IPアドレス](#ip%E3%82%A2%E3%83%89%E3%83%AC%E3%82%B9)
 
 <!-- /TOC -->
+
 
 # おまじない
 <a id="markdown-%E3%81%8A%E3%81%BE%E3%81%98%E3%81%AA%E3%81%84" name="%E3%81%8A%E3%81%BE%E3%81%98%E3%81%AA%E3%81%84"></a>
@@ -2830,9 +2837,29 @@ $xml.Save($filepath)
 ## ZIPファイル
 <a id="markdown-zip%E3%83%95%E3%82%A1%E3%82%A4%E3%83%AB" name="zip%E3%83%95%E3%82%A1%E3%82%A4%E3%83%AB"></a>
 
+### 圧縮
+<a id="markdown-%E5%9C%A7%E7%B8%AE" name="%E5%9C%A7%E7%B8%AE"></a>
+
+| パラメーター        | 値              | 内容                                                              |
+| ------------------- | --------------- | ----------------------------------------------------------------- |
+| `-Force`            |                 | 既存ファイルが存在したら上書き                                    |
+| `-Update`           |                 | 既存ファイルを更新                                                |
+| `-CompressionLevel` |                 | 圧縮の量                                                          |
+|                     | `Optimal`       | 最適値                                                            |
+|                     | `Fastest`       | 使用可能な最速の圧縮方法                                          |
+|                     | `NoCompression` | 圧縮しない                                                        |
+| `-LiteralPath`      |                 | Path パラメーターとは異なり、ワイルドカードを利用しない場合に指定 |
+
 ```powershell
 Compress-Archive -Path .\*.ps1 -DestinationPath .\archive.zip
 
+Compress-Archive -LiteralPath .\foo.ps1,.\bar.ps1 -CompressionLevel Optimal -DestinationPath .\archive.zip
+```
+
+### 解凍
+<a id="markdown-%E8%A7%A3%E5%87%8D" name="%E8%A7%A3%E5%87%8D"></a>
+
+```powershell
 $date = Get-Date -Format "yyyyMMddHHmmss"
 New-Item .\$date -ItemType Directory -Force
 Expand-Archive -Path .\archive.zip -DestinationPath .\$date
@@ -2939,6 +2966,38 @@ $isoPath = "C:\disc1.iso"
 
 DisMount-DiskImage $isoPath
 ```
+
+
+## 画像ファイル
+<a id="markdown-%E7%94%BB%E5%83%8F%E3%83%95%E3%82%A1%E3%82%A4%E3%83%AB" name="%E7%94%BB%E5%83%8F%E3%83%95%E3%82%A1%E3%82%A4%E3%83%AB"></a>
+
+
+### 画像編集
+<a id="markdown-%E7%94%BB%E5%83%8F%E7%B7%A8%E9%9B%86" name="%E7%94%BB%E5%83%8F%E7%B7%A8%E9%9B%86"></a>
+
+
+#### 画像のトリミング
+<a id="markdown-%E7%94%BB%E5%83%8F%E3%81%AE%E3%83%88%E3%83%AA%E3%83%9F%E3%83%B3%E3%82%B0" name="%E7%94%BB%E5%83%8F%E3%81%AE%E3%83%88%E3%83%AA%E3%83%9F%E3%83%B3%E3%82%B0"></a>
+
+```powershell
+$SourcePath = ".\trim.jpg";
+$DestinationPath = ".\trimmed.png";
+
+Add-Type -AssemblyName System.Drawing
+$SourceBitmap = New-Object System.Drawing.Bitmap($SourcePath)
+
+# x, y, width, height
+$TrimRectangle = New-Object System.Drawing.Rectangle(240, 670, 600, 400);
+$DestinationBitmap = $SourceBitmap.Clone($TrimRectangle, $SourceBitmap.PixelFormat)
+$DestinationBitmap.Save($DestinationPath, [System.Drawing.Imaging.ImageFormat]::Png)
+
+$DestinationBitmap.Dispose()
+$SourceBitmap.Dispose()
+```
+
+
+### スクリーンショット
+<a id="markdown-%E3%82%B9%E3%82%AF%E3%83%AA%E3%83%BC%E3%83%B3%E3%82%B7%E3%83%A7%E3%83%83%E3%83%88" name="%E3%82%B9%E3%82%AF%E3%83%AA%E3%83%BC%E3%83%B3%E3%82%B7%E3%83%A7%E3%83%83%E3%83%88"></a>
 
 
 # ネットワーク

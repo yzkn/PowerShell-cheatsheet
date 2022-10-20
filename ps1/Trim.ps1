@@ -1,0 +1,13 @@
+$SourcePath = ".\trim.jpg";
+$DestinationPath = ".\trimmed.png";
+
+Add-Type -AssemblyName System.Drawing
+$SourceBitmap = New-Object System.Drawing.Bitmap($SourcePath)
+
+# x, y, width, height
+$TrimRectangle = New-Object System.Drawing.Rectangle(240, 670, 600, 400);
+$DestinationBitmap = $SourceBitmap.Clone($TrimRectangle, $SourceBitmap.PixelFormat)
+$DestinationBitmap.Save($DestinationPath, [System.Drawing.Imaging.ImageFormat]::Png)
+
+$DestinationBitmap.Dispose()
+$SourceBitmap.Dispose()
