@@ -40,6 +40,7 @@
             - [設定変数のみ一覧化](#%E8%A8%AD%E5%AE%9A%E5%A4%89%E6%95%B0%E3%81%AE%E3%81%BF%E4%B8%80%E8%A6%A7%E5%8C%96)
         - [配列](#%E9%85%8D%E5%88%97)
             - [多次元配列](#%E5%A4%9A%E6%AC%A1%E5%85%83%E9%85%8D%E5%88%97)
+            - [オブジェクトの配列](#%E3%82%AA%E3%83%96%E3%82%B8%E3%82%A7%E3%82%AF%E3%83%88%E3%81%AE%E9%85%8D%E5%88%97)
         - [ArrayList](#arraylist)
         - [ハッシュテーブル](#%E3%83%8F%E3%83%83%E3%82%B7%E3%83%A5%E3%83%86%E3%83%BC%E3%83%96%E3%83%AB)
     - [画面出力](#%E7%94%BB%E9%9D%A2%E5%87%BA%E5%8A%9B)
@@ -61,6 +62,8 @@
         - [ループ](#%E3%83%AB%E3%83%BC%E3%83%97)
             - [ループ文](#%E3%83%AB%E3%83%BC%E3%83%97%E6%96%87)
             - [ループ制御文](#%E3%83%AB%E3%83%BC%E3%83%97%E5%88%B6%E5%BE%A1%E6%96%87)
+            - [ForEach メソッド](#foreach-%E3%83%A1%E3%82%BD%E3%83%83%E3%83%89)
+            - [パイプライン](#%E3%83%91%E3%82%A4%E3%83%97%E3%83%A9%E3%82%A4%E3%83%B3)
         - [例外処理](#%E4%BE%8B%E5%A4%96%E5%87%A6%E7%90%86)
             - [try節](#try%E7%AF%80)
             - [trap節](#trap%E7%AF%80)
@@ -1020,14 +1023,17 @@ $array6
 ```
 
 > 6
+>
 > 66
+>
 > 666
 
 > 6
+>
 > 666
 
 ```powershell
-$array = .1000
+$array = 0..1000
 
 # 指定された値が配列に含まれるか検査する
 $array -contains 5
@@ -1037,19 +1043,30 @@ $array[0]
 
 $array[-1]
 
+$array[1,3,5]
+
 $array[10..200] # 添え字も配列
 ```
 
 > True
 
-> 2
+> 0
 
-> 4
+> 1000
 
-> 102
-> 103
+> 1
+>
+> 3
+>
+> 5
+
+> 10
+>
+> 11
+>
 > (中略)
-> 201
+>
+> 200
 
 #### 多次元配列
 <a id="markdown-%E5%A4%9A%E6%AC%A1%E5%85%83%E9%85%8D%E5%88%97" name="%E5%A4%9A%E6%AC%A1%E5%85%83%E9%85%8D%E5%88%97"></a>
@@ -1060,6 +1077,74 @@ $array[1][2]
 ```
 
 > 2-3
+
+#### オブジェクトの配列
+<a id="markdown-%E3%82%AA%E3%83%96%E3%82%B8%E3%82%A7%E3%82%AF%E3%83%88%E3%81%AE%E9%85%8D%E5%88%97" name="%E3%82%AA%E3%83%96%E3%82%B8%E3%82%A7%E3%82%AF%E3%83%88%E3%81%AE%E9%85%8D%E5%88%97"></a>
+
+```powershell
+$AppUsers = @(
+    [pscustomobject] @{FirstName="Owen"; LastName="Hardacre"; Mail="owen.hardacre@example.net"},
+    [pscustomobject] @{FirstName="Luke"; LastName="Edmunds"; Mail="luke.edmunds@example.net"},
+    [pscustomobject] @{FirstName="John"; LastName="Graham"; Mail="john.graham@example.net"},
+    [pscustomobject] @{FirstName="Elizabeth"; LastName="Dyer"; Mail="elizabeth.dyer@example.net"},
+    [pscustomobject] @{FirstName="Robert"; LastName="Wright"; Mail="robert.wright@example.net"}
+)
+
+# 個々の要素にアクセス
+$AppUsers[0]
+
+# プロパティを参照
+$AppUsers[0].FirstName
+
+# プロパティを更新
+$AppUsers[0].FirstName = "Oliver"
+$AppUsers[0].FirstName
+
+# 全ての要素のプロパティ
+$AppUsers | ForEach-Object {$_.Mail}
+$AppUsers | Select-Object -ExpandProperty Mail
+$AppUsers.Mail
+
+# 要素のフィルタリング
+$AppUsers | Where-Object {$_.FirstName -eq "Luke"} | Select-Object -ExpandProperty Mail
+$AppUsers.Where({$_.FirstName -eq "Luke"}).Mail
+
+# オブジェクトの配列をソート
+$AppUsers | Where-Object {$_.FirstName -ne $null} | Sort-Object "LastName" -Descending | Select-Object -First 3
+
+```
+
+> FirstName LastName Mail
+>
+> --------- -------- ----
+>
+> Owen      Hardacre owen.hardacre@example.net
+
+> Owen
+
+> Oliver
+
+> owen.hardacre@example.net
+>
+> luke.edmunds@example.net
+>
+> john.graham@example.net
+>
+> elizabeth.dyer@example.net
+>
+> robert.wright@example.net
+
+> luke.edmunds@example.net
+
+> FirstName LastName Mail
+>
+> --------- -------- ----
+>
+> Robert    Wright   robert.wright@example.net
+>
+> Oliver    Hardacre owen.hardacre@example.net
+>
+> John      Graham   john.graham@example.net
 
 
 ### ArrayList
@@ -1450,6 +1535,28 @@ foreach ($i in 0..4) {
 > 1
 > 2
 > 4
+
+#### ForEach メソッド
+<a id="markdown-foreach-%E3%83%A1%E3%82%BD%E3%83%83%E3%83%89" name="foreach-%E3%83%A1%E3%82%BD%E3%83%83%E3%83%89"></a>
+
+```powershell
+$data = 1..3
+$data.foreach({"Data [$PSItem]"})
+```
+
+> Data [1]
+>
+> Data [2]
+>
+> Data [3]
+
+#### パイプライン
+<a id="markdown-%E3%83%91%E3%82%A4%E3%83%97%E3%83%A9%E3%82%A4%E3%83%B3" name="%E3%83%91%E3%82%A4%E3%83%97%E3%83%A9%E3%82%A4%E3%83%B3"></a>
+
+```powershell
+$data = 1..3
+$data | ForEach-Object {"Data [$PSItem]"}
+```
 
 ### 例外処理
 <a id="markdown-%E4%BE%8B%E5%A4%96%E5%87%A6%E7%90%86" name="%E4%BE%8B%E5%A4%96%E5%87%A6%E7%90%86"></a>
@@ -2405,6 +2512,9 @@ $path = [System.Environment]::GetFolderPath("Desktop")
 $dirPath = [System.Environment]::GetFolderPath("Desktop")
 
 Get-ChildItem -Path $dirPath -Recurse
+
+# ソートに使うプロパティ、表示件数を指定
+Get-ChildItem $dirPath -Recurse | Sort-Object "Name" -Descending | Select-Object -First 10
 ```
 
 ## フォルダの合計サイズ（再帰）
